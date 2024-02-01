@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'new_activity_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -118,24 +119,48 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+              style: TextStyle(
+                fontSize: 24.0 + (_counter * 2),
+              ),
+              ),
           ],
         ),
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+      floatingActionButton: Stack(
         children: [
-          FloatingActionButton(
-            onPressed: _incrementCounter,
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
+          Positioned(
+            bottom: 20.0,
+            right: 20.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FloatingActionButton(
+                  onPressed: _incrementCounter,
+                  tooltip: 'Increment',
+                  child: const Icon(Icons.add),
+                ),
+                SizedBox(width: 10),  // Espacio entre botones
+                FloatingActionButton(
+                  onPressed: _decrementCounter,
+                  tooltip: 'Decrement',
+                  child: const Icon(Icons.remove),
+                ),
+              ],
+            ),
           ),
-          SizedBox(width: 10),  // Espacio entre botones
-          FloatingActionButton(
-            onPressed: _decrementCounter,  // Usa la nueva función aquí
-            tooltip: 'Decrement',
-            child: const Icon(Icons.remove),  // Icono de disminución
+          Positioned(
+            bottom: 20.0,
+            left: 20.0,
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NewActivityScreen()),
+                );
+              },
+              tooltip: 'Open New Activity',
+              child: const Icon(Icons.open_in_new),
+            ),
           ),
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
