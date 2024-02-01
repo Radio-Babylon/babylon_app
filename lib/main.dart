@@ -77,6 +77,14 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void test() {
+    setState(() {
+      if (_counter > 0) {
+        _counter--;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
