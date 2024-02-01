@@ -155,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => NewActivityScreen()),
+                    MaterialPageRoute(builder: (context) => NewActivityScreen(counterValue: _counter)),
                 );
               },
               tooltip: 'Open New Activity',
