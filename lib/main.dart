@@ -1,91 +1,91 @@
 import 'package:flutter/material.dart';
-import 'register1.dart'; // Importing the register screen
+import 'register1.dart';
 
 void main() {
-  runApp(const MyApp()); // Entry point of the application
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key}); // Constructor with optional key
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Babylon Radio', // Application title
-      theme: ThemeData( // Defines the custom theme of the app
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), // Base color for the theme
-        useMaterial3: true, // Opting in for Material 3 design
-        textTheme: const TextTheme( // Custom text theme
-          bodyMedium: TextStyle(fontFamily: 'Lato'), // Specifying default font family
+      title: 'Babylon Radio',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(fontFamily: 'Lato'),
         ),
       ),
-      home: const LogoScreen(), // Sets the home screen of the app
+      home: const LogoScreen(),
     );
   }
 }
 
 class LogoScreen extends StatelessWidget {
-  const LogoScreen({super.key}); // Constructor with optional key
+  const LogoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          const SizedBox(height: 60), // Adds top padding for the logo
+          const SizedBox(height: 60), // Padding top for logo
           SizedBox(
             height: 185,
             width: 185,
-            child: Image.asset('assets/images/logo.png'), // Loads the logo image from assets
+            child: Image.asset('assets/images/logo.png'),
           ),
-          const SizedBox(height: 30), // Adds space between the logo and the welcome text
+          const SizedBox(height: 30), // Space between logo and text
           const Text(
-            'Welcome to Babylon Radio', // Welcome text
-            textAlign: TextAlign.center, // Centers the text
+            'Welcome to Babylon Radio',
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w300,
-              fontFamily: 'Lato', // Custom font family
+              fontFamily: 'Lato',
             ),
           ),
-          const SizedBox(height: 12), // Adds space between the welcome text and the catchphrase
+          const SizedBox(height: 12), // Space between Welcome text and catchphrase
           const Text(
-            'A nice catch phrase', // Catchphrase text
-            textAlign: TextAlign.center, // Centers the text
+            'A nice catch phrase',
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w300,
-              fontFamily: 'Lato', // Custom font family
+              fontFamily: 'Lato',
             ),
           ),
-          const SizedBox(height: 48), // Adds space before the buttons
+          const SizedBox(height: 48), // Space between catchphrase and buttons
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 21),
             child: ElevatedButton(
-              onPressed: () {}, // Placeholder for login functionality
-              child: const Text('Login'), // Login button text
+              onPressed: () {},
+              child: const Text('Login'),
               style: ElevatedButton.styleFrom(
-                minimumSize: const Size(350, 80), // Sets the button size
-                textStyle: const TextStyle(fontSize: 24, fontFamily: 'Lato'), // Custom text style
+                minimumSize: const Size(350, 80), // Set the button size
+                textStyle: const TextStyle(fontSize: 24, fontFamily: 'Lato'),
               ),
             ),
           ),
-          const SizedBox(height: 18), // Adds space between the buttons
+          const SizedBox(height: 18), // Space between buttons
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 21),
             child: OutlinedButton(
               onPressed: () {
-                // Uses Navigator.push to navigate to the Register screen
+                // Usa Navigator.push para navegar a RegisterScreen
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => CreateAccountPage()),
                 );
               },
-              child: const Text('Register'), // Register button text
+              child: const Text('Register'),
               style: OutlinedButton.styleFrom(
-                minimumSize: const Size(350, 80), // Sets the button size
-                textStyle: const TextStyle(fontSize: 24, fontFamily: 'Lato'), // Custom text style
-                side: const BorderSide(width: 2.0, color: Colors.grey), // Sets border width and color
+                minimumSize: const Size(350, 80), // Set the button size
+                textStyle: const TextStyle(fontSize: 24, fontFamily: 'Lato'),
+                side: const BorderSide(width: 2.0, color: Colors.grey), // Border width and color
               ),
             ),
           ),
