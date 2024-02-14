@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MyApp()); // Entry point of the Flutter application.
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Create Account',
+      title: 'Create Account', // Title of the application.
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primarySwatch: Colors.blue, // Primary theme color.
+        visualDensity: VisualDensity.adaptivePlatformDensity, // Adjusts visual density based on the platform.
       ),
-      home: CreateAccountPage(),
+      home: CreateAccountPage(), // The homepage widget of the application.
     );
   }
 }
@@ -23,11 +23,11 @@ class CreateAccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create a New Account'),
+        title: Text('Create a New Account'), // Title of the AppBar.
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: CreateAccountForm(),
+        padding: EdgeInsets.all(16.0), // Padding around the form.
+        child: CreateAccountForm(), // The form widget for account creation.
       ),
     );
   }
@@ -39,24 +39,25 @@ class CreateAccountForm extends StatefulWidget {
 }
 
 class CreateAccountFormState extends State<CreateAccountForm> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>(); // Key for identifying the form.
 
   Widget _buildTextField({required String labelText, bool isPassword = false}) {
+    // Helper method to build text fields with common styling.
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0), // Espaciado entre campos de texto
+      padding: const EdgeInsets.only(bottom: 16.0), // Adds space between text fields.
       child: TextFormField(
         decoration: InputDecoration(
-          labelText: labelText,
+          labelText: labelText, // Label text for the field.
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0), // Borde redondeado con radio de 5
+            borderRadius: BorderRadius.circular(5.0), // Rounded corners for the input field.
           ),
           filled: true,
-          fillColor: Colors.grey[200], // Color de fondo del campo de texto
+          fillColor: Colors.grey[200], // Background color of the text field.
         ),
-        obscureText: isPassword, // Si es un campo de contraseña, oculta el texto
+        obscureText: isPassword, // Hides text input if it's a password field.
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please enter your $labelText';
+            return 'Please enter your $labelText'; // Validation message.
           }
           return null;
         },
@@ -66,22 +67,20 @@ class CreateAccountFormState extends State<CreateAccountForm> {
 
   @override
   Widget build(BuildContext context) {
-    // El logo debe ser de un tamaño específico y con un padding definido.
-    // Basado en el diseño proporcionado, parece que el logo debería estar centrado con un tamaño específico.
     return SingleChildScrollView(
       child: Form(
-        key: _formKey,
+        key: _formKey, // Associates the form with the form key.
         child: Column(
           children: <Widget>[
-            SizedBox(height: 37), // Espacio superior del logo
+            SizedBox(height: 37), // Top padding for the logo.
             Image.asset(
-              'assets/images/logo.png',
-              width: 365, // Ancho basado en el diseño
-              height: 90, // Altura basada en el diseño
-              fit: BoxFit.contain,
+              'assets/images/logo.png', // Path to the logo image.
+              width: 365, // Width of the logo.
+              height: 90, // Height of the logo.
+              fit: BoxFit.contain, // Makes sure the logo is contained properly within the box.
             ),
-            SizedBox(height: 37), // Espacio inferior del logo
-            // Definimos el resto de los campos de texto
+            SizedBox(height: 37), // Bottom padding for the logo.
+            // Calls the helper method to build text fields.
             _buildTextField(labelText: 'Name'),
             _buildTextField(labelText: 'Surname'),
             _buildTextField(labelText: 'Date of Birth'),
@@ -90,22 +89,23 @@ class CreateAccountFormState extends State<CreateAccountForm> {
             _buildTextField(labelText: 'Password', isPassword: true),
             _buildTextField(labelText: 'Confirm Password', isPassword: true),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 16.0), // Adds vertical padding around the button.
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(365, 60), // Tamaño del botón basado en tu diseño
+                  minimumSize: Size(365, 60), // Size of the button.
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0), // Botón con bordes redondeados
+                    borderRadius: BorderRadius.circular(30.0), // Rounded edges for the button.
                   ),
                 ),
                 onPressed: () {
+                  // Validates the form and shows a SnackBar if the form is valid.
                   if (_formKey.currentState?.validate() ?? false) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Processing Data')),
+                      SnackBar(content: Text('Processing Data')), // Snackbar message.
                     );
                   }
                 },
-                child: Text('Next'),
+                child: Text('Next'), // Text displayed on the button.
               ),
             ),
           ],
