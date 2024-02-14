@@ -51,7 +51,8 @@ class LogoScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12), // Space between Welcome text and catchphrase
           const Text(
-            'A nice catch phrase',
+            'Celebrating cultures, promoting integration',
+
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 24,
