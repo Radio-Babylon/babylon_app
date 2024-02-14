@@ -81,7 +81,7 @@ class LogoScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 21),
             child: OutlinedButton(
               onPressed: () {
-                // Usa Navigator.push para navegar a RegisterScreen
+                // Usa Navigator.push to navigate into RegisterScreen
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => CreateAccountPage()),
