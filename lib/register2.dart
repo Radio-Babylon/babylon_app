@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'register3.dart';
 
 class RegisterPage2 extends StatefulWidget {
   @override
@@ -24,13 +25,13 @@ class _RegisterPage2State extends State<RegisterPage2> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register Screen 2'),
+        title: const Text('Photo Profile'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Image.asset('assets/images/logo.png', height: 120, width: 120), // Cambia el tamaño según sea necesario
+          Image.asset('assets/images/logo.png', height: 120, width: 120),
           const Text(
             'Before we finish, let\'s set up your profile',
             textAlign: TextAlign.center,
@@ -39,9 +40,9 @@ class _RegisterPage2State extends State<RegisterPage2> {
           const SizedBox(height: 20),
           Center(
             child: CircleAvatar(
-              radius: 80, // El radio del círculo de la foto
+              radius: 80,
               backgroundImage: _image != null ? FileImage(_image!) : null,
-              child: _image == null ? Text('Photo') : null, // Muestra 'Photo' si no hay imagen
+              child: _image == null ? Text('Photo') : null,
             ),
           ),
           const SizedBox(height: 20),
@@ -51,13 +52,22 @@ class _RegisterPage2State extends State<RegisterPage2> {
           ),
           ElevatedButton(
             onPressed: () {
-              // Navega a la siguiente pantalla o realiza alguna acción
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RegisterPage3()),
+              );
             },
             child: const Text('Next'),
           ),
+
           TextButton(
             onPressed: () {
-              // Opción para saltar este paso
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RegisterPage3()),
+              );
             },
             child: const Text('Skip'),
           ),

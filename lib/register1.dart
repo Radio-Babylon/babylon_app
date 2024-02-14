@@ -1,23 +1,6 @@
 import 'package:flutter/material.dart';
 import 'register2.dart';
 
-void main() {
-  runApp(MyApp()); // Entry point of the Flutter application.
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Create Account', // Title of the application.
-      theme: ThemeData(
-        primarySwatch: Colors.blue, // Primary theme color.
-        visualDensity: VisualDensity.adaptivePlatformDensity, // Adjusts visual density based on the platform.
-      ),
-      home: CreateAccountPage(), // The homepage widget of the application.
-    );
-  }
-}
 
 class CreateAccountPage extends StatelessWidget {
   @override
