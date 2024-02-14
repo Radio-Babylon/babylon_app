@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'register2.dart';
 
 void main() {
   runApp(MyApp()); // Entry point of the Flutter application.
@@ -98,14 +99,16 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                   ),
                 ),
                 onPressed: () {
-                  // Validates the form and shows a SnackBar if the form is valid.
                   if (_formKey.currentState?.validate() ?? false) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Processing Data')), // Snackbar message.
+                    // Navega a la siguiente página después de la validación del formulario
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterPage2()), // Asegúrate de importar register2.dart en la parte superior
                     );
                   }
                 },
-                child: Text('Next'), // Text displayed on the button.
+                child: Text('Next'),
+                // Text displayed on the button.
               ),
             ),
           ],
