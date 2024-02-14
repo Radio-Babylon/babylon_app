@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'register1.dart';
+import 'login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -62,7 +63,12 @@ class LogoScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 21),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => loginPage()),
+                );
+              },
               child: const Text('Login'),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(350, 80), // Set the button size
