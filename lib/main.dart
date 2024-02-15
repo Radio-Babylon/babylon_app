@@ -40,19 +40,20 @@ class LogoScreen extends StatelessWidget {
             width: 185,
             child: Image.asset('assets/images/logo.png'),
           ),
-          const SizedBox(height: 30), // Space between logo and text
+          const SizedBox(height: 45), // Space between logo and text
           const Text(
-            'Welcome to Babylon Radio',
+            'Welcome to Babylon Radio!',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w300,
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
               fontFamily: 'Lato',
             ),
           ),
-          const SizedBox(height: 12), // Space between Welcome text and catchphrase
+          const SizedBox(height: 75), // Space between Welcome text and catchphrase
           const Text(
-            'Celebrating cultures, promoting integration',
+            'Celebrating cultures,\n' //\n breaks the line
+                ' promoting integration',
 
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -61,7 +62,7 @@ class LogoScreen extends StatelessWidget {
               fontFamily: 'Lato',
             ),
           ),
-          const SizedBox(height: 48), // Space between catchphrase and buttons
+          const SizedBox(height: 70), // Space between catchphrase and buttons
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 21),
             child: ElevatedButton(
@@ -71,14 +72,22 @@ class LogoScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => loginPage()),
                 );
               },
-              child: const Text('Login'),
               style: ElevatedButton.styleFrom(
+                primary: Colors.lightGreen, // Background color of the button
                 minimumSize: const Size(350, 80), // Set the button size
-                textStyle: const TextStyle(fontSize: 24, fontFamily: 'Lato'),
+              ),
+              child: Text(
+                'Login',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontFamily: 'Lato',
+                  color: Colors.white, // Text color of the button
+                ),
               ),
             ),
+
           ),
-          const SizedBox(height: 18), // Space between buttons
+          const SizedBox(height: 25), // Space between buttons
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 21),
             child: OutlinedButton(
