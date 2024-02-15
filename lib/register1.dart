@@ -83,10 +83,10 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                 ),
                 onPressed: () {
                   if (_formKey.currentState?.validate() ?? false) {
-                    // Navega a la siguiente página después de la validación del formulario
+                    // Go to next page after fill the form
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => RegisterPage2()), // Asegúrate de importar register2.dart en la parte superior
+                      MaterialPageRoute(builder: (context) => RegisterPage2()),
                     );
                   }
                 },
