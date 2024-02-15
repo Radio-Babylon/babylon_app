@@ -73,9 +73,9 @@ class _RegisterPage3State extends State<RegisterPage3> {
                 );
               }).toList(),
             ),
-            _buildCheckboxListTileSection('Select interest 1', interest1),
-            _buildCheckboxListTileSection('Select interest 2', interest2),
-            _buildCheckboxListTileSection('Select interest 3', interest3),
+            _buildCheckboxGridSection('Select interest 1', interest1),
+            _buildCheckboxGridSection('Select interest 2', interest2),
+            _buildCheckboxGridSection('Select interest 3', interest3),
             const SizedBox(height: 20),
             ElevatedButton(
               child: const Text('Finish'),
@@ -89,7 +89,9 @@ class _RegisterPage3State extends State<RegisterPage3> {
     );
   }
 
-  Widget _buildCheckboxListTileSection(String title, Map<String, bool> options) {
+  Widget _buildCheckboxGridSection(String title, Map<String, bool> options) {
+    int crossAxisCount = 3; // Number of columns in the grid
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -97,18 +99,46 @@ class _RegisterPage3State extends State<RegisterPage3> {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
         ),
-        ...options.keys.map((String key) {
-          return CheckboxListTile(
-            title: Text(key),
-            value: options[key],
-            onChanged: (bool? value) {
-              setState(() {
-                options[key] = value!;
-              });
+        // Wrap the GridView with a Container for the background
+        Container(
+          decoration: BoxDecoration(
+            // Use a BoxDecoration to style the background
+            color: Colors.grey[200], // This should be the color of your choice
+            border: Border.all(
+              color: Colors.black, // The color of the border
+              width: 1, // The width of the border
+            ),
+            borderRadius: BorderRadius.circular(15), // The border radius
+          ),
+          padding: const EdgeInsets.all(8), // Padding for the Container
+          // GridView for the checkbox grid
+          child: GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: crossAxisCount,
+              childAspectRatio: 3 / 1, // Adjust as needed for your design
+            ),
+            itemCount: options.length,
+            itemBuilder: (context, index) {
+              String key = options.keys.elementAt(index);
+              return CheckboxListTile(
+                title: Text(key),
+                value: options[key],
+                onChanged: (bool? value) {
+                  setState(() {
+                    options[key] = value!;
+                  });
+                },
+                controlAffinity: ListTileControlAffinity.trailing, // Position the checkbox after the text
+                contentPadding: EdgeInsets.symmetric(horizontal: 0),// Position the checkbox on the left side
+              );
             },
-          );
-        }).toList(),
+          ),
+        ),
       ],
     );
   }
-}
+
+  }
+

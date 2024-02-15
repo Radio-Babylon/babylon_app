@@ -81,14 +81,10 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                     borderRadius: BorderRadius.circular(30.0), // Rounded edges for the button.
                   ),
                 ),
-                onPressed: () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    // Navega a la siguiente página después de la validación del formulario
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RegisterPage2()), // Asegúrate de importar register2.dart en la parte superior
-                    );
-                  }
+                onPressed: () { Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterPage2()),
+                );
                 },
                 child: Text('Next'),
                 // Text displayed on the button.
