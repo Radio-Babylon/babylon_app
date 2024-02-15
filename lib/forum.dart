@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'events-info.dart';
+import 'forumTopic.dart';
 
-class EventsSceen extends StatelessWidget {
+class ForumScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: <Widget>[
           const Text(
-            'Events Screen',
+            'Forum Screen',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 12,
@@ -23,10 +23,10 @@ class EventsSceen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => eventsInfo()),
+                  MaterialPageRoute(builder: (context) => topicForum()),
                 );
               },
-              child: const Text('See events Info'),
+              child: const Text('Go to Topic'),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(350, 80), // Set the button size
                 textStyle: const TextStyle(fontSize: 24, fontFamily: 'Lato'),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'register1.dart';
 import 'login.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Babylon Radio',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
         useMaterial3: true,
         textTheme: const TextTheme(
           bodyMedium: TextStyle(fontFamily: 'Lato'),
