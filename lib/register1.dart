@@ -56,14 +56,14 @@ class CreateAccountFormState extends State<CreateAccountForm> {
         key: _formKey, // Associates the form with the form key.
         child: Column(
           children: <Widget>[
-            SizedBox(height: 90), // Top padding for the logo.
+            SizedBox(height: 15), // Top padding for the logo.
             Image.asset(
               'assets/images/logoRectangle.png', // Path to the logo image.
               width: 365, // Width of the logo.
               height: 90, // Height of the logo.
               fit: BoxFit.contain, // Makes sure the logo is contained properly within the box.
             ),
-            SizedBox(height: 37), // Bottom padding for the logo.
+            SizedBox(height: 35), // Bottom padding for the logo.
             // Calls the helper method to build text fields.
             _buildTextField(labelText: 'Name'),
             _buildTextField(labelText: 'Surname'),

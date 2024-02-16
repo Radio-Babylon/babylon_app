@@ -31,7 +31,11 @@ class _RegisterPage2State extends State<RegisterPage2> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Image.asset('assets/images/logoSquare.png', height: 120, width: 120),
+          Image.asset(
+              'assets/images/logoRectangle.png',
+              height: 90,
+              width: 365),
+          SizedBox(height: 150), //padding for the logo bottom
           const Text(
             'Before we finish, let\'s set up your profile',
             textAlign: TextAlign.center,
@@ -40,7 +44,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
           const SizedBox(height: 20),
           Center(
             child: CircleAvatar(
-              radius: 80,
+              radius: 125,
               backgroundImage: _image != null ? FileImage(_image!) : null,
               child: _image == null ? Text('Photo') : null,
             ),
@@ -52,7 +56,6 @@ class _RegisterPage2State extends State<RegisterPage2> {
           ),
           ElevatedButton(
             onPressed: () {
-
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => RegisterPage3()),
@@ -60,7 +63,6 @@ class _RegisterPage2State extends State<RegisterPage2> {
             },
             child: const Text('Next'),
           ),
-
           TextButton(
             onPressed: () {
 

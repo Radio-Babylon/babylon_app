@@ -14,7 +14,9 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             // Logo
-            Image.asset('assets/images/logoSquare.png', height: 120),
+            Image.asset('assets/images/logoRectangle.png',
+            height: 90,
+            width: 365),
             SizedBox(height: 48), // Space after logo
             // Title
             Text(

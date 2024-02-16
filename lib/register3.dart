@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login.dart';
 
 class RegisterPage3 extends StatefulWidget {
   @override
@@ -60,7 +61,9 @@ class _RegisterPage3State extends State<RegisterPage3> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Image.asset('assets/images/logoSquare.png', height: 120, width: 120),
+            Image.asset('assets/images/logoRectangle.png',
+                height: 90,
+                width: 365),
             const SizedBox(height: 20),
             const Text(
               'Almost there, just a few more steps',
@@ -84,9 +87,11 @@ class _RegisterPage3State extends State<RegisterPage3> {
             const SizedBox(height: 20),
             ElevatedButton(
               child: const Text('Finish'),
-              onPressed: () {
-                // Implement the action when 'Finish' is pressed, such as saving to a database.
-              },
+                onPressed: () { Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+                },
             ),
           ],
         ),
