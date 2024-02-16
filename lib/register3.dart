@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
+
 class RegisterPage3 extends StatefulWidget {
   @override
   _RegisterPage3State createState() => _RegisterPage3State();
 }
 
 class _RegisterPage3State extends State<RegisterPage3> {
-  String? selectedLanguage;
+  // This list will hold the selected languages.
+  List<String> selectedLanguages = [];
+  // A list of languages that users can choose from.
   List<String> languages = [
-    "English", "Spanish", "Mandarin", "French", "German",
-    "Japanese", "Russian", "Italian", "Portuguese", "Arabic", "Korean",
+    "Arabic", "Bengali", "Bosnian", "Bulgarian", "Cantonese",
+    "Chinese", "Croatian", "Czech", "Danish", "Dutch",
+    "English", "Finnish", "French", "German", "Greek",
+    "Hebrew", "Hindi", "Hungarian", "Indonesian", "Italian",
+    "Japanese", "Korean", "Malay", "Marathi", "Norwegian",
+    "Pashto", "Persian", "Polish", "Portuguese", "Punjabi",
+    "Romanian", "Russian", "Serbian", "Sindhi", "Slovak",
+    "Spanish", "Swahili", "Swedish", "Tamil", "Telugu",
+    "Thai", "Turkish", "Urdu", "Vietnamese"
   ];
 
+  // Maps to manage the interests' selections.
   late Map<String, bool> interest1;
   late Map<String, bool> interest2;
   late Map<String, bool> interest3;
@@ -18,6 +29,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
   @override
   void initState() {
     super.initState();
+    // Initialize the interests with all options set to false (not selected).
     interest1 = {
       "option 1": false,
       "option 2": false,
@@ -29,7 +41,6 @@ class _RegisterPage3State extends State<RegisterPage3> {
       "option 8": false,
       "option 9": false,
     };
-
     interest2 = Map.from(interest1);
     interest3 = {
       "option 1": false,
@@ -57,22 +68,16 @@ class _RegisterPage3State extends State<RegisterPage3> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
-            DropdownButton<String>(
-              isExpanded: true,
-              hint: Text('Select the languages you speak'),
-              value: selectedLanguage,
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedLanguage = newValue!;
-                });
-              },
-              items: languages.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+            // Tappable ListTile that opens the multi-select dialog.
+            ListTile(
+              title: Text('Select the languages you speak'),
+              subtitle: Text(
+                selectedLanguages.isNotEmpty ? selectedLanguages.join(', ') : 'None selected',
+                style: TextStyle(color: Theme.of(context).primaryColor),
+              ),
+              onTap: () => _showMultiSelectLanguages(context),
             ),
+            // Building sections for interests
             _buildCheckboxGridSection('Select interest 1', interest1),
             _buildCheckboxGridSection('Select interest 2', interest2),
             _buildCheckboxGridSection('Select interest 3', interest3),
@@ -80,7 +85,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
             ElevatedButton(
               child: const Text('Finish'),
               onPressed: () {
-                // Action when you press 'Finish'
+                // Implement the action when 'Finish' is pressed, such as saving to a database.
               },
             ),
           ],
@@ -89,6 +94,49 @@ class _RegisterPage3State extends State<RegisterPage3> {
     );
   }
 
+  // This function creates the multi-selection dialog for languages.
+  void _showMultiSelectLanguages(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: Text('Select Languages'),
+          content: Container(
+            width: double.minPositive,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: languages.length,
+              itemBuilder: (ctx, index) {
+                return CheckboxListTile(
+                  title: Text(languages[index]),
+                  value: selectedLanguages.contains(languages[index]),
+                  onChanged: (bool? value) {
+                    setState(() {
+                      if (value == true) {
+                        selectedLanguages.add(languages[index]);
+                      } else {
+                        selectedLanguages.remove(languages[index]);
+                      }
+                    });
+                    // Close and reopen the dialog to show the updated list.
+                    Navigator.of(context).pop();
+                    _showMultiSelectLanguages(context);
+                  },
+                );
+              },
+            ),
+          ),
+          actions: [
+            // Closes the dialog when the 'Done' button is pressed.
+            TextButton(
+              child: Text('Done'),
+              onPressed: () => Navigator.of(ctx).pop(),
+            ),
+          ],
+        );
+      },
+    );
+  }
   Widget _buildCheckboxGridSection(String title, Map<String, bool> options) {
     int crossAxisCount = 3; // Number of columns in the grid
 
