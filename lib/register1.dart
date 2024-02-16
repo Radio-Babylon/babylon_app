@@ -56,9 +56,9 @@ class CreateAccountFormState extends State<CreateAccountForm> {
         key: _formKey, // Associates the form with the form key.
         child: Column(
           children: <Widget>[
-            SizedBox(height: 37), // Top padding for the logo.
+            SizedBox(height: 90), // Top padding for the logo.
             Image.asset(
-              'assets/images/logo.png', // Path to the logo image.
+              'assets/images/logoRectangle.png', // Path to the logo image.
               width: 365, // Width of the logo.
               height: 90, // Height of the logo.
               fit: BoxFit.contain, // Makes sure the logo is contained properly within the box.
@@ -78,7 +78,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(365, 60), // Size of the button.
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0), // Rounded edges for the button.
+                    borderRadius: BorderRadius.circular(60.0), // Rounded edges for the button.
                   ),
                 ),
                 onPressed: () { Navigator.push(

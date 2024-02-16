@@ -15,7 +15,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Babylon Radio',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
+        colorScheme: ColorScheme.fromSwatch(
+        ).copyWith(
+          primary: Color(0xFF006400),
+        ),
+        scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
         textTheme: const TextTheme(
           bodyMedium: TextStyle(fontFamily: 'Lato'),
@@ -38,7 +42,7 @@ class LogoScreen extends StatelessWidget {
           SizedBox(
             height: 185,
             width: 185,
-            child: Image.asset('assets/images/logo.png'),
+            child: Image.asset('assets/images/logoSquare.png'),
           ),
           const SizedBox(height: 45), // Space between logo and text
           const Text(
@@ -50,7 +54,7 @@ class LogoScreen extends StatelessWidget {
               fontFamily: 'Lato',
             ),
           ),
-          const SizedBox(height: 75), // Space between Welcome text and catchphrase
+          const SizedBox(height: 60), // Space between Welcome text and catchphrase
           const Text(
             'Celebrating cultures,\n' //\n breaks the line
                 ' promoting integration',
@@ -62,7 +66,7 @@ class LogoScreen extends StatelessWidget {
               fontFamily: 'Lato',
             ),
           ),
-          const SizedBox(height: 70), // Space between catchphrase and buttons
+          const SizedBox(height: 90), // Space between catchphrase and buttons
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 21),
             child: ElevatedButton(
@@ -73,7 +77,7 @@ class LogoScreen extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.lightGreen, // Background color of the button
+                primary: Color(0xFF006400), // Background color of the button
                 minimumSize: const Size(350, 80), // Set the button size
               ),
               child: Text(

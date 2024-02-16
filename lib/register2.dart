@@ -31,7 +31,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Image.asset('assets/images/logo.png', height: 120, width: 120),
+          Image.asset('assets/images/logoSquare.png', height: 120, width: 120),
           const Text(
             'Before we finish, let\'s set up your profile',
             textAlign: TextAlign.center,

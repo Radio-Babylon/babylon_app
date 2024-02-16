@@ -60,7 +60,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Image.asset('assets/images/logo.png', height: 120, width: 120),
+            Image.asset('assets/images/logoSquare.png', height: 120, width: 120),
             const SizedBox(height: 20),
             const Text(
               'Almost there, just a few more steps',
