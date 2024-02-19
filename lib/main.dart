@@ -1,10 +1,15 @@
+import 'package:babylon_app/firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'register1.dart';
 import 'login.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
-  //testing
 }
 
 class MyApp extends StatelessWidget {
@@ -69,7 +74,12 @@ class LogoScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 21),
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                // await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                //   email: "barry.allen@example.com",
+                //   password: "SuperSecretPassword!"
+                // );
+                // var data = FirebaseFirestore.instance.collection('test');
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),
