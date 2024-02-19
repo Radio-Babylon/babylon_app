@@ -5,6 +5,7 @@ import 'news.dart';
 import 'forum.dart';
 import 'events.dart';
 import 'connections.dart';
+import 'radio.dart';
 
 class homePage extends StatefulWidget {
   @override
@@ -20,6 +21,7 @@ class _MyHomePageState extends State<homePage> {
 
   final List<Widget> _tabs = [
     HomeScreen(),
+    RadioScreen(),
     NewsScreen(),
     ForumScreen(),
     EventsSceen(),
@@ -40,6 +42,7 @@ class _MyHomePageState extends State<homePage> {
             labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
             tabs: [
               Tab(icon: Icon(Icons.home), text: 'Home'),
+              Tab(icon: Icon(Icons.radio), text: 'Radio'),
               Tab(icon: Icon(Icons.newspaper), text: 'News'),
               Tab(icon: Icon(Icons.forum), text: 'Forum'),
               Tab(icon: Icon(Icons.event), text: 'Events'),
