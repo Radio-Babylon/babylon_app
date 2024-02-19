@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'register1.dart';
 import 'login.dart';
 
-
+ 
 void main() {
   runApp(const MyApp());
 }
