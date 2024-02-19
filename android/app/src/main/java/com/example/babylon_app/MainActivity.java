@@ -1,4 +1,4 @@
-package com.example.babylon_app;
+package com.babylonradio;
 
 import io.flutter.embedding.android.FlutterActivity;
 

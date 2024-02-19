@@ -1,9 +1,14 @@
+import 'package:babylon_app/firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'register1.dart';
 import 'login.dart';
 
- 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -15,8 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Babylon Radio',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(
-        ).copyWith(
+        colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: Color(0xFF006400),
         ),
         scaffoldBackgroundColor: Colors.white,
@@ -54,11 +58,11 @@ class LogoScreen extends StatelessWidget {
               fontFamily: 'Lato',
             ),
           ),
-          const SizedBox(height: 60), // Space between Welcome text and catchphrase
+          const SizedBox(
+              height: 60), // Space between Welcome text and catchphrase
           const Text(
             'Celebrating cultures,\n' //\n breaks the line
-                ' promoting integration',
-
+            ' promoting integration',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 24,
@@ -70,7 +74,12 @@ class LogoScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 21),
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                // await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                //   email: "barry.allen@example.com",
+                //   password: "SuperSecretPassword!"
+                // );
+                // var data = FirebaseFirestore.instance.collection('test');
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),
@@ -89,7 +98,6 @@ class LogoScreen extends StatelessWidget {
                 ),
               ),
             ),
-
           ),
           const SizedBox(height: 25), // Space between buttons
           Padding(
@@ -106,7 +114,8 @@ class LogoScreen extends StatelessWidget {
               style: OutlinedButton.styleFrom(
                 minimumSize: const Size(350, 80), // Set the button size
                 textStyle: const TextStyle(fontSize: 24, fontFamily: 'Lato'),
-                side: const BorderSide(width: 2.0, color: Colors.grey), // Border width and color
+                side: const BorderSide(
+                    width: 2.0, color: Colors.grey), // Border width and color
               ),
             ),
           ),
