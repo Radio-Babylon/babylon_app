@@ -27,53 +27,81 @@ class _RegisterPage2State extends State<RegisterPage2> {
       appBar: AppBar(
         title: const Text('Photo Profile'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Image.asset(
-              'assets/images/logoRectangle.png',
-              height: 90,
-              width: 365),
-          SizedBox(height: 150), //padding for the logo bottom
-          const Text(
-            'Before we finish, let\'s set up your profile',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 20),
-          Center(
-            child: CircleAvatar(
-              radius: 125,
-              backgroundImage: _image != null ? FileImage(_image!) : null,
-              child: _image == null ? Text('Photo') : null,
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 20), // Adjust overall horizontal spacing
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(bottom: 25), // Adjust space below the logo
+              child: Image.asset(
+                'assets/images/logoRectangle.png',
+                height: 90,
+                width: 365,
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          TextButton(
-            onPressed: getImage,
-            child: const Text('Select file'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RegisterPage3()),
-              );
-            },
-            child: const Text('Next'),
-          ),
-          TextButton(
-            onPressed: () {
-
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RegisterPage3()),
-              );
-            },
-            child: const Text('Skip'),
-          ),
-        ],
+            const Text(
+              'Before we finish, let\'s set up your profile',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            Center(
+              child: CircleAvatar(
+                radius: 125,
+                backgroundColor: Color(0xFF006400),
+                backgroundImage: _image != null ? FileImage(_image!) : null,
+                child: _image == null ? Text('Photo') : null,
+              ),
+            ),
+            const SizedBox(height: 20),
+            TextButton(
+              onPressed: getImage,
+              child: const Text('Select file'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF006400),
+                minimumSize: Size(365, 60), // Size of the button.
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(60.0), // Rounded edges for the button.
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterPage3()),
+                );
+              },
+              child: const Text(
+                'Next',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontFamily: 'Lato',
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 20), // Adjust space above and below the "Skip" button
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegisterPage3()),
+                  );
+                },
+                child: const Text('Skip'),
+                style: OutlinedButton.styleFrom(
+                    minimumSize: Size(365, 60), // Set the button size
+                  textStyle: const TextStyle(fontSize: 24, fontFamily: 'Lato'),
+                  side: const BorderSide(width: 2.0, color: Colors.grey),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
