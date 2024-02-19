@@ -43,18 +43,24 @@ class LoginPage extends StatelessWidget {
             ),
             SizedBox(height: 24), // Space after text fields
             // Login button that navigates to HomePage on press
-            OutlinedButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF006400),
+                minimumSize: Size(365, 60), // Size of the button.
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(60.0), // Rounded edges for the button.
+                ),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => homePage()),
                 );
               },
-              child: const Text('Login'),
-              style: OutlinedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 50), // Wide and tall button
-                textStyle: const TextStyle(fontSize: 24),
-                side: const BorderSide(width: 2.0, color: Colors.grey),
+              child: const Text('Login',
+                style: TextStyle(color: Colors.white,
+                  fontSize: 24,
+                  fontFamily: 'Lato',),
               ),
             ),
             SizedBox(height: 32), // Space after Login button

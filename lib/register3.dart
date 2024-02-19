@@ -32,21 +32,30 @@ class _RegisterPage3State extends State<RegisterPage3> {
     super.initState();
     // Initialize the interests with all options set to false (not selected).
     interest1 = {
-      "option 1": false,
-      "option 2": false,
-      "option 3": false,
-      "option 4": false,
-      "option 5": false,
-      "option 6": false,
-      "option 7": false,
-      "option 8": false,
-      "option 9": false,
+      "hiking": false,
+      "dancing": false,
+      "football": false,
+      "swimming": false,
+      "singing": false,
+      "cooking": false,
+      "watching movies": false,
+      "rugby": false,
+      "board games": false,
+      "Writing": false,
     };
-    interest2 = Map.from(interest1);
+    interest2 = {
+      "EDM": false,
+      "Pop": false,
+      "K-pop": false,
+      "House": false,
+      "Rock": false,
+      "Country": false,
+    };
     interest3 = {
-      "option 1": false,
-      "option 2": false,
-      "option 3": false,
+      "drawing": false,
+      "ceramic": false,
+      "reading": false,
+      "Gaming": false,
     };
   }
 
@@ -73,7 +82,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
             const SizedBox(height: 20),
             // Tappable ListTile that opens the multi-select dialog.
             ListTile(
-              title: Text('Select the languages you speak'),
+              title: Text('Select the languages that you speak'),
               subtitle: Text(
                 selectedLanguages.isNotEmpty ? selectedLanguages.join(', ') : 'None selected',
                 style: TextStyle(color: Theme.of(context).primaryColor),
@@ -81,19 +90,30 @@ class _RegisterPage3State extends State<RegisterPage3> {
               onTap: () => _showMultiSelectLanguages(context),
             ),
             // Building sections for interests
-            _buildCheckboxGridSection('Select interest 1', interest1),
-            _buildCheckboxGridSection('Select interest 2', interest2),
-            _buildCheckboxGridSection('Select interest 3', interest3),
+            _buildCheckboxGridSection('Activities', interest1),
+            _buildCheckboxGridSection('Music', interest2),
+            _buildCheckboxGridSection('Hobbies', interest3),
             const SizedBox(height: 20),
             ElevatedButton(
-              child: const Text('Finish'),
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF006400),
+                minimumSize: Size(365, 60), // Size of the button.
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(60.0), // Rounded edges for the button.
+                ),
+              ),
                 onPressed: () { Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),
                 );
                 },
+              child: const Text('Finish',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontFamily: 'Lato',),
             ),
-          ],
+            )],
         ),
       ),
     );
@@ -105,6 +125,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
       context: context,
       builder: (ctx) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: Text('Select Languages'),
           content: Container(
             width: double.minPositive,
@@ -143,7 +164,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
     );
   }
   Widget _buildCheckboxGridSection(String title, Map<String, bool> options) {
-    int crossAxisCount = 3; // Number of columns in the grid
+    int crossAxisCount = 2; // Number of columns in the grid
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,21 +177,21 @@ class _RegisterPage3State extends State<RegisterPage3> {
         Container(
           decoration: BoxDecoration(
             // Use a BoxDecoration to style the background
-            color: Colors.grey[200], // This should be the color of your choice
+            color: Color(0xFF006400).withOpacity(0.25),
             border: Border.all(
               color: Colors.black, // The color of the border
               width: 1, // The width of the border
             ),
             borderRadius: BorderRadius.circular(15), // The border radius
           ),
-          padding: const EdgeInsets.all(8), // Padding for the Container
+          padding: const EdgeInsets.all(5), // Padding for the inside of the Container
           // GridView for the checkbox grid
           child: GridView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: crossAxisCount,
-              childAspectRatio: 3 / 1, // Adjust as needed for your design
+              childAspectRatio: 4 / 1, // Adjust as needed for your design
             ),
             itemCount: options.length,
             itemBuilder: (context, index) {
@@ -183,8 +204,8 @@ class _RegisterPage3State extends State<RegisterPage3> {
                     options[key] = value!;
                   });
                 },
-                controlAffinity: ListTileControlAffinity.trailing, // Position the checkbox after the text
-                contentPadding: EdgeInsets.symmetric(horizontal: 0),// Position the checkbox on the left side
+                controlAffinity: ListTileControlAffinity.leading, // Position the checkbox after the text
+                contentPadding: EdgeInsets.symmetric(horizontal: 2),// Position the checkbox on the left side
               );
             },
           ),

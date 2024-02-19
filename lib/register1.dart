@@ -7,7 +7,7 @@ class CreateAccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create a New Account'), // Title of the AppBar.
+        title: Text('Create a New Account'),// Title of the AppBar.
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0), // Padding around the form.
@@ -36,7 +36,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
             borderRadius: BorderRadius.circular(5.0), // Rounded corners for the input field.
           ),
           filled: true,
-          fillColor: Colors.grey[200], // Background color of the text field.
+          fillColor: Colors.white, // Background color of the text field.
         ),
         obscureText: isPassword, // Hides text input if it's a password field.
         validator: (value) {
@@ -76,6 +76,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
               padding: const EdgeInsets.symmetric(vertical: 16.0), // Adds vertical padding around the button.
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF006400),
                   minimumSize: Size(365, 60), // Size of the button.
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(60.0), // Rounded edges for the button.
@@ -86,11 +87,14 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                   MaterialPageRoute(builder: (context) => RegisterPage2()),
                 );
                 },
-                child: Text('Next'),
+                child: Text('Next',
+                  style: TextStyle(color: Colors.white,
+                    fontSize: 24,
+                    fontFamily: 'Lato',),
                 // Text displayed on the button.
               ),
             ),
-          ],
+            )],
         ),
       ),
     );
