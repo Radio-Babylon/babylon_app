@@ -76,7 +76,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
               padding: const EdgeInsets.symmetric(vertical: 16.0), // Adds vertical padding around the button.
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF006400),
+                  backgroundColor: Color(0xFF006400),
                   minimumSize: Size(365, 60), // Size of the button.
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(60.0), // Rounded edges for the button.

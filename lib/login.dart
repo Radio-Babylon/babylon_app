@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
             // Login button that navigates to HomePage on press
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF006400),
+                backgroundColor: Color(0xFF006400),
                 minimumSize: Size(365, 60), // Size of the button.
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(60.0), // Rounded edges for the button.

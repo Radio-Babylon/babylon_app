@@ -86,7 +86,7 @@ class LogoScreen extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF006400), // Background color of the button
+                backgroundColor: Color(0xFF006400), // Background color of the button
                 minimumSize: const Size(350, 80), // Set the button size
               ),
               child: Text(
