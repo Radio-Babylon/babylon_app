@@ -40,11 +40,9 @@ class RadioScreen extends StatelessWidget {
   }
 
   // Method to launch the URL
-  Future<void> _launchURL() async {
-    if (await canLaunchUrl(_url)) { // Check if the URL can be launched using the new canLaunchUrl method
-      await launchUrl(_url); // Use the new launchUrl method
-    } else {
-      throw 'Could not launch $_url'; // Throw an error if the URL can't be launched
+  void _launchURL() async {
+    if (!await launchUrl(_url)) { // Check if the URL can be launched
+      throw 'Could not launch $_url';
     }
   }
 }
