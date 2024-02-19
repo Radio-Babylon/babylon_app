@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "766184958846",
+    "project_id": "babylon-app-e8168",
+    "storage_bucket": "babylon-app-e8168.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766184958846:android:c7bd4f10ff61d739b6a12f",
+        "android_client_info": {
+          "package_name": "com.babylonradio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsiAXO-bLAREFNULzVzaGTCZLHHdPyvEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
