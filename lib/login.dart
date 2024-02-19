@@ -68,7 +68,7 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 // Facebook login button
-                _buildSocialButton('assets/facebook.png', () {
+                _buildSocialButton('assets/images/facebook.png', () {
                   // onPressed function
                 }, 85),
                 // Google login button
