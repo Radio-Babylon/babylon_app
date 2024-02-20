@@ -1,13 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'register2.dart';
-
 
 class CreateAccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create a New Account'),// Title of the AppBar.
+        title: Text('Create a New Account'), // Title of the AppBar.
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0), // Padding around the form.
@@ -25,15 +25,56 @@ class CreateAccountForm extends StatefulWidget {
 class CreateAccountFormState extends State<CreateAccountForm> {
   final _formKey = GlobalKey<FormState>(); // Key for identifying the form.
 
+  late final TextEditingController _name;
+  late final TextEditingController _surname;
+  late final TextEditingController _dateOfBirth;
+  late final TextEditingController _email;
+  late final TextEditingController _county;
+  late final TextEditingController _password;
+
+  late final Map<String, TextEditingController> myController = {
+    'Name': _name,
+    'Surname': _surname,
+    'Date of Birth': _dateOfBirth,
+    'Email Address': _email,
+    'Country of Origin': _county,
+    'Password': _password
+  };
+
+  @override
+  void initState() {
+    _name = TextEditingController();
+    _surname = TextEditingController();
+    _dateOfBirth = TextEditingController();
+    _email = TextEditingController();
+    _county = TextEditingController();
+    _password = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _name.dispose();
+    _surname.dispose();
+    _dateOfBirth.dispose();
+    _email.dispose();
+    _county.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
   Widget _buildTextField({required String labelText, bool isPassword = false}) {
     // Helper method to build text fields with common styling.
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0), // Adds space between text fields.
+      padding: const EdgeInsets.only(
+          bottom: 16.0), // Adds space between text fields.
       child: TextFormField(
+        controller: myController[labelText],
         decoration: InputDecoration(
           labelText: labelText, // Label text for the field.
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0), // Rounded corners for the input field.
+            borderRadius: BorderRadius.circular(
+                5.0), // Rounded corners for the input field.
           ),
           filled: true,
           fillColor: Colors.white, // Background color of the text field.
@@ -61,7 +102,8 @@ class CreateAccountFormState extends State<CreateAccountForm> {
               'assets/images/logoRectangle.png', // Path to the logo image.
               width: 365, // Width of the logo.
               height: 90, // Height of the logo.
-              fit: BoxFit.contain, // Makes sure the logo is contained properly within the box.
+              fit: BoxFit
+                  .contain, // Makes sure the logo is contained properly within the box.
             ),
             SizedBox(height: 35), // Bottom padding for the logo.
             // Calls the helper method to build text fields.
@@ -73,28 +115,35 @@ class CreateAccountFormState extends State<CreateAccountForm> {
             _buildTextField(labelText: 'Password', isPassword: true),
             _buildTextField(labelText: 'Confirm Password', isPassword: true),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0), // Adds vertical padding around the button.
+              padding: const EdgeInsets.symmetric(
+                  vertical: 16.0), // Adds vertical padding around the button.
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF006400),
                   minimumSize: Size(365, 60), // Size of the button.
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(60.0), // Rounded edges for the button.
+                    borderRadius: BorderRadius.circular(
+                        60.0), // Rounded edges for the button.
                   ),
                 ),
-                onPressed: () { Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegisterPage2()),
-                );
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegisterPage2()),
+                  );
                 },
-                child: Text('Next',
-                  style: TextStyle(color: Colors.white,
+                child: Text(
+                  'Next',
+                  style: TextStyle(
+                    color: Colors.white,
                     fontSize: 24,
-                    fontFamily: 'Lato',),
-                // Text displayed on the button.
+                    fontFamily: 'Lato',
+                  ),
+                  // Text displayed on the button.
+                ),
               ),
-            ),
-            )],
+            )
+          ],
         ),
       ),
     );
