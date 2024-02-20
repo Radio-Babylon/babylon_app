@@ -1,4 +1,5 @@
 import 'package:babylon_app/firebase_options.dart';
+import 'package:babylon_app/service/auth/authService.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -75,10 +76,8 @@ class LogoScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 21),
             child: ElevatedButton(
               onPressed: () async {
-                // await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                //   email: "barry.allen@example.com",
-                //   password: "SuperSecretPassword!"
-                // );
+                // AuthService.registerUsingEmailPassword(name: "oui", email: "oui@oui.com", password:"ouioui");
+                // print(FirebaseAuth.instance.currentUser);
                 // var data = FirebaseFirestore.instance.collection('test');
                 Navigator.push(
                   context,
