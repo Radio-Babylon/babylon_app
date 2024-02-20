@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'events-info.dart';
 
-class EventsSceen extends StatelessWidget {
+class EventsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
