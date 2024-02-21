@@ -1,3 +1,4 @@
+import 'package:babylon_app/service/wpGraphQL/wpGraphQLService.dart';
 import 'package:flutter/material.dart';
 import 'reading_news.dart';
 
@@ -22,6 +23,7 @@ class NewsScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 21),
             child: ElevatedButton(
               onPressed: () {
+                WpGraphQLService.getNewPosts();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => readingNews()),

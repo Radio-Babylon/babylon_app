@@ -36,6 +36,7 @@ dependencies:
   firebase_core: ^2.25.4
   firebase_auth: ^4.17.4
   cloud_firestore: ^4.15.5
+  graphql_flutter: ^5.2.0-beta.6
 
 
 dev_dependencies:
