@@ -1,15 +1,18 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+
+import 'package:babylon_app/models/post.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class WpGraphQLService {
 
-  static Future<void> getNewPosts() async {
+  static Future<List<Post>> getNewPosts() async {
+    List<Post> result = List.empty(growable: true);
+
     final HttpLink httpLink = HttpLink("https://babylonradio.com/graphql");
     final GraphQLClient client = GraphQLClient(
       link: httpLink,
       cache: GraphQLCache(),
     );
-
 
     const String getFirstPosts = r'''
       query getFirstPosts {
@@ -18,10 +21,11 @@ class WpGraphQLService {
           title
           featuredImage {
             node {
-              link
+              sourceUrl
             }
           }
           excerpt
+          uri
         }
       }
     }''';
@@ -30,6 +34,12 @@ class WpGraphQLService {
       document: gql(getFirstPosts),
     );
 
-    var data = await client.query(options);
+    var response = await client.query(options);
+    var responsePosts = response.data?["posts"]?["nodes"];
+
+    responsePosts.forEach((aPost) {
+      result.add(Post(aPost["title"],aPost["excerpt"],aPost["featuredImage"]["node"]["sourceUrl"],aPost["uri"]));
+    });
+    return result;
   }
 }

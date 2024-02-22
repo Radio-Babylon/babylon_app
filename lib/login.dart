@@ -74,19 +74,19 @@ class LoginPage extends StatelessWidget {
                 // Facebook login button
                 _buildSocialButton('assets/images/facebook.png', () {
                   // onPressed function
-                }, 85),
+                }, 55),
                 // Google login button
                 _buildSocialButton(
                     'assets/images/google.png', // Replace with your asset
                     () {
                   // TODO: Implement Google login functionality
-                }, 85),
+                }, 55),
                 // Twitter login button
                 _buildSocialButton(
-                    'assets/images/twitter.jpeg', // Replace with your asset
+                    'assets/images/linkln.png', // Replace with your asset
                     () {
                   // TODO: Implement Twitter login functionality
-                }, 85),
+                }, 55),
               ],
             ),
           ],
