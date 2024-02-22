@@ -28,116 +28,133 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTextStyle(
-      style: Theme.of(context).textTheme.displayMedium!,
-      textAlign: TextAlign.center,
-      child: FutureBuilder<List<Post>>(
-        future: _posts, // a previously-obtained Future<String> or null
-        builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
-          List<Widget> children;
-          if (snapshot.hasData) {
-            children = <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 16, top: 16),
-                child: Text("LATEST NEWS",
-                    textAlign: TextAlign.left,
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+    return Scaffold(
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              const Text('News'),
+              SizedBox(
+                height: 55,
+                width: 55,
+                child: Image.asset('assets/images/logoSquare.png'),
               ),
-              ...snapshot.data!.map(
-                (aPost) => Card(
-                  margin: EdgeInsets.all(16),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            ],
+          ),
+          backgroundColor: Colors.green,
+        ),
+        body: DefaultTextStyle(
+          style: Theme.of(context).textTheme.displayMedium!,
+          textAlign: TextAlign.center,
+          child: FutureBuilder<List<Post>>(
+            future: _posts, // a previously-obtained Future<String> or null
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
+              List<Widget> children;
+              if (snapshot.hasData) {
+                children = <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 16, top: 16),
+                    child: Text("LATEST NEWS",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                  ),
+                  ...snapshot.data!.map(
+                    (aPost) => Card(
+                      margin: EdgeInsets.all(16),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 8, top: 16),
+                            child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.circular(20), // Image border
+                              child: SizedBox.fromSize(
+                                size: Size.fromRadius(50), // Image radius
+                                child: Image.network(aPost.featuredImageURL!,
+                                    fit: BoxFit.cover),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                              child: Padding(
+                            padding: EdgeInsets.all(16),
+                            child: Column(children: [
+                              Text(
+                                aPost.title!,
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              Text(stripHtml(aPost.excerpt!),
+                                  style: TextStyle(fontSize: 12),
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                heightFactor: 1.4,
+                                child: TextButton(
+                                  onPressed: () => goToUrl(
+                                      "https://babylonradio.com/" + aPost.url!),
+                                  child:
+                                      Text("READ", textAlign: TextAlign.right),
+                                  style: TextButton.styleFrom(
+                                      foregroundColor: Colors.white,
+                                      elevation: 2,
+                                      backgroundColor: Color(0xFF006400)),
+                                ),
+                              )
+                            ]),
+                          ))
+                        ],
+                      ),
+                    ),
+                  )
+                ];
+              } else if (snapshot.hasError) {
+                children = <Widget>[
+                  const Icon(
+                    Icons.error_outline,
+                    color: Colors.red,
+                    size: 60,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text('Error: ${snapshot.error}'),
+                  ),
+                ];
+              } else {
+                children = <Widget>[
+                  Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 8, top: 16),
-                        child: ClipRRect(
-                          borderRadius:
-                              BorderRadius.circular(20), // Image border
-                          child: SizedBox.fromSize(
-                            size: Size.fromRadius(50), // Image radius
-                            child: Image.network(aPost.featuredImageURL!,
-                                fit: BoxFit.cover),
-                          ),
+                        padding: EdgeInsets.only(top: 16),
+                        child: SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: CircularProgressIndicator(
+                              color: Color(0xFF006400)),
                         ),
                       ),
-                      Expanded(
-                          child: Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Column(children: [
-                          Text(
-                            aPost.title!,
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          Text(stripHtml(aPost.excerpt!),
-                              style: TextStyle(fontSize: 12),
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            heightFactor: 1.4,
-                            child: TextButton(
-                              onPressed: () => goToUrl(
-                                  "https://babylonradio.com/" + aPost.url!),
-                              child: Text("READ", textAlign: TextAlign.right),
-                              style: TextButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  elevation: 2,
-                                  backgroundColor: Color(0xFF006400)),
-                            ),
-                          )
-                        ]),
-                      ))
+                      Padding(
+                        padding: EdgeInsets.only(top: 16),
+                        child: Text('Loading...'),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 128),
+                        child: Image.asset('assets/images/logoSquare.png',
+                            height: 185, width: 185),
+                      ),
                     ],
-                  ),
-                ),
-              )
-            ];
-          } else if (snapshot.hasError) {
-            children = <Widget>[
-              const Icon(
-                Icons.error_outline,
-                color: Colors.red,
-                size: 60,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
-              ),
-            ];
-          } else {
-            children = <Widget>[
-              Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 16),
-                    child: SizedBox(
-                      width: 60,
-                      height: 60,
-                      child:
-                          CircularProgressIndicator(color: Color(0xFF006400)),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 16),
-                    child: Text('Loading...'),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 128),
-                    child: Image.asset('assets/images/logoSquare.png',
-                        height: 185, width: 185),
-                  ),
-                ],
-              )
-            ];
-          }
-          return ListView(
-            children: children,
-          );
-        },
-      ),
-    );
+                  )
+                ];
+              }
+              return ListView(
+                children: children,
+              );
+            },
+          ),
+        ));
   }
 }

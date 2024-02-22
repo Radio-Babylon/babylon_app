@@ -5,6 +5,20 @@ class ForumScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            const Text('Forum'),
+            SizedBox(
+              height: 55,
+              width: 55,
+              child: Image.asset('assets/images/logoSquare.png'),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.green,
+      ),
       body: Column(
         children: <Widget>[
           const Text(

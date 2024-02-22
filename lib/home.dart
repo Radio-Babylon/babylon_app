@@ -81,15 +81,21 @@ class _HomePageState extends State<HomePage>
                   MaterialPageRoute(builder: (context) => HomePage())),
             ),
             ListTile(
-              leading: const Icon(Icons.newspaper),
-              title: const Text('News'),
-              onTap: () => _selectTab(1),
-            ),
+                leading: const Icon(Icons.newspaper),
+                title: const Text('News'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const NewsScreen()));
+                }),
             ListTile(
-              leading: const Icon(Icons.forum),
-              title: const Text('Forum'),
-              onTap: () => _selectTab(2),
-            ),
+                leading: const Icon(Icons.forum),
+                title: const Text('Forum'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => ForumScreen()));
+                }),
             ListTile(
                 leading: const Icon(Icons.event),
                 title: const Text('Events'),
