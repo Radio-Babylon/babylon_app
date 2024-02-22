@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'reading_news.dart';
 
 class NewsScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

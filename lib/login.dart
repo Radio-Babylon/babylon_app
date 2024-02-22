@@ -8,15 +8,15 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Login Page"),
       ),
-      body: SingleChildScrollView( // Usar SingleChildScrollView to avoid overflow when the keyboard comes up
+      body: SingleChildScrollView(
+        // Usar SingleChildScrollView to avoid overflow when the keyboard comes up
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             // Logo
             Image.asset('assets/images/logoRectangle.png',
-            height: 90,
-            width: 365),
+                height: 90, width: 365),
             SizedBox(height: 50), // Space after logo
             // Title
             Text(
@@ -24,21 +24,21 @@ class LoginPage extends StatelessWidget {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 50), // Space after title
-          TextField(
-            decoration: InputDecoration(
-              labelText: 'Email Address',
-              border: OutlineInputBorder(),
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Email Address',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.emailAddress,
             ),
-            keyboardType: TextInputType.emailAddress,
-          ),
-          SizedBox(height: 20), // Space between text fields
-          TextField(
-            decoration: InputDecoration(
-              labelText: 'Password',
-              border: OutlineInputBorder(),
+            SizedBox(height: 20), // Space between text fields
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Password',
+                border: OutlineInputBorder(),
+              ),
+              obscureText: true,
             ),
-            obscureText: true,
-          ),
 
             SizedBox(height: 25), // Space after text fields
             // Login button that navigates to HomePage on press
@@ -47,19 +47,23 @@ class LoginPage extends StatelessWidget {
                 backgroundColor: Color(0xFF006400),
                 minimumSize: Size(365, 60), // Size of the button.
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(60.0), // Rounded edges for the button.
+                  borderRadius: BorderRadius.circular(
+                      60.0), // Rounded edges for the button.
                 ),
               ),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => homePage()),
+                  MaterialPageRoute(builder: (context) => HomePage()),
                 );
               },
-              child: const Text('Login',
-                style: TextStyle(color: Colors.white,
+              child: const Text(
+                'Login',
+                style: TextStyle(
+                  color: Colors.white,
                   fontSize: 24,
-                  fontFamily: 'Lato',),
+                  fontFamily: 'Lato',
+                ),
               ),
             ),
             SizedBox(height: 35), // Space after Login button
@@ -73,16 +77,16 @@ class LoginPage extends StatelessWidget {
                 }, 85),
                 // Google login button
                 _buildSocialButton(
-                  'assets/images/google.png', // Replace with your asset
-                      () {
-                    // TODO: Implement Google login functionality
-                  }, 85),
+                    'assets/images/google.png', // Replace with your asset
+                    () {
+                  // TODO: Implement Google login functionality
+                }, 85),
                 // Twitter login button
                 _buildSocialButton(
-                  'assets/images/twitter.jpeg', // Replace with your asset
-                      () {
-                    // TODO: Implement Twitter login functionality
-                  },85 ),
+                    'assets/images/twitter.jpeg', // Replace with your asset
+                    () {
+                  // TODO: Implement Twitter login functionality
+                }, 85),
               ],
             ),
           ],
@@ -91,7 +95,8 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSocialButton(String iconPath, VoidCallback onPressed, double size) {
+  Widget _buildSocialButton(
+      String iconPath, VoidCallback onPressed, double size) {
     return Container(
       width: size,
       height: 85,
@@ -100,21 +105,6 @@ class LoginPage extends StatelessWidget {
         child: Image.asset(iconPath), // The social icon
         backgroundColor: Colors.white,
         elevation: 0, // Remove shadow
-      ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  // TODO: Implement your HomePage widget
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Home"),
-      ),
-      body: Center(
-        child: Text("Welcome to the Home Page!"),
       ),
     );
   }

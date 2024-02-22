@@ -11,7 +11,8 @@ class MyProfile extends StatelessWidget {
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             // Navigate back to HomeScreen when the arrow is pressed
-            Navigator.push(context, MaterialPageRoute(builder: (context) => homePage()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomePage()));
           },
         ),
       ),
@@ -22,7 +23,8 @@ class MyProfile extends StatelessWidget {
             CircleAvatar(
               radius: 60,
               backgroundColor: Colors.grey.shade300,
-              child: Text('profile picture', style: TextStyle(color: Colors.white)),
+              child: Text('profile picture',
+                  style: TextStyle(color: Colors.white)),
             ),
             TextButton(
               onPressed: () {
@@ -41,7 +43,6 @@ class MyProfile extends StatelessWidget {
                 },
                 child: Text('Logout'),
                 style: ElevatedButton.styleFrom(
-
                   backgroundColor: Colors.white, // Button background color
                 ),
               ),
@@ -65,7 +66,8 @@ class MyProfile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Full Name', style: Theme.of(context).textTheme.headline6),
+                    Text('Full Name',
+                        style: Theme.of(context).textTheme.headline6),
                     Text(
                       'short bio short bio short bio short bio short bio short bio',
                       style: TextStyle(color: Colors.grey),
@@ -122,7 +124,7 @@ class MyProfile extends StatelessWidget {
       runSpacing: 8.0,
       children: List.generate(
         6,
-            (index) => Chip(
+        (index) => Chip(
           label: Text('interest ${index + 1}'),
         ),
       ),
@@ -134,7 +136,9 @@ class MyProfile extends StatelessWidget {
     return Wrap(
       spacing: 8.0,
       runSpacing: 8.0,
-      children: ['language 1', 'language 2', 'language 3'].map((lang) => Chip(label: Text(lang))).toList(),
+      children: ['language 1', 'language 2', 'language 3']
+          .map((lang) => Chip(label: Text(lang)))
+          .toList(),
     );
   }
 }

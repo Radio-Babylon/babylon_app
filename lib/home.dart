@@ -1,3 +1,4 @@
+import 'package:babylon_app/login.dart';
 import 'package:flutter/material.dart';
 import 'partners.dart';
 import 'chats.dart';
@@ -8,12 +9,12 @@ import 'connections.dart';
 import 'myprofile.dart';
 
 // HomePage with a custom user profile section above the AppBar, a Drawer, and PageView for content navigation
-class homePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<homePage>
+class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   // Controller for the tabs
   late TabController _tabController;
@@ -41,86 +42,21 @@ class _HomePageState extends State<homePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          /*SliverToBoxAdapter(
-            child: GestureDetector(
-              // Wrap the profile section with GestureDetector
-              onTap: () {
-                // Navigate to the MyProfile screen when the profile picture is tapped
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => MyProfile()));
-              },
-              // User profile section at the top of the body
-              child: Container(
-                color: Colors.green,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0, vertical: 20.0),
-                /*child: Row(
-                    children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Colors.grey.shade300,
-                    child: const Text('PP', style: TextStyle(fontSize: 24, color: Colors.white)),
-                  ),
-                  const SizedBox(width: 20),
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Welcome,', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-                        Text("Person's Name", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
-                      ],
-                    ),
-                  ),
-                ],
-                    ),*/
-              ),
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            const Text('Home'),
+            SizedBox(
+              height: 55,
+              width: 55,
+              child: Image.asset('assets/images/logoSquare.png'),
             ),
-          ),*/
-          const SliverAppBar(
-            // AppBar that becomes part of the scrollable content
-            pinned: true, // Keeps the AppBar visible at the top
-            //floating: false,
-            expandedHeight: 0.0, // No expanded height
-            /*flexibleSpace: const FlexibleSpaceBar(
-              title: Text(''), // No title in the flexible space
-            ),
-            bottom: TabBar(
-              controller:
-                  _tabController, // Setting the controller for the TabBar
-              isScrollable: true, // Making the TabBar scrollable
-              tabs: const [
-                Tab(icon: Icon(Icons.home), text: 'Home'),
-                Tab(icon: Icon(Icons.newspaper), text: 'News'),
-                Tab(icon: Icon(Icons.forum), text: 'Forum'),
-                Tab(icon: Icon(Icons.event), text: 'Events'),
-                Tab(icon: Icon(Icons.chat), text: 'Chats'),
-                Tab(
-                    icon: Icon(Icons.connect_without_contact),
-                    text: 'Connections'),
-                Tab(icon: Icon(Icons.business), text: 'Partners'),
-              ],
-            ),*/
-          ),
-          SliverFillRemaining(
-            // Expanded to fill the remaining space for the TabBarView
-            child: TabBarView(
-              controller:
-                  _tabController, // Setting the controller for the TabBarView
-              children: [
-                HomeScreen(),
-                NewsScreen(),
-                ForumScreen(),
-                EventsScreen(),
-                ChatsScreen(),
-                ConnectionsScreen(),
-                PartnersScreen(),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
+        backgroundColor: Colors.green,
       ),
+      body: HomeScreen(),
       drawer: Drawer(
         // Drawer for side navigation
         child: ListView(
@@ -141,7 +77,8 @@ class _HomePageState extends State<homePage>
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text('Home'),
-              onTap: () => _selectTab(0),
+              onTap: () => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => HomePage())),
             ),
             ListTile(
               leading: const Icon(Icons.newspaper),
@@ -154,10 +91,13 @@ class _HomePageState extends State<homePage>
               onTap: () => _selectTab(2),
             ),
             ListTile(
-              leading: const Icon(Icons.event),
-              title: const Text('Events'),
-              onTap: () => _selectTab(3),
-            ),
+                leading: const Icon(Icons.event),
+                title: const Text('Events'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const EventsScreen()));
+                }),
             ListTile(
               leading: const Icon(Icons.chat),
               title: const Text('Chats'),
@@ -261,6 +201,27 @@ class HomeScreen extends StatelessWidget {
               _buildForumCard('FORUM TOPIC 4', '10 Replies', true),
             ],
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              _buildForumCard('FORUM TOPIC 1', '0 Replies', true),
+              _buildForumCard('FORUM TOPIC 3', '1 Reply', true),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              _buildForumCard('FORUM TOPIC 1', '0 Replies', true),
+              _buildForumCard('FORUM TOPIC 3', '1 Reply', true),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              _buildForumCard('FORUM TOPIC 1', '0 Replies', true),
+              _buildForumCard('FORUM TOPIC 3', '1 Reply', true),
+            ],
+          ),
           TextButton(
             onPressed: () {
               // Browse on forum action
@@ -338,3 +299,93 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+/*  THE FIRST REMOVED SECTION
+
+          /*SliverToBoxAdapter(
+            child: GestureDetector(
+              // Wrap the profile section with GestureDetector
+              onTap: () {
+                // Navigate to the MyProfile screen when the profile picture is tapped
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => MyProfile()));
+              },
+              // User profile section at the top of the body
+              child: Container(
+                color: Colors.green,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0, vertical: 20.0),
+                /*child: Row(
+                    children: [
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.grey.shade300,
+                    child: const Text('PP', style: TextStyle(fontSize: 24, color: Colors.white)),
+                  ),
+                  const SizedBox(width: 20),
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Welcome,', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+                        Text("Person's Name", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
+                      ],
+                    ),
+                  ),
+                ],
+                    ),*/
+              ),
+            ),
+          ),*/
+          const SliverAppBar(
+            // AppBar that becomes part of the scrollable content
+            pinned: true, // Keeps the AppBar visible at the top
+            //floating: false,
+            expandedHeight: 0.0, // No expanded height
+            /*flexibleSpace: const FlexibleSpaceBar(
+              title: Text(''), // No title in the flexible space
+            ),
+            bottom: TabBar(
+              controller:
+                  _tabController, // Setting the controller for the TabBar
+              isScrollable: true, // Making the TabBar scrollable
+              tabs: const [
+                Tab(icon: Icon(Icons.home), text: 'Home'),
+                Tab(icon: Icon(Icons.newspaper), text: 'News'),
+                Tab(icon: Icon(Icons.forum), text: 'Forum'),
+                Tab(icon: Icon(Icons.event), text: 'Events'),
+                Tab(icon: Icon(Icons.chat), text: 'Chats'),
+                Tab(
+                    icon: Icon(Icons.connect_without_contact),
+                    text: 'Connections'),
+                Tab(icon: Icon(Icons.business), text: 'Partners'),
+              ],
+            ),*/
+          ),
+
+
+ */
+
+/*      body: CustomScrollView(
+        slivers: <Widget>[
+          // THE FIRST REMOVED SECTION
+          SliverFillRemaining(
+            // Expanded to fill the remaining space for the TabBarView
+            child: TabBarView(
+              controller:
+                  _tabController, // Setting the controller for the TabBarView
+              children: [
+                HomeScreen(),
+                NewsScreen(),
+                ForumScreen(),
+                EventsScreen(),
+                ChatsScreen(),
+                ConnectionsScreen(),
+                PartnersScreen(),
+              ],
+            ),
+          ),
+        ],
+      ), */

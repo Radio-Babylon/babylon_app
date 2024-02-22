@@ -1,10 +1,38 @@
 import 'package:flutter/material.dart';
 import 'events-info.dart';
+import 'home.dart';
 
-class EventsScreen extends StatelessWidget {
+class EventsScreen extends StatefulWidget {
+  const EventsScreen({super.key});
+
+  @override
+  State<EventsScreen> createState() => _EventsScreenState();
+}
+
+class _EventsScreenState extends State<EventsScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //drawer: NavigationDrawer(),
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            const Text('Events'),
+            SizedBox(
+              height: 55,
+              width: 55,
+              child: Image.asset('assets/images/logoSquare.png'),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.green,
+      ),
       body: Column(
         children: <Widget>[
           const Text(
