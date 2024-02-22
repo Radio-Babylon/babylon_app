@@ -5,97 +5,174 @@ import 'news.dart';
 import 'forum.dart';
 import 'events.dart';
 import 'connections.dart';
+import 'myprofile.dart';
 
-// HomePage with a custom AppBar and bottom navigation
+// HomePage with a custom user profile section above the AppBar, a Drawer, and PageView for content navigation
 class homePage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<homePage> {
-  // Stateful data like currentIndex can be used for bottom navigation or other state management
-  int _currentIndex = 0;
+class _HomePageState extends State<homePage> with SingleTickerProviderStateMixin {
+  // Controller for the tabs
+  late TabController _tabController;
 
-  // List of widgets for each tab content
-  final List<Widget> _tabs = [
-    HomeScreen(),
-    NewsScreen(),
-    ForumScreen(),
-    EventsScreen(),
-    ChatsScreen(),
-    ConnectionsScreen(),
-    PartnersScreen()
-  ];
+  @override
+  void initState() {
+    super.initState();
+    // Initialize TabController with the number of tabs
+    _tabController = TabController(length: 7, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the TabController when the widget is disposed
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  void _selectTab(int index) {
+    // Function to handle drawer item tap events
+    Navigator.pop(context); // Close the drawer
+    _tabController.animateTo(index); // Change the tab to the selected index
+  }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: _tabs.length,  // Number of tabs
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(200.0),  // Custom height for the AppBar
-          child: Column(
-            children: [
-              // Custom user profile section
-              Container(
-                color: Colors.grey.shade200,  // Background color for the profile section
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 50,  // Size of the profile picture
-                      backgroundColor: Colors.grey.shade300,
-                      // Placeholder for the profile picture
-                      child: Text('PP', style: TextStyle(fontSize: 24, color: Colors.white)),
-                    ),
-                    SizedBox(width: 20),  // Space between the avatar and the text
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Welcome,', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-                          Text("Person's Name", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
-                        ],
-                      ),
-                    ),
-                    // Menu icon or button if needed
-                    IconButton(
-                      icon: Icon(Icons.menu),
-                      onPressed: () {
-                        // Action for menu icon
-                      },
-                    ),
-                  ],
+    return Scaffold(
+      drawer: Drawer(
+        // Drawer for side navigation
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                "Drawer Header",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
                 ),
               ),
-              // AppBar with tabs below the profile section
-              Material(
-                color: Colors.white,  // Background color for the TabBar
-                child: TabBar(
-                  isScrollable: true,
-                  indicatorColor: Colors.green,
-                  labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                  tabs: [
-                    Tab(icon: Icon(Icons.home), text: 'Home'),
-                    Tab(icon: Icon(Icons.newspaper), text: 'News'),
-                    Tab(icon: Icon(Icons.forum), text: 'Forum'),
-                    Tab(icon: Icon(Icons.event), text: 'Events'),
-                    Tab(icon: Icon(Icons.chat), text: 'Chats'),
-                    Tab(icon: Icon(Icons.connect_without_contact), text: 'Connections'),
-                    Tab(icon: Icon(Icons.business), text: 'Partners'),
-                  ],
-                ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+              onTap: () => _selectTab(0),
+            ),
+            ListTile(
+              leading: Icon(Icons.newspaper),
+              title: Text('News'),
+              onTap: () => _selectTab(1),
+            ),
+            ListTile(
+              leading: Icon(Icons.forum),
+              title: Text('Forum'),
+              onTap: () => _selectTab(2),
+            ),
+            ListTile(
+              leading: Icon(Icons.event),
+              title: Text('Events'),
+              onTap: () => _selectTab(3),
+            ),
+            ListTile(
+              leading: Icon(Icons.chat),
+              title: Text('Chats'),
+              onTap: () => _selectTab(4),
+            ),
+            ListTile(
+              leading: Icon(Icons.connect_without_contact),
+              title: Text('Connections'),
+              onTap: () => _selectTab(5),
+            ),
+            ListTile(
+              leading: Icon(Icons.business),
+              title: Text('Partners'),
+              onTap: () => _selectTab(6),
+            ),
+            // Repeat ListTiles for other items...
+          ],
+        ),
+      ),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+          child: GestureDetector( // Wrap the profile section with GestureDetector
+          onTap: () {
+        // Navigate to the MyProfile screen when the profile picture is tapped
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyProfile()));
+        },
+            // User profile section at the top of the body
+            child: Container(
+              color: Colors.grey.shade200,
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.grey.shade300,
+                    child: Text('PP', style: TextStyle(fontSize: 24, color: Colors.white)),
+                  ),
+                  SizedBox(width: 20),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Welcome,', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+                        Text("Person's Name", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-        body: TabBarView(
-          children: _tabs,  // Displaying content for the selected tab
-        ),
+          ),
+          SliverAppBar(
+            // AppBar that becomes part of the scrollable content
+            pinned: true, // Keeps the AppBar visible at the top
+            floating: false,
+            expandedHeight: 0.0, // No expanded height
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(''), // No title in the flexible space
+            ),
+            bottom: TabBar(
+              controller: _tabController, // Setting the controller for the TabBar
+              isScrollable: true, // Making the TabBar scrollable
+              tabs: [
+                Tab(icon: Icon(Icons.home), text: 'Home'),
+                Tab(icon: Icon(Icons.newspaper), text: 'News'),
+                Tab(icon: Icon(Icons.forum), text: 'Forum'),
+                Tab(icon: Icon(Icons.event), text: 'Events'),
+                Tab(icon: Icon(Icons.chat), text: 'Chats'),
+                Tab(icon: Icon(Icons.connect_without_contact), text: 'Connections'),
+                Tab(icon: Icon(Icons.business), text: 'Partners'),
+              ],
+            ),
+          ),
+          SliverFillRemaining(
+            // Expanded to fill the remaining space for the TabBarView
+            child: TabBarView(
+              controller: _tabController, // Setting the controller for the TabBarView
+              children: [
+                HomeScreen(),
+                NewsScreen(),
+                ForumScreen(),
+                EventsScreen(),
+                ChatsScreen(),
+                ConnectionsScreen(),
+                PartnersScreen(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
 
 // Define other screens like HomeScreen, NewsScreen, etc., similar to the HomeScreen class
 // Each screen will have its own layout and widgets
