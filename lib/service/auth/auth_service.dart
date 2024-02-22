@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
-
   static Future<User?> registerUsingEmailPassword({
     required String name,
     required String email,
@@ -23,6 +22,7 @@ class AuthService {
     }
     return user;
   }
+
   static Future<User?> signInUsingEmailPassword({
     required String email,
     required String password,

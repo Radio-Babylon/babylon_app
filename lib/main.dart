@@ -1,5 +1,5 @@
 import 'package:babylon_app/firebase_options.dart';
-import 'package:babylon_app/service/auth/authService.dart';
+import 'package:babylon_app/service/auth/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,7 +9,7 @@ import 'login.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform); 
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -85,7 +85,8 @@ class LogoScreen extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF006400), // Background color of the button
+                backgroundColor:
+                    Color(0xFF006400), // Background color of the button
                 minimumSize: const Size(350, 80), // Set the button size
               ),
               child: Text(

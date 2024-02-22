@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'register2.dart';
+import 'service/auth/auth_service.dart';
+import 'service/user/user_service.dart';
 
 class CreateAccountPage extends StatelessWidget {
   @override
@@ -32,13 +35,21 @@ class CreateAccountFormState extends State<CreateAccountForm> {
   late final TextEditingController _county;
   late final TextEditingController _password;
 
-  late final Map<String, TextEditingController> myController = {
+  late final Map<String, TextEditingController> userInfoController = {
     'Name': _name,
     'Surname': _surname,
     'Date of Birth': _dateOfBirth,
     'Email Address': _email,
     'Country of Origin': _county,
     'Password': _password
+  };
+
+  late final Map<String, String> userInfo = {
+    'Name': _name.text,
+    'Surname': _surname.text,
+    'Date of Birth': _dateOfBirth.text,
+    'Email Address': _email.text,
+    'Country of Origin': _county.text,
   };
 
   @override
@@ -69,7 +80,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
       padding: const EdgeInsets.only(
           bottom: 16.0), // Adds space between text fields.
       child: TextFormField(
-        controller: myController[labelText],
+        controller: userInfoController[labelText],
         decoration: InputDecoration(
           labelText: labelText, // Label text for the field.
           border: OutlineInputBorder(
@@ -126,7 +137,19 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                         60.0), // Rounded edges for the button.
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
+                  User? currentUser =
+                      await AuthService.registerUsingEmailPassword(
+                          name: _name.text,
+                          email: _email.text,
+                          password: _password.text);
+                  if (currentUser != null) {
+                    UserService.fillUser(user: currentUser, userInfo: userInfo);
+                  }
+
+                  if (!mounted) return;
+                  //Navigator.of(context).pop();
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => RegisterPage2()),

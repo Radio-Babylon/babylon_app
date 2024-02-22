@@ -1,3 +1,6 @@
+import 'package:babylon_app/service/user/user_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -28,13 +31,15 @@ class _RegisterPage2State extends State<RegisterPage2> {
         title: const Text('Photo Profile'),
       ),
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20), // Adjust overall horizontal spacing
+        margin: EdgeInsets.symmetric(
+            horizontal: 20), // Adjust overall horizontal spacing
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(bottom: 25), // Adjust space below the logo
+              margin:
+                  EdgeInsets.only(bottom: 25), // Adjust space below the logo
               child: Image.asset(
                 'assets/images/logoRectangle.png',
                 height: 90,
@@ -65,10 +70,24 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 backgroundColor: Color(0xFF006400),
                 minimumSize: Size(365, 60), // Size of the button.
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(60.0), // Rounded edges for the button.
+                  borderRadius: BorderRadius.circular(
+                      60.0), // Rounded edges for the button.
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
+                final currentUser = FirebaseAuth.instance.currentUser;
+
+                if (currentUser != null) {
+                  if (_image != null) {
+                    await UserService.addPhoto(
+                        user: currentUser, file: _image!);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Please upload an image')));
+                  }
+                }
+                if (!mounted) return;
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => RegisterPage3()),
@@ -84,7 +103,9 @@ class _RegisterPage2State extends State<RegisterPage2> {
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 20), // Adjust space above and below the "Skip" button
+              margin: EdgeInsets.symmetric(
+                  vertical:
+                      20), // Adjust space above and below the "Skip" button
               child: TextButton(
                 onPressed: () {
                   Navigator.push(
@@ -94,7 +115,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 },
                 child: const Text('Skip'),
                 style: OutlinedButton.styleFrom(
-                    minimumSize: Size(365, 60), // Set the button size
+                  minimumSize: Size(365, 60), // Set the button size
                   textStyle: const TextStyle(fontSize: 24, fontFamily: 'Lato'),
                   side: const BorderSide(width: 2.0, color: Colors.grey),
                 ),
