@@ -123,9 +123,9 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews>{
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 128),
-                    child: Image.asset('assets/images/logoRectangle.png',
-                      height: 90,
-                      width: 365
+                    child: Image.asset('assets/images/logoSquare.png',
+                      height: 185,
+                      width: 185
                     ),
                   ),
                 ],
