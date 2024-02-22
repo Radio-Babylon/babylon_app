@@ -13,7 +13,8 @@ class homePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<homePage> with SingleTickerProviderStateMixin {
+class _HomePageState extends State<homePage>
+    with SingleTickerProviderStateMixin {
   // Controller for the tabs
   late TabController _tabController;
 
@@ -40,83 +41,30 @@ class _HomePageState extends State<homePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        // Drawer for side navigation
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                "Drawer Header",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Home'),
-              onTap: () => _selectTab(0),
-            ),
-            ListTile(
-              leading: Icon(Icons.newspaper),
-              title: Text('News'),
-              onTap: () => _selectTab(1),
-            ),
-            ListTile(
-              leading: Icon(Icons.forum),
-              title: Text('Forum'),
-              onTap: () => _selectTab(2),
-            ),
-            ListTile(
-              leading: Icon(Icons.event),
-              title: Text('Events'),
-              onTap: () => _selectTab(3),
-            ),
-            ListTile(
-              leading: Icon(Icons.chat),
-              title: Text('Chats'),
-              onTap: () => _selectTab(4),
-            ),
-            ListTile(
-              leading: Icon(Icons.connect_without_contact),
-              title: Text('Connections'),
-              onTap: () => _selectTab(5),
-            ),
-            ListTile(
-              leading: Icon(Icons.business),
-              title: Text('Partners'),
-              onTap: () => _selectTab(6),
-            ),
-            // Repeat ListTiles for other items...
-          ],
-        ),
-      ),
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverToBoxAdapter(
-          child: GestureDetector( // Wrap the profile section with GestureDetector
-          onTap: () {
-        // Navigate to the MyProfile screen when the profile picture is tapped
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyProfile()));
-        },
-            // User profile section at the top of the body
-            child: Container(
-              color: Colors.grey.shade200,
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-              child: Row(
-                children: [
+          /*SliverToBoxAdapter(
+            child: GestureDetector(
+              // Wrap the profile section with GestureDetector
+              onTap: () {
+                // Navigate to the MyProfile screen when the profile picture is tapped
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => MyProfile()));
+              },
+              // User profile section at the top of the body
+              child: Container(
+                color: Colors.green,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0, vertical: 20.0),
+                /*child: Row(
+                    children: [
                   CircleAvatar(
                     radius: 50,
                     backgroundColor: Colors.grey.shade300,
-                    child: Text('PP', style: TextStyle(fontSize: 24, color: Colors.white)),
+                    child: const Text('PP', style: TextStyle(fontSize: 24, color: Colors.white)),
                   ),
-                  SizedBox(width: 20),
-                  Expanded(
+                  const SizedBox(width: 20),
+                  const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -126,36 +74,40 @@ class _HomePageState extends State<homePage> with SingleTickerProviderStateMixin
                     ),
                   ),
                 ],
+                    ),*/
               ),
             ),
-          ),
-          ),
-          SliverAppBar(
+          ),*/
+          const SliverAppBar(
             // AppBar that becomes part of the scrollable content
             pinned: true, // Keeps the AppBar visible at the top
-            floating: false,
+            //floating: false,
             expandedHeight: 0.0, // No expanded height
-            flexibleSpace: FlexibleSpaceBar(
+            /*flexibleSpace: const FlexibleSpaceBar(
               title: Text(''), // No title in the flexible space
             ),
             bottom: TabBar(
-              controller: _tabController, // Setting the controller for the TabBar
+              controller:
+                  _tabController, // Setting the controller for the TabBar
               isScrollable: true, // Making the TabBar scrollable
-              tabs: [
+              tabs: const [
                 Tab(icon: Icon(Icons.home), text: 'Home'),
                 Tab(icon: Icon(Icons.newspaper), text: 'News'),
                 Tab(icon: Icon(Icons.forum), text: 'Forum'),
                 Tab(icon: Icon(Icons.event), text: 'Events'),
                 Tab(icon: Icon(Icons.chat), text: 'Chats'),
-                Tab(icon: Icon(Icons.connect_without_contact), text: 'Connections'),
+                Tab(
+                    icon: Icon(Icons.connect_without_contact),
+                    text: 'Connections'),
                 Tab(icon: Icon(Icons.business), text: 'Partners'),
               ],
-            ),
+            ),*/
           ),
           SliverFillRemaining(
             // Expanded to fill the remaining space for the TabBarView
             child: TabBarView(
-              controller: _tabController, // Setting the controller for the TabBarView
+              controller:
+                  _tabController, // Setting the controller for the TabBarView
               children: [
                 HomeScreen(),
                 NewsScreen(),
@@ -169,10 +121,65 @@ class _HomePageState extends State<homePage> with SingleTickerProviderStateMixin
           ),
         ],
       ),
+      drawer: Drawer(
+        // Drawer for side navigation
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                "Drawer Header",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Home'),
+              onTap: () => _selectTab(0),
+            ),
+            ListTile(
+              leading: const Icon(Icons.newspaper),
+              title: const Text('News'),
+              onTap: () => _selectTab(1),
+            ),
+            ListTile(
+              leading: const Icon(Icons.forum),
+              title: const Text('Forum'),
+              onTap: () => _selectTab(2),
+            ),
+            ListTile(
+              leading: const Icon(Icons.event),
+              title: const Text('Events'),
+              onTap: () => _selectTab(3),
+            ),
+            ListTile(
+              leading: const Icon(Icons.chat),
+              title: const Text('Chats'),
+              onTap: () => _selectTab(4),
+            ),
+            ListTile(
+              leading: const Icon(Icons.connect_without_contact),
+              title: const Text('Connections'),
+              onTap: () => _selectTab(5),
+            ),
+            ListTile(
+              leading: const Icon(Icons.business),
+              title: const Text('Partners'),
+              onTap: () => _selectTab(6),
+            ),
+            // Repeat ListTiles for other items...
+          ],
+        ),
+      ),
     );
   }
 }
-
 
 // Define other screens like HomeScreen, NewsScreen, etc., similar to the HomeScreen class
 // Each screen will have its own layout and widgets
@@ -198,7 +205,7 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
+          const Text(
             'UPCOMING EVENTS',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
@@ -207,19 +214,20 @@ class HomeScreen extends StatelessWidget {
               leading: Container(
                 width: 50,
                 height: 50,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.rectangle,
                   color: Colors.grey,
                 ),
-                child: Icon(Icons.image, color: Colors.white), // Placeholder icon
+                child: const Icon(Icons.image,
+                    color: Colors.white), // Placeholder icon
               ),
-              title: Text('EVENT NAME'),
-              subtitle: Text('DATE\nTIME\nDescription...'),
+              title: const Text('EVENT NAME'),
+              subtitle: const Text('DATE\nTIME\nDescription...'),
               trailing: ElevatedButton(
                 onPressed: () {
                   // Info button action
                 },
-                child: Text('+ info'),
+                child: const Text('+ info'),
               ),
             ),
           ),
@@ -235,7 +243,7 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
+          const Text(
             'FORUMS PARTICIPATION',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
@@ -257,7 +265,7 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {
               // Browse on forum action
             },
-            child: Text('Browse on forum'),
+            child: const Text('Browse on forum'),
           ),
         ],
       ),
@@ -265,7 +273,8 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildForumCard(String title, String subtitle, bool isOpen) {
-    return Expanded( // Using Expanded to fill the available space in the Row
+    return Expanded(
+      // Using Expanded to fill the available space in the Row
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -273,18 +282,20 @@ class HomeScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min, // To make the card wrap its content
             children: <Widget>[
               Text(title),
-              SizedBox(height: 4), // Add a small space between the text widgets
+              const SizedBox(
+                  height: 4), // Add a small space between the text widgets
               Text(subtitle),
-              SizedBox(height: 8), // Add some space before the button
+              const SizedBox(height: 8), // Add some space before the button
               if (isOpen) // Only show the button if the forum is 'Open'
                 ElevatedButton(
                   onPressed: () {
                     // Your button tap action here
                   },
-                  child: Text('Open'),
+                  child: const Text('Open'),
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white, // Text Color
-                    backgroundColor: Colors.blue,  ),
+                    backgroundColor: Colors.blue,
+                  ),
                 ),
             ],
           ),
@@ -299,22 +310,22 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
+          const Text(
             'CHATS',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           ListTile(
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               backgroundColor: Colors.grey,
               child: Icon(Icons.person, color: Colors.white),
             ),
-            title: Text('PERSON\'S NAME'),
-            subtitle: Text('last message sent...'),
+            title: const Text('PERSON\'S NAME'),
+            subtitle: const Text('last message sent...'),
             trailing: TextButton(
               onPressed: () {
                 // Open chat action
               },
-              child: Text('Open'),
+              child: const Text('Open'),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white, // Text Color
                 backgroundColor: Colors.blue, // Button Background Color
