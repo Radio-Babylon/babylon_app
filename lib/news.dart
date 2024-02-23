@@ -1,4 +1,5 @@
 import 'package:babylon_app/models/post.dart';
+import 'package:babylon_app/navigation_menu.dart';
 import 'package:babylon_app/service/wpGraphQL/wpGraphQLService.dart';
 import 'package:babylon_app/utils/htmlStrip.dart';
 import 'package:babylon_app/utils/launchUrl.dart';
@@ -29,6 +30,7 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: const PublicDrawer(),
         appBar: AppBar(
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

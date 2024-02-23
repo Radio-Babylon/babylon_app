@@ -1,4 +1,5 @@
 import 'package:babylon_app/login.dart';
+import 'package:babylon_app/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'partners.dart';
 import 'chats.dart';
@@ -57,72 +58,7 @@ class _HomePageState extends State<HomePage>
         backgroundColor: Colors.green,
       ),
       body: HomeScreen(),
-      drawer: Drawer(
-        // Drawer for side navigation
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                "Drawer Header",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
-              onTap: () => Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => HomePage())),
-            ),
-            ListTile(
-                leading: const Icon(Icons.newspaper),
-                title: const Text('News'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const NewsScreen()));
-                }),
-            ListTile(
-                leading: const Icon(Icons.forum),
-                title: const Text('Forum'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => ForumScreen()));
-                }),
-            ListTile(
-                leading: const Icon(Icons.event),
-                title: const Text('Events'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const EventsScreen()));
-                }),
-            ListTile(
-              leading: const Icon(Icons.chat),
-              title: const Text('Chats'),
-              onTap: () => _selectTab(4),
-            ),
-            ListTile(
-              leading: const Icon(Icons.connect_without_contact),
-              title: const Text('Connections'),
-              onTap: () => _selectTab(5),
-            ),
-            ListTile(
-              leading: const Icon(Icons.business),
-              title: const Text('Partners'),
-              onTap: () => _selectTab(6),
-            ),
-            // Repeat ListTiles for other items...
-          ],
-        ),
-      ),
+      drawer: const PublicDrawer(),
     );
   }
 }
@@ -306,8 +242,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-
-
 /*  THE FIRST REMOVED SECTION
 
           /*SliverToBoxAdapter(
@@ -395,3 +329,5 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ), */
+
+

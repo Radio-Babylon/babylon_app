@@ -1,6 +1,6 @@
+import 'package:babylon_app/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'events-info.dart';
-import 'home.dart';
 
 class EventsScreen extends StatefulWidget {
   const EventsScreen({super.key});
@@ -18,7 +18,7 @@ class _EventsScreenState extends State<EventsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //drawer: NavigationDrawer(),
+      drawer: const PublicDrawer(),
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
