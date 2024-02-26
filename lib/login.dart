@@ -28,6 +28,7 @@ class LoginFormState extends State<LoginForm> {
 
   late final TextEditingController _email;
   late final TextEditingController _password;
+  String? _error;
 
   late final Map<String, TextEditingController> userInfoController = {
     'Email': _email,
@@ -43,6 +44,7 @@ class LoginFormState extends State<LoginForm> {
   void initState() {
     _email = TextEditingController();
     _password = TextEditingController();
+    _error = "";
     super.initState();
   }
 
@@ -50,6 +52,7 @@ class LoginFormState extends State<LoginForm> {
   void dispose() {
     _email.dispose();
     _password.dispose();
+    _error = "";
     super.dispose();
   }
 
@@ -69,6 +72,13 @@ class LoginFormState extends State<LoginForm> {
             Text(
               'Login into your account',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Padding(padding: EdgeInsets.only(top: 16),
+              child:
+                Text(
+                  _error!,
+                  style: TextStyle(color: Colors.red),
+              )
             ),
             SizedBox(height: 50), // Space after title
             TextField(
@@ -101,12 +111,18 @@ class LoginFormState extends State<LoginForm> {
                 ),
               ),
               onPressed: () async{
-                User? loginUser = await AuthService.signInUsingEmailPassword(email: _email.text, password: _password.text);
-                if(loginUser != null)
+                Object? loginUser = await AuthService.signInUsingEmailPassword(email: _email.text, password: _password.text);
+                if(loginUser is User)
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => HomePage()),
                   );
+                else if (loginUser is FirebaseAuthException){
+                  print(loginUser);
+                  setState(() {
+                   _error = loginUser.message!; 
+                  });
+                }
               },
               child: const Text(
                 'Login',
