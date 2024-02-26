@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'forumTopic.dart';
+import 'package:babylon_app/navigation_menu.dart';
 
 class ForumScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const PublicDrawer(),
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -13,7 +15,7 @@ class ForumScreen extends StatelessWidget {
             SizedBox(
               height: 55,
               width: 55,
-              child: Image.asset('assets/images/logoSquare.png'),
+              child: Image.asset('assets/images/logowhite.png'),
             ),
           ],
         ),

@@ -4,7 +4,6 @@ import 'package:babylon_app/service/wpGraphQL/wpGraphQLService.dart';
 import 'package:babylon_app/utils/htmlStrip.dart';
 import 'package:babylon_app/utils/launchUrl.dart';
 import 'package:flutter/material.dart';
-import 'reading_news.dart';
 
 class NewsScreen extends StatelessWidget {
   const NewsScreen({super.key});
@@ -39,7 +38,7 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
               SizedBox(
                 height: 55,
                 width: 55,
-                child: Image.asset('assets/images/logoSquare.png'),
+                child: Image.asset('assets/images/logowhite.png'),
               ),
             ],
           ),

@@ -2,8 +2,10 @@ import 'package:babylon_app/events.dart';
 import 'package:babylon_app/forum.dart';
 import 'package:babylon_app/home.dart';
 import 'package:babylon_app/news.dart';
+import 'package:babylon_app/radio.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 
 class PublicDrawer extends StatefulWidget {
   const PublicDrawer({super.key});
@@ -39,6 +41,14 @@ class _PublicDrawerState extends State<PublicDrawer> {
                 //Navigator.pop(context);
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const FutureBuilderNews()));
+              }),
+          ListTile(
+              leading: const Icon(Icons.radio),
+              title: const Text('Radio'),
+              onTap: () {
+                //Navigator.pop(context);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => RadioScreen()));
               }),
           ListTile(
               leading: const Icon(Icons.forum),

@@ -27,7 +27,7 @@ class _EventsScreenState extends State<EventsScreen> {
             SizedBox(
               height: 55,
               width: 55,
-              child: Image.asset('assets/images/logoSquare.png'),
+              child: Image.asset('assets/images/logowhite.png'),
             ),
           ],
         ),

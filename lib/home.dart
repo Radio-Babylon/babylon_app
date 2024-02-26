@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage>
             SizedBox(
               height: 55,
               width: 55,
-              child: Image.asset('assets/images/logoSquare.png'),
+              child: Image.asset('assets/images/logowhite.png'),
             ),
           ],
         ),
@@ -136,27 +136,7 @@ class HomeScreen extends StatelessWidget {
               _buildForumCard('FORUM TOPIC 3', '1 Reply', true),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              _buildForumCard('FORUM TOPIC 2', '3 Replies', true),
-              _buildForumCard('FORUM TOPIC 4', '10 Replies', true),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              _buildForumCard('FORUM TOPIC 1', '0 Replies', true),
-              _buildForumCard('FORUM TOPIC 3', '1 Reply', true),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              _buildForumCard('FORUM TOPIC 1', '0 Replies', true),
-              _buildForumCard('FORUM TOPIC 3', '1 Reply', true),
-            ],
-          ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -197,7 +177,7 @@ class HomeScreen extends StatelessWidget {
                   child: const Text('Open'),
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white, // Text Color
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Color(0xFF006400),
                   ),
                 ),
             ],
@@ -231,7 +211,97 @@ class HomeScreen extends StatelessWidget {
               child: const Text('Open'),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white, // Text Color
-                backgroundColor: Colors.blue, // Button Background Color
+                backgroundColor: Color(0xFF006400), // Button Background Color
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const CircleAvatar(
+              backgroundColor: Colors.grey,
+              child: Icon(Icons.person, color: Colors.white),
+            ),
+            title: const Text('PERSON\'S NAME'),
+            subtitle: const Text('last message sent...'),
+            trailing: TextButton(
+              onPressed: () {
+                // Open chat action
+              },
+              child: const Text('Open'),
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white, // Text Color
+                backgroundColor: Color(0xFF006400), // Button Background Color
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const CircleAvatar(
+              backgroundColor: Colors.grey,
+              child: Icon(Icons.person, color: Colors.white),
+            ),
+            title: const Text('PERSON\'S NAME'),
+            subtitle: const Text('last message sent...'),
+            trailing: TextButton(
+              onPressed: () {
+                // Open chat action
+              },
+              child: const Text('Open'),
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white, // Text Color
+                backgroundColor: Color(0xFF006400), // Button Background Color
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const CircleAvatar(
+              backgroundColor: Colors.grey,
+              child: Icon(Icons.person, color: Colors.white),
+            ),
+            title: const Text('PERSON\'S NAME'),
+            subtitle: const Text('last message sent...'),
+            trailing: TextButton(
+              onPressed: () {
+                // Open chat action
+              },
+              child: const Text('Open'),
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white, // Text Color
+                backgroundColor: Color(0xFF006400), // Button Background Color
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const CircleAvatar(
+              backgroundColor: Colors.grey,
+              child: Icon(Icons.person, color: Colors.white),
+            ),
+            title: const Text('PERSON\'S NAME'),
+            subtitle: const Text('last message sent...'),
+            trailing: TextButton(
+              onPressed: () {
+                // Open chat action
+              },
+              child: const Text('Open'),
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white, // Text Color
+                backgroundColor: Color(0xFF006400), // Button Background Color
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const CircleAvatar(
+              backgroundColor: Colors.grey,
+              child: Icon(Icons.person, color: Colors.white),
+            ),
+            title: const Text('PERSON\'S NAME'),
+            subtitle: const Text('last message sent...'),
+            trailing: TextButton(
+              onPressed: () {
+                // Open chat action
+              },
+              child: const Text('Open'),
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white, // Text Color
+                backgroundColor: Color(0xFF006400), // Button Background Color
               ),
             ),
           ),
