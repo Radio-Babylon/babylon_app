@@ -125,6 +125,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
             _buildTextField(labelText: 'Country of Origin'),
             _buildTextField(labelText: 'Password', isPassword: true),
             _buildTextField(labelText: 'Confirm Password', isPassword: true),
+
             Padding(
               padding: const EdgeInsets.symmetric(
                   vertical: 16.0), // Adds vertical padding around the button.
@@ -138,9 +139,10 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                   ),
                 ),
                 onPressed: () async {
+                  final fullName = '${_name.text} ${_surname.text}';
                   User? currentUser =
                       await AuthService.registerUsingEmailPassword(
-                          name: _name.text,
+                          name: fullName,
                           email: _email.text,
                           password: _password.text);
                   if (currentUser != null) {

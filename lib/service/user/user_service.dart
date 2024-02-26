@@ -36,6 +36,12 @@ class UserService {
           .update({'ImageUrl': imgUrl})
           .then((value) => print("User Updated and photo added"))
           .catchError((error) => print("Failed to add the photo: $error"));
+
+      try {
+        await user.updatePhotoURL(imgUrl);
+      } catch (error) {
+        print("Failed to add the photo to user in auth: $error");
+      }
     }
   }
 
@@ -74,5 +80,11 @@ class UserService {
           .catchError(
               (error) => print("Failed to add the additionalInfo: $error"));
     }
+  }
+
+  static Future<void> getUserImgUrl({required User user}) async {
+    final db = FirebaseFirestore.instance;
+
+    final docUser = db.collection('users').doc(user.uid);
   }
 }
