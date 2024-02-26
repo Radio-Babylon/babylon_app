@@ -1,6 +1,7 @@
 import 'package:babylon_app/events.dart';
 import 'package:babylon_app/forum.dart';
 import 'package:babylon_app/home.dart';
+import 'package:babylon_app/myprofile.dart';
 import 'package:babylon_app/news.dart';
 import 'package:babylon_app/radio.dart';
 import 'package:flutter/material.dart';
@@ -82,6 +83,17 @@ class _PublicDrawerState extends State<PublicDrawer> {
             title: const Text('Partners'),
             //onTap: () => _selectTab(6),
           ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text('My profile'),
+            onTap: () {
+              //Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyProfile()),
+              );
+            },
+          ),
           // Repeat ListTiles for other items...
         ],
       ),
@@ -113,42 +125,85 @@ class _DrawerHeaderWithUserInfoState extends State<DrawerHeaderWithUserInfo> {
 
   @override
   Widget build(BuildContext context) {
+    String fullName = currentUser?.displayName ?? 'Unknown user';
+    String email = currentUser?.email ?? 'email';
     String? imgUrl = currentUser?.photoURL;
+    final ImageProvider currentImg;
+
+    if (imgUrl != null) {
+      currentImg = NetworkImage(imgUrl);
+    } else {
+      currentImg = const AssetImage('assets/images/default_user_logo.png');
+    }
+
     print(currentUser);
-    if (currentUser != null && imgUrl != null) {
-      return SizedBox(
-        height: 230,
-        child: DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.green,
-          ),
-          padding: const EdgeInsets.all(0),
-          child: Container(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                CircleAvatar(
+    // if (currentUser != null) {
+    return SizedBox(
+      height: 230,
+      child: DrawerHeader(
+        decoration: const BoxDecoration(
+          color: Colors.green,
+        ),
+        padding: const EdgeInsets.all(0),
+        child: Container(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                child: CircleAvatar(
                   radius: 52,
-                  backgroundImage: NetworkImage(
-                      imgUrl), //AssetImage('${currentUser?.photoURL}') //currentUser?.photoURL
+                  backgroundImage: currentImg,
+                  backgroundColor: Colors
+                      .green, //AssetImage('${currentUser?.photoURL}') //currentUser?.photoURL
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text('${currentUser?.displayName}',
-                    style: TextStyle(fontSize: 18)),
-                SizedBox(
-                  height: 5,
-                ),
-                Text('${currentUser?.email}', style: TextStyle(fontSize: 10)),
-              ],
-            ),
+                // Wrap the profile section with GestureDetector
+                onTap: () {
+                  // Navigate to the MyProfile screen when the profile picture is tapped
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => MyProfile()));
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(fullName, style: const TextStyle(fontSize: 18)),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(email, style: const TextStyle(fontSize: 10)),
+            ],
           ),
         ),
-      );
-    } else {
+      ),
+    );
+  }
+}
+
+
+
+/*      decoration: BoxDecoration(
+        color: Colors.blue,
+      ),
+      child: Text(
+        "Drawer Header",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 24,
+        ),
+      ), */
+
+
+      /*        CircleAvatar(
+          radius: 52,
+          backgroundImage: AssetImage('assets/images/logoSquare.png'),
+        ) */
+
+
+
+
+        /*else {
       return SizedBox(
         height: 220,
         child: DrawerHeader(
@@ -179,24 +234,4 @@ class _DrawerHeaderWithUserInfoState extends State<DrawerHeaderWithUserInfo> {
           ),
         ),
       );
-    }
-  }
-}
-
-
-/*      decoration: BoxDecoration(
-        color: Colors.blue,
-      ),
-      child: Text(
-        "Drawer Header",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 24,
-        ),
-      ), */
-
-
-      /*        CircleAvatar(
-          radius: 52,
-          backgroundImage: AssetImage('assets/images/logoSquare.png'),
-        ) */
+    } */
