@@ -19,6 +19,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    print(currentUser);
+
     return MaterialApp(
       title: 'Babylon Radio',
       theme: ThemeData(
@@ -31,7 +34,7 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(fontFamily: 'Lato'),
         ),
       ),
-      home: const LogoScreen(),
+      home: currentUser != null ? HomePage() :LogoScreen(),
     );
   }
 }
@@ -41,15 +44,6 @@ class LogoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User? currentUser = FirebaseAuth.instance.currentUser;
-    print(currentUser);
-
-    if(currentUser != null)
-     Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => HomePage()),
-    );
-
     return Scaffold(
       body: Column(
         children: [
