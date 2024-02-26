@@ -6,7 +6,6 @@ import 'package:babylon_app/radio.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class PublicDrawer extends StatefulWidget {
   const PublicDrawer({super.key});
 
@@ -47,8 +46,8 @@ class _PublicDrawerState extends State<PublicDrawer> {
               title: const Text('Radio'),
               onTap: () {
                 //Navigator.pop(context);
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => RadioScreen()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => RadioScreen()));
               }),
           ListTile(
               leading: const Icon(Icons.forum),
@@ -121,7 +120,7 @@ class _DrawerHeaderWithUserInfoState extends State<DrawerHeaderWithUserInfo> {
         height: 230,
         child: DrawerHeader(
           decoration: BoxDecoration(
-            color: Colors.blue,
+            color: Colors.green,
           ),
           padding: const EdgeInsets.all(0),
           child: Container(
