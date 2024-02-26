@@ -1,4 +1,5 @@
 import 'package:babylon_app/firebase_options.dart';
+import 'package:babylon_app/home.dart';
 import 'package:babylon_app/service/auth/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,6 +41,15 @@ class LogoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    print(currentUser);
+
+    if(currentUser != null)
+     Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+    );
+
     return Scaffold(
       body: Column(
         children: [
@@ -76,9 +86,6 @@ class LogoScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 21),
             child: ElevatedButton(
               onPressed: () async {
-                // AuthService.registerUsingEmailPassword(name: "oui", email: "oui@oui.com", password:"ouioui");
-                // print(FirebaseAuth.instance.currentUser);
-                // var data = FirebaseFirestore.instance.collection('test');
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),

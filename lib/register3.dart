@@ -1,6 +1,6 @@
+import 'package:babylon_app/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'login.dart';
 import 'package:babylon_app/service/user/user_service.dart';
 
 class RegisterPage3 extends StatefulWidget {
@@ -156,7 +156,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
 
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(builder: (context) => HomePage()),
                 );
               },
               child: const Text(
