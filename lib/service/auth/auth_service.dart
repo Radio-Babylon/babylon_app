@@ -19,11 +19,12 @@ class AuthService {
       user = auth.currentUser;
     } catch (e) {
       print(e);
+      throw(e);
     }
     return user;
   }
 
-  static Future<Object?> signInUsingEmailPassword({
+  static Future<User?> signInUsingEmailPassword({
     required String email,
     required String password,
   }) async {
@@ -36,8 +37,8 @@ class AuthService {
       );
       user = userCredential.user;
     } catch (e) {
-      FirebaseAuthException error = e as FirebaseAuthException;
-      return error;
+      print(e);
+      throw(e);
     }
     return user;
   }

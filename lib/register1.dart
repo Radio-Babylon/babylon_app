@@ -1,3 +1,4 @@
+import 'package:babylon_app/service/auth/authExceptions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,8 @@ class CreateAccountFormState extends State<CreateAccountForm> {
   late final TextEditingController _email;
   late final TextEditingController _county;
   late final TextEditingController _password;
+  late final TextEditingController _rePassword;
+  String? _error;
 
   late final Map<String, TextEditingController> userInfoController = {
     'Name': _name,
@@ -41,7 +44,9 @@ class CreateAccountFormState extends State<CreateAccountForm> {
     'Date of Birth': _dateOfBirth,
     'Email Address': _email,
     'Country of Origin': _county,
-    'Password': _password
+    'Password': _password,
+    'Confirm Password': _rePassword,
+
   };
 
   late final Map<String, String> userInfo = {
@@ -60,6 +65,8 @@ class CreateAccountFormState extends State<CreateAccountForm> {
     _email = TextEditingController();
     _county = TextEditingController();
     _password = TextEditingController();
+    _rePassword = TextEditingController();
+    _error = "";
     super.initState();
   }
 
@@ -71,10 +78,12 @@ class CreateAccountFormState extends State<CreateAccountForm> {
     _email.dispose();
     _county.dispose();
     _password.dispose();
+    _rePassword.dispose();
+    _error = "";
     super.dispose();
   }
 
-  Widget _buildTextField({required String labelText, bool isPassword = false}) {
+  Widget _buildTextField({required String labelText, bool isPassword = false, bool hasDatePicker = false}) {
     // Helper method to build text fields with common styling.
     return Padding(
       padding: const EdgeInsets.only(
@@ -96,6 +105,23 @@ class CreateAccountFormState extends State<CreateAccountForm> {
             return 'Please enter your $labelText'; // Validation message.
           }
           return null;
+        },
+        readOnly: hasDatePicker,
+        onTap: () async {
+          if(hasDatePicker){
+            DateTime? pickedDate = await showDatePicker(
+              context: context, initialDate: DateTime.now(),
+              firstDate: DateTime(1901),
+              lastDate: DateTime(2101)
+            );
+                  
+            if(pickedDate != null ){
+              print(pickedDate);
+              setState(() {
+                  _dateOfBirth.text = "${pickedDate.year}-${pickedDate.month < 10 ? "0${pickedDate.month}" : pickedDate.month}-${pickedDate.day}";
+              });
+            }
+          }
         },
       ),
     );
@@ -120,12 +146,18 @@ class CreateAccountFormState extends State<CreateAccountForm> {
             // Calls the helper method to build text fields.
             _buildTextField(labelText: 'Name'),
             _buildTextField(labelText: 'Surname'),
-            _buildTextField(labelText: 'Date of Birth'),
+            _buildTextField(labelText: 'Date of Birth', hasDatePicker: true),
             _buildTextField(labelText: 'Email Address'),
-            _buildTextField(labelText: 'Country of Origin'),
+            // _buildTextField(labelText: 'Country of Origin'),
             _buildTextField(labelText: 'Password', isPassword: true),
             _buildTextField(labelText: 'Confirm Password', isPassword: true),
-
+            Padding(padding: EdgeInsets.only(top: 16),
+              child:
+                Text(
+                  _error!,
+                  style: TextStyle(color: Colors.red),
+              )
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(
                   vertical: 16.0), // Adds vertical padding around the button.
@@ -140,22 +172,32 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                 ),
                 onPressed: () async {
                   final fullName = '${_name.text} ${_surname.text}';
-                  User? currentUser =
+                  try {
+                    AuthException.validateRegisterForm(_name.text, _surname.text, _email.text, _password.text, _rePassword.text, _dateOfBirth.text);
+                    User? currentUser =
                       await AuthService.registerUsingEmailPassword(
                           name: fullName,
                           email: _email.text,
                           password: _password.text);
-                  if (currentUser != null) {
-                    UserService.fillUser(user: currentUser, userInfo: userInfo);
+                    if (currentUser is User) {
+                      await UserService.fillUser(user: currentUser, userInfo: userInfo);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RegisterPage2()),
+                      );
+                    }
+                  } catch (e) {
+                    if(e is FirebaseAuthException)
+                      setState(() {
+                        _error = (e as FirebaseAuthException).message; 
+                      });
+                    else
+                      setState(() {
+                        _error = e.toString(); 
+                      });
                   }
-
                   if (!mounted) return;
                   //Navigator.of(context).pop();
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RegisterPage2()),
-                  );
                 },
                 child: Text(
                   'Next',
