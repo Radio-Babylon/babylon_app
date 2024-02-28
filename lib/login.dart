@@ -111,17 +111,17 @@ class LoginFormState extends State<LoginForm> {
                 ),
               ),
               onPressed: () async{
-                Object? loginUser = await AuthService.signInUsingEmailPassword(email: _email.text, password: _password.text);
-                if(loginUser is User)
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
-                else if (loginUser is FirebaseAuthException){
-                  print(loginUser);
+                try {
+                  Object? loginUser = await AuthService.signInUsingEmailPassword(email: _email.text, password: _password.text);
+                  if(loginUser is User)
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                } catch (e) {
                   setState(() {
-                   _error = loginUser.message!; 
-                  });
+                    _error = (e as FirebaseAuthException).message; 
+                  }); 
                 }
               },
               child: const Text(

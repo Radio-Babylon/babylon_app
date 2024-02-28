@@ -1,3 +1,4 @@
+import 'package:babylon_app/home.dart';
 import 'package:babylon_app/service/user/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -93,13 +94,19 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 }
                 if (!mounted) return;
 
+                // disable register's second view
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => RegisterPage3()),
+                // );
+
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RegisterPage3()),
+                  MaterialPageRoute(builder: (context) => HomePage()),
                 );
               },
               child: const Text(
-                'Next',
+                'Finish',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -113,9 +120,15 @@ class _RegisterPage2State extends State<RegisterPage2> {
                       20), // Adjust space above and below the "Skip" button
               child: TextButton(
                 onPressed: () {
+                  // disable 3rd register screen
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => RegisterPage3()),
+                  // );
+
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => RegisterPage3()),
+                    MaterialPageRoute(builder: (context) => HomePage()),
                   );
                 },
                 child: const Text('Skip'),
