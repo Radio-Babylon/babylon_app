@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "766184958846-t68b3c6og4nr75mjd44h7cr1if347iiv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.babylonradio",
+            "certificate_hash": "c51f0fde16e34095b5964233e064522b486bab86"
+          }
+        },
+        {
           "client_id": "766184958846-lr5fat70pq8senfldulfbr6t2jgmskhu.apps.googleusercontent.com",
           "client_type": 3
         }
