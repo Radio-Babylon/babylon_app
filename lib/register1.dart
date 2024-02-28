@@ -13,8 +13,9 @@ class CreateAccountPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Create a New Account'), // Title of the AppBar.
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0), // Padding around the form.
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16.0), // Padding around the form.
+        alignment: Alignment.center,
         child: CreateAccountForm(), // The form widget for account creation.
       ),
     );
@@ -134,7 +135,6 @@ class CreateAccountFormState extends State<CreateAccountForm> {
         key: _formKey, // Associates the form with the form key.
         child: Column(
           children: <Widget>[
-            SizedBox(height: 15), // Top padding for the logo.
             Image.asset(
               'assets/images/logoRectangle.png', // Path to the logo image.
               width: 365, // Width of the logo.
@@ -142,7 +142,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
               fit: BoxFit
                   .contain, // Makes sure the logo is contained properly within the box.
             ),
-            SizedBox(height: 35), // Bottom padding for the logo.
+            SizedBox(height: 30), // Bottom padding for the logo.
             // Calls the helper method to build text fields.
             _buildTextField(labelText: 'Name'),
             _buildTextField(labelText: 'Surname'),
@@ -151,7 +151,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
             // _buildTextField(labelText: 'Country of Origin'),
             _buildTextField(labelText: 'Password', isPassword: true),
             _buildTextField(labelText: 'Confirm Password', isPassword: true),
-            Padding(padding: EdgeInsets.only(top: 16),
+            Padding(padding: EdgeInsets.symmetric(vertical: 8),
               child:
                 Text(
                   _error!,
@@ -159,8 +159,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
               )
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: 16.0), // Adds vertical padding around the button.
+              padding: const EdgeInsets.only(top: 8), // Adds vertical padding around the button.
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF006400),

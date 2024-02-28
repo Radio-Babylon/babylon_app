@@ -50,14 +50,12 @@ class LogoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 60), // Padding top for logo
-          SizedBox(
-            height: 185,
-            width: 185,
-            child: Image.asset('assets/images/logoSquare.png'),
+          Container(
+            margin: EdgeInsets.only(bottom: 45),
+            child: Image.asset('assets/images/logoSquare.png', width: 185, height: 185),
           ),
-          const SizedBox(height: 45), // Space between logo and text
           const Text(
             'Welcome to Babylon Radio!',
             textAlign: TextAlign.center,
@@ -67,21 +65,21 @@ class LogoScreen extends StatelessWidget {
               fontFamily: 'Lato',
             ),
           ),
-          const SizedBox(
-              height: 60), // Space between Welcome text and catchphrase
-          const Text(
-            'Celebrating cultures,\n' //\n breaks the line
-            ' promoting integration',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w300,
-              fontFamily: 'Lato',
+          Container(
+            margin: EdgeInsets.only(top: 50, bottom: 50),
+            child: const Text(
+              'Celebrating cultures,\n' //\n breaks the line
+              ' promoting integration',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w300,
+                fontFamily: 'Lato',
+              ),
             ),
           ),
-          const SizedBox(height: 90), // Space between catchphrase and buttons
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 21),
+          Container(
+            margin: const EdgeInsets.all(21),
             child: ElevatedButton(
               onPressed: () async {
                 Navigator.push(
@@ -104,9 +102,8 @@ class LogoScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 25), // Space between buttons
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 21),
+          Container(
+            margin: const EdgeInsets.only(left: 21, right: 21, bottom: 21),
             child: OutlinedButton(
               onPressed: () {
                 // Usa Navigator.push to navigate into RegisterScreen
@@ -124,8 +121,7 @@ class LogoScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 25), // Space between buttons
-          Padding(
+          Container(
             padding: const EdgeInsets.symmetric(horizontal: 42),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

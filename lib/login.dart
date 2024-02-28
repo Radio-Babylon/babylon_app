@@ -58,87 +58,83 @@ class LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        // Usar SingleChildScrollView to avoid overflow when the keyboard comes up
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // Logo
-            Image.asset('assets/images/logoRectangle.png',
-                height: 90, width: 365),
-            SizedBox(height: 50), // Space after logo
-            // Title
-            Text(
-              'Login into your account',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            Padding(padding: EdgeInsets.only(top: 16),
-              child:
-                Text(
-                  _error!,
-                  style: TextStyle(color: Colors.red),
-              )
-            ),
-            SizedBox(height: 50), // Space after title
-            TextFormField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                labelText: 'Password',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-              ),
-              controller: _email,
-              keyboardType: TextInputType.emailAddress,
-            ),
-            SizedBox(height: 20), // Space between text fields
-            TextFormField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                labelText: 'Password',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-              ),
-              controller: _password,
-              obscureText: true,
-            ),
-
-            SizedBox(height: 25), // Space after text fields
-            // Login button that navigates to HomePage on press
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF006400),
-                minimumSize: Size(365, 60), // Size of the button.
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                      60.0), // Rounded edges for the button.
-                ),
-              ),
-              onPressed: () async{
-                try {
-                  User? loginUser = await AuthService.signInUsingEmailPassword(email: _email.text, password: _password.text);
-                  if(loginUser is User)
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
-                } catch (e) {
-                  setState(() {
-                    _error = (e as FirebaseAuthException).message; 
-                  }); 
-                }
-              },
-              child: const Text(
-                'Login',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontFamily: 'Lato',
-                ),
-              ),
-            ),
-          ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        // Logo
+        Image.asset('assets/images/logoRectangle.png',
+            height: 90, width: 365),
+        SizedBox(height: 50), // Space after logo
+        // Title
+        Text(
+          'Login into your account',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
+        Padding(padding: EdgeInsets.only(top: 16),
+          child:
+            Text(
+              _error!,
+              style: TextStyle(color: Colors.red),
+          )
+        ),
+        SizedBox(height: 50), // Space after title
+        TextFormField(
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.white,
+            labelText: 'Password',
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          ),
+          controller: _email,
+          keyboardType: TextInputType.emailAddress,
+        ),
+        SizedBox(height: 20), // Space between text fields
+        TextFormField(
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.white,
+            labelText: 'Password',
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          ),
+          controller: _password,
+          obscureText: true,
+        ),
+
+        SizedBox(height: 25), // Space after text fields
+        // Login button that navigates to HomePage on press
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color(0xFF006400),
+            minimumSize: Size(365, 60), // Size of the button.
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                  60.0), // Rounded edges for the button.
+            ),
+          ),
+          onPressed: () async{
+            try {
+              User? loginUser = await AuthService.signInUsingEmailPassword(email: _email.text, password: _password.text);
+              if(loginUser is User)
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
+            } catch (e) {
+              setState(() {
+                _error = (e as FirebaseAuthException).message; 
+              }); 
+            }
+          },
+          child: const Text(
+            'Login',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontFamily: 'Lato',
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
