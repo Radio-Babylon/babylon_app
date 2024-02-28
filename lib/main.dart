@@ -34,7 +34,11 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(fontFamily: 'Lato'),
         ),
       ),
-      home: currentUser != null ? HomePage() :LogoScreen(),
+      home: currentUser != null ? HomePage() : LogoScreen(),
+      routes: {
+        '/logo/': (context) => const LogoScreen(),
+        '/register/': (context) => CreateAccountPage()
+      },
     );
   }
 }

@@ -1,6 +1,8 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:firebase_core/firebase_core.dart';
-//import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
@@ -86,5 +88,13 @@ class UserService {
     final db = FirebaseFirestore.instance;
 
     final docUser = db.collection('users').doc(user.uid);
+  }
+
+  static Future<Image> convertFileToImage(File picture) async {
+    List<int> imageBase64 = picture.readAsBytesSync();
+    String imageAsString = base64Encode(imageBase64);
+    Uint8List uint8list = base64.decode(imageAsString);
+    Image image = Image.memory(uint8list);
+    return image;
   }
 }
