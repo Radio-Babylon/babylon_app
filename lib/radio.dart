@@ -24,48 +24,38 @@ class RadioScreen extends StatelessWidget {
         ),
         backgroundColor: Colors.green,
       ),
-      backgroundColor: Colors.grey[200], // Light grey background
-      body: Center( // Center the content
-        child: Column(
-
-
-          mainAxisAlignment: MainAxisAlignment.center, // Center the column content vertically
-          children: <Widget>[
-
-            Image.asset('assets/images/logoRectangle.png',
-                height: 90, width: 365),
-            SizedBox(height: 50), // Space after logo
-            // Title
-
-
-            SizedBox(height: 48), // Space between text and button
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 21),
-              child: ElevatedButton.icon(
-                icon: Icon(Icons.radio, size: 28), // Radio icon for the button
-                label: Text('Listen Babylon Radio'),
-                onPressed: _launchURL, // Call the method to launch the URL when button is pressed
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white, // Text Color
-                  backgroundColor: Color(0xFF006400), // White color for the text and icon
-                  minimumSize: Size(350, 80), // Set the size of the button
-                  textStyle: TextStyle(fontSize: 24, fontFamily: 'Lato'), // Apply text style
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30), // Rounded corners for the button
-                  ),
-                  elevation: 4, // Shadow for the button
-                ),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Container(
+              color: Color(0xff3A82B9), // Light blue for the top part
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width, // Make the image cover the full width
+            child: InkWell(
+              onTap: _launchURL, // Calls the _launchURL method when the image is tapped
+              child: Image.asset(
+                'assets/images/photoradio.png',
+                fit: BoxFit.cover, // Cover the container without distorting the aspect ratio
               ),
             ),
-          ],
-        ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              color: Color(0xff5065A5), // Dark blue for the bottom part
+            ),
+          ),
+        ],
       ),
     );
   }
 
   // Method to launch the URL
   void _launchURL() async {
-    if (!await launchUrl(_url)) { // Check if the URL can be launched
+    if (!await launchUrl(_url)) { // Checks if the URL can be launched
       throw 'Could not launch $_url';
     }
   }

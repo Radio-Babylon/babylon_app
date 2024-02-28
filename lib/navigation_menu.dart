@@ -6,6 +6,8 @@ import 'package:babylon_app/news.dart';
 import 'package:babylon_app/radio.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:babylon_app/partners.dart';
+
 
 class PublicDrawer extends StatefulWidget {
   const PublicDrawer({super.key});
@@ -81,7 +83,8 @@ class _PublicDrawerState extends State<PublicDrawer> {
           ListTile(
             leading: const Icon(Icons.business),
             title: const Text('Partners'),
-            //onTap: () => _selectTab(6),
+            onTap: () => Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => PartnersScreen())),
           ),
           ListTile(
             leading: const Icon(Icons.settings),
