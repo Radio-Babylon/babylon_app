@@ -26,8 +26,6 @@ class AuthService {
   }
 
   static Future<User?> signInUsingEmailPassword({
-
-    
     required String email,
     required String password,
   }) async {

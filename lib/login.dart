@@ -112,7 +112,7 @@ class LoginFormState extends State<LoginForm> {
               ),
               onPressed: () async{
                 try {
-                  Object? loginUser = await AuthService.signInUsingEmailPassword(email: _email.text, password: _password.text);
+                  User? loginUser = await AuthService.signInUsingEmailPassword(email: _email.text, password: _password.text);
                   if(loginUser is User)
                     Navigator.push(
                       context,
@@ -145,8 +145,20 @@ class LoginFormState extends State<LoginForm> {
                 // Google login button
                 _buildSocialButton(
                     'assets/images/google.png', // Replace with your asset
-                    () {
-                  // TODO: Implement Google login functionality
+                    () async {
+                      try {
+                        UserCredential? loginUser = await AuthService.signInWithGoogle();
+                        if(loginUser is UserCredential)
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomePage()),
+                          );
+                      } catch (e) {
+                        setState(() {
+                          print(e.toString());
+                          _error = e.toString(); 
+                        }); 
+                      }
                 }, 55),
                 // Twitter login button
                 _buildSocialButton(
