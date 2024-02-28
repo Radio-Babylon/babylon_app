@@ -139,9 +139,9 @@ class LoginFormState extends State<LoginForm> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 // Facebook login button
-                _buildSocialButton('assets/images/facebook.png', () {
-                  // onPressed function
-                }, 55),
+                // _buildSocialButton('assets/images/facebook.png', () {
+                //   // onPressed function
+                // }, 55),
                 // Google login button
                 _buildSocialButton(
                     'assets/images/google.png', // Replace with your asset
@@ -161,11 +161,11 @@ class LoginFormState extends State<LoginForm> {
                       }
                 }, 55),
                 // Twitter login button
-                _buildSocialButton(
-                    'assets/images/linkln.png', // Replace with your asset
-                    () {
-                  // TODO: Implement Twitter login functionality
-                }, 55),
+                // _buildSocialButton(
+                //     'assets/images/linkln.png', // Replace with your asset
+                //     () {
+                //   // TODO: Implement Twitter login functionality
+                // }, 55),
               ],
             ),
           ],
