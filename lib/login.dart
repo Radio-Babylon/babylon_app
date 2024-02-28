@@ -81,19 +81,23 @@ class LoginFormState extends State<LoginForm> {
               )
             ),
             SizedBox(height: 50), // Space after title
-            TextField(
+            TextFormField(
               decoration: InputDecoration(
-                labelText: 'Email Address',
-                border: OutlineInputBorder(),
+                filled: true,
+                fillColor: Colors.white,
+                labelText: 'Password',
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
               ),
               controller: _email,
               keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(height: 20), // Space between text fields
-            TextField(
+            TextFormField(
               decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
                 labelText: 'Password',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
               ),
               controller: _password,
               obscureText: true,
@@ -133,57 +137,8 @@ class LoginFormState extends State<LoginForm> {
                 ),
               ),
             ),
-            SizedBox(height: 35), // Space after Login button
-            // Social media buttons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                // Facebook login button
-                // _buildSocialButton('assets/images/facebook.png', () {
-                //   // onPressed function
-                // }, 55),
-                // Google login button
-                _buildSocialButton(
-                    'assets/images/google.png', // Replace with your asset
-                    () async {
-                      try {
-                        UserCredential? loginUser = await AuthService.signInWithGoogle();
-                        if(loginUser is UserCredential)
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomePage()),
-                          );
-                      } catch (e) {
-                        setState(() {
-                          print(e.toString());
-                          _error = e.toString(); 
-                        }); 
-                      }
-                }, 55),
-                // Twitter login button
-                // _buildSocialButton(
-                //     'assets/images/linkln.png', // Replace with your asset
-                //     () {
-                //   // TODO: Implement Twitter login functionality
-                // }, 55),
-              ],
-            ),
           ],
         ),
-    );
-  }
-
-  Widget _buildSocialButton(
-      String iconPath, VoidCallback onPressed, double size) {
-    return Container(
-      width: size,
-      height: 85,
-      child: FloatingActionButton(
-        onPressed: onPressed,
-        child: Image.asset(iconPath), // The social icon
-        backgroundColor: Colors.white,
-        elevation: 0, // Remove shadow
-      ),
     );
   }
 }

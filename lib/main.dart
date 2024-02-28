@@ -124,7 +124,65 @@ class LogoScreen extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 25), // Space between buttons
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 42),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Flexible(
+                  flex: 3,
+                  child: Text("Continue with", style: TextStyle(fontSize: 24, fontFamily: 'Lato')),
+                ),
+                Flexible(
+                  flex: 1,
+                  child:
+                    _buildSocialButton(
+                    'assets/images/google.png', // Replace with your asset
+                    () async {
+                      try {
+                        UserCredential? loginUser = await AuthService.signInWithGoogle();
+                        if(loginUser is UserCredential)
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomePage()),
+                          );
+                        } catch (e) {
+                          print(e.toString()); 
+                        }; 
+                      }, 55)
+                ),
+                Flexible(
+                  flex: 1,
+                  child:
+                    _buildSocialButton(
+                      'assets/images/facebook.png', // Replace with your asset
+                      () async {
+                        try {
+                          
+                        } catch (e) {
+                          print(e.toString()); 
+                        }; 
+                      }, 55)
+                )
+              ] 
+            )
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSocialButton(
+    String iconPath, VoidCallback onPressed, double height) {
+    return Container(
+      height: height,
+      child: FloatingActionButton(
+        onPressed: onPressed,
+        child: Image.asset(iconPath), // The social icon
+        backgroundColor: Colors.white,
+        elevation: 0, // Remove shadow
       ),
     );
   }

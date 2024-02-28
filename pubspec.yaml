@@ -39,6 +39,7 @@ dependencies:
   graphql_flutter: ^5.2.0-beta.6
   firebase_storage: ^11.6.6
   google_sign_in: ^6.2.1
+  flutter_facebook_auth: ^6.1.1
 
 
 dev_dependencies:
