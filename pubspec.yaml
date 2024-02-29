@@ -95,6 +95,7 @@ flutter:
     - assets/images/default_user_logo.png
     - assets/images/photoradio.png
     - assets/images/eventexample.jpg
+    - assets/images/iconEdit.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

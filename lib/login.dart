@@ -62,28 +62,27 @@ class LoginFormState extends State<LoginForm> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         // Logo
-        Image.asset('assets/images/logoRectangle.png',
-            height: 90, width: 365),
+        Image.asset('assets/images/logoRectangle.png', height: 90, width: 365),
         SizedBox(height: 50), // Space after logo
         // Title
         Text(
           'Login into your account',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Padding(padding: EdgeInsets.only(top: 16),
-          child:
-            Text(
+        Padding(
+            padding: EdgeInsets.only(top: 16),
+            child: Text(
               _error!,
               style: TextStyle(color: Colors.red),
-          )
-        ),
+            )),
         SizedBox(height: 50), // Space after title
         TextFormField(
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.white,
-            labelText: 'Password',
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+            labelText: 'Email',
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
           ),
           controller: _email,
           keyboardType: TextInputType.emailAddress,
@@ -94,7 +93,8 @@ class LoginFormState extends State<LoginForm> {
             filled: true,
             fillColor: Colors.white,
             labelText: 'Password',
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
           ),
           controller: _password,
           obscureText: true,
@@ -107,22 +107,23 @@ class LoginFormState extends State<LoginForm> {
             backgroundColor: Color(0xFF006400),
             minimumSize: Size(365, 60), // Size of the button.
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                  60.0), // Rounded edges for the button.
+              borderRadius:
+                  BorderRadius.circular(60.0), // Rounded edges for the button.
             ),
           ),
-          onPressed: () async{
+          onPressed: () async {
             try {
-              User? loginUser = await AuthService.signInUsingEmailPassword(email: _email.text, password: _password.text);
-              if(loginUser is User)
+              User? loginUser = await AuthService.signInUsingEmailPassword(
+                  email: _email.text, password: _password.text);
+              if (loginUser is User)
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => HomePage()),
                 );
             } catch (e) {
               setState(() {
-                _error = (e as FirebaseAuthException).message; 
-              }); 
+                _error = (e as FirebaseAuthException).message;
+              });
             }
           },
           child: const Text(

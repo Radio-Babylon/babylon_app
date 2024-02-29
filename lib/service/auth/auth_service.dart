@@ -20,7 +20,7 @@ class AuthService {
       user = auth.currentUser;
     } catch (e) {
       print(e);
-      throw(e);
+      throw (e);
     }
     return user;
   }
@@ -39,7 +39,7 @@ class AuthService {
       user = userCredential.user;
     } catch (e) {
       print(e);
-      throw(e);
+      throw (e);
     }
     return user;
   }
@@ -49,7 +49,8 @@ class AuthService {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(

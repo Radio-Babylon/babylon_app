@@ -1,5 +1,7 @@
 import 'package:babylon_app/login.dart';
 import 'package:babylon_app/navigation_menu.dart';
+import 'package:babylon_app/service/user/babylon_user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'partners.dart';
 import 'chats.dart';
@@ -42,6 +44,9 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    BabylonUser.changeBabylonUserData(
+        currentUser: FirebaseAuth.instance.currentUser);
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -136,7 +141,6 @@ class HomeScreen extends StatelessWidget {
               _buildForumCard('FORUM TOPIC 3', '1 Reply', true),
             ],
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
