@@ -1,106 +1,140 @@
 import 'package:flutter/material.dart';
-import 'events.dart'; // Import the Event class from the events.dart file.
+import 'events.dart'; // Ensure this file contains the Event class with all necessary fields.
 
-// EventInfoScreen displays detailed information about an event.
+// EventInfoScreen displays detailed information about an event including the host and location.
 class EventInfoScreen extends StatelessWidget {
-  // Event to display is passed through the constructor.
+  // Event object passed through the constructor containing all event details.
   final Event event;
 
-  // Constructor requires an Event object when creating the widget.
+  // Requiring the event parameter when the widget is constructed.
   const EventInfoScreen({Key? key, required this.event}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // Use MediaQuery to get device width for responsive design.
-    double screenWidth = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
 
-    // Scaffold provides the AppBar at the top and a Body for content.
+    // Scaffold provides the AppBar at the top and a body for the content.
     return Scaffold(
       appBar: AppBar(
         title: Text(
           event.title,
-          style: TextStyle(fontSize: 24), // Larger AppBar title
+          style: TextStyle(
+              fontSize: 24), // Increase font size for AppBar title for better visibility.
         ),
         backgroundColor: Colors.green,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            // Centered container for the event image with increased size.
+            // Container for the event image, taking full width of the screen.
             Container(
               width: screenWidth,
-              // Make the image take the full width of the screen.
               child: Image.asset(
                 'assets/images/eventexample.jpg',
-                height: 200,
-                // Increased height from 80 to 200 for a larger image.
+                height: 250, // Increase height for a more prominent image.
                 fit: BoxFit.cover,
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+            // Padding for the content below the image.
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0, vertical: 24.0),
               child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(24.0),
-                    // Increased padding for more space.
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          event.title,
-                          style: TextStyle(fontSize: 34),
-                          // Larger title text
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  // Event title with increased font size.
+                  Text(
+                    event.title,
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  // Event description with appropriate styling.
+                  Text(
+                    event.description,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  SizedBox(height: 16),
+                  // Row for the date with calendar icon.
+                  Row(
+                    children: [
+                      Icon(Icons.calendar_today, size: 20),
+                      SizedBox(width: 8),
+                      // Text for the event date and time.
+                      Text(
+                        '${event.date} at ${event.time}',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  // Row for the location with location icon.
+                  Row(
+                    children: [
+                      Icon(Icons.location_on, size: 20),
+                      SizedBox(width: 8),
+                      // Text for the event location.
+                      Text(
+                        event.location,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Text.rich(
+                    TextSpan(
+                      style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                      children: [
+                        TextSpan(
+                          text: 'Hosted by: ', // Texto inicial
                         ),
-                        SizedBox(height: 10),
-                        Text(
-                          textAlign: TextAlign.left,
-                          event.description,
-                          style: TextStyle(fontSize: 18), // Larger description text for readability.
+                        WidgetSpan(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: CircleAvatar(
+                              backgroundImage: AssetImage('assets/images/default_user_logo.png'),
+                              radius: 20,
+                            ),
+                          ),
+                        ),
+                        TextSpan(
+                          text: event.host, // Nombre del anfitrión
                         ),
                       ],
                     ),
                   ),
-                  Row(
-                    children: [
-                      Icon(Icons.calendar_today, size: 30), // Calendar icon.
-                      SizedBox(width: 8), // Space between icon and text.
-                      Text(
-                        '${event.date} at ${event.time}',
-                        style: TextStyle(
-                            fontSize:
-                                18), // Slightly larger date and time text for readability.
-                      ),
-                    ],
-                  ),
+
+                  SizedBox(height: 24),
+                  // Attend button with larger text and padding.
                   ElevatedButton(
                     child: Text('ATTEND', style: TextStyle(fontSize: 18)),
-                    // Larger button text.
                     onPressed: () {
-                      // Event attendance functionality to be implemented here.
+                      // TODO: Implement event attendance functionality.
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       padding: EdgeInsets.symmetric(
-                          horizontal: 50,
-                          vertical: 15), // Larger button padding.
+                          horizontal: 32, vertical: 12),
                     ),
                   ),
-                  // Section showing people attending the event inside a styled container.
+                  // Section for people attending the event.
                   _buildPeopleAttendingSection(context),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 
-  // Builds the 'People Attending' section with a more attractive design.
+  // Widget to build the 'People Attending' section.
   Widget _buildPeopleAttendingSection(BuildContext context) {
-    // Replace with actual data in a real app.
-    List<String> attendingUsers = List.generate(
-        15, (index) => 'Person ${index + 1}'); // Example list of 15 people.
+    // Replace with actual data
+    List<String> attendingUsers = List.generate(15, (index) => 'Person ${index + 1}');
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25),
@@ -111,26 +145,30 @@ class EventInfoScreen extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
               'People Attending',
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1!
-                  .copyWith(fontSize: 18), // Larger text for the section title.
+              style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 18), // Larger text for the section title.
             ),
           ),
-          // Horizontally scrollable list of avatars.
+          // Horizontally scrollable list of avatars with an overlap effect.
           Container(
-            height: 49,
-            child: ListView.separated(
+            height: 70, // Adjusted height to accommodate the border.
+            child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 4,
-              // Show 4 for the preview
-              separatorBuilder: (_, index) => SizedBox(width: 10),
-              // Increased separation for the avatars.
+              itemCount: attendingUsers.length, // The total number of avatars to display.
               itemBuilder: (context, index) {
-                return CircleAvatar(
-                  backgroundImage:
-                      AssetImage('assets/images/default_user_logo.png'),
-                  radius: 30, // Larger avatars for better visibility.
+                // Wrapping each avatar with a Transform.translate to create an overlap effect.
+                return Transform.translate(
+                  offset: Offset(-30.0 * index, 0), // Shifts each avatar to the left; adjust the multiplier as needed.
+                  child: Container(
+                    margin: EdgeInsets.only(right: index != attendingUsers.length - 1 ? 20 : 0), // Adjust the right margin to control the overlap
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 3), // White border around the avatar
+                    ),
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/images/default_user_logo.png'),
+                      radius: 30, // The radius of avatars.
+                    ),
+                  ),
                 );
               },
             ),
@@ -139,18 +177,16 @@ class EventInfoScreen extends StatelessWidget {
             padding: const EdgeInsets.only(top: 8.0),
             child: OutlinedButton.icon(
               onPressed: () {
-                // Opens a dialog showing all attendees.
-                _showAllAttendeesPopup(context, attendingUsers);
+                // Opens a bottom sheet showing all attendees. The function to show the bottom sheet needs to be defined.
+                _showAllAttendeesBottomSheet(context, attendingUsers);
               },
-              icon: Icon(Icons.person, size: 24), // Larger icon size.
+              icon: Icon(Icons.person, size: 24), // Icon for the 'See all' button.
               label: Text(
                 'See all (${attendingUsers.length})',
-                style: TextStyle(
-                    fontSize: 16), // Larger text for 'See all' button.
+                style: TextStyle(fontSize: 16), // Text style for the 'See all' button.
               ),
               style: OutlinedButton.styleFrom(
-                side: BorderSide(
-                    color: Colors.green), // Border color to match the theme.
+                side: BorderSide(color: Colors.green), // Border color to match the theme.
               ),
             ),
           ),
@@ -160,44 +196,73 @@ class EventInfoScreen extends StatelessWidget {
   }
 
   // Function to show a dialog with all attending users.
-  void _showAllAttendeesPopup(
-      BuildContext context, List<String> attendingUsers) {
-    showDialog(
+  void _showAllAttendeesBottomSheet(BuildContext context, List<String> attendingUsers) {
+    final Size screenSize = MediaQuery.of(context).size;
+    final double bottomSheetHeight = screenSize.height * 0.75;
+
+
+    showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('All Attendees', style: TextStyle(fontSize: 20)),
-          // Larger dialog title.
-          content: SizedBox(
-            width: double.maxFinite,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: attendingUsers.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage:
-                        AssetImage('assets/images/default_user_logo.png'),
-                    radius: 20, // Larger avatar in dialog.
-                  ),
-                  title: Text(attendingUsers[index],
-                      style: TextStyle(
-                          fontSize: 16)), // Larger text in dialog list.
-                );
-              },
+        // Use a Stack to layer the elements correctly
+        return Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            // Semi-transparent overlay
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: bottomSheetHeight,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop(); // Close the modal when the overlay is tapped
+                },
+                child: Container(
+                  color: Colors.black.withOpacity(0.5),
+                ),
+              ),
             ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Close', style: TextStyle(fontSize: 16)),
-              // Larger 'Close' button text.
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+            // Main bottom sheet content
+            Container(
+              margin: EdgeInsets.only(top: screenSize.height - bottomSheetHeight),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+              ),
+              child: ListView.builder(
+                itemCount: attendingUsers.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: AssetImage('assets/images/default_user_logo.png'),
+                      radius: 20,
+                    ),
+                    title: Text(attendingUsers[index], style: TextStyle(fontSize: 16)),
+                    onTap: () {
+                      // TODO: Implement navigation to attendee's profile
+                    },
+                  );
+                },
+              ),
+            ),
+            // Close button that 'floats' above the bottom sheet and overlay
+            Positioned(
+              top: screenSize.height - bottomSheetHeight - 30,
+              child: FloatingActionButton(
+                backgroundColor: Colors.green,
+                child: Icon(Icons.close, color: Colors.white),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the bottom sheet
+                },
+              ),
             ),
           ],
         );
       },
     );
   }
+
 }

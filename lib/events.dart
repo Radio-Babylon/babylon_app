@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'events-info.dart'; // Make sure this file exists with the EventInfoScreen class
-// If you have a custom drawer, make sure 'navigation_menu.dart' exists with the PublicDrawer class.
-// Otherwise, comment out or remove the line below.
-import 'navigation_menu.dart';
+import 'events-info.dart'; // This file should contain the EventInfoScreen class.
 
-
-// Define the Event class with all necessary information about an event.
+// Define the Event class with all necessary information about an event, including the host and location.
 class Event {
   final String title;
   final String date;
   final String time;
   final String description;
+  final String host;
+  final String location;
 
-  Event(this.title, this.date, this.time, this.description);
+  Event(this.title, this.date, this.time, this.description, this.host, this.location);
 }
 
-// Define the EventsScreen as a StatefulWidget.
+// Define the EventsScreen as a StatefulWidget to handle dynamic content like user events.
 class EventsScreen extends StatefulWidget {
   const EventsScreen({Key? key}) : super(key: key);
 
@@ -23,30 +21,26 @@ class EventsScreen extends StatefulWidget {
   State<EventsScreen> createState() => _EventsScreenState();
 }
 
-// Define the corresponding State class for EventsScreen.
+// Define the corresponding State class for EventsScreen with TabController for tab navigation.
 class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  // Initialize the TabController.
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
   }
 
-  // Dispose of the TabController when it's no longer needed.
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
   }
 
-  // Build the UI for the EventsScreen.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // If you don't have a custom drawer, comment out or remove the line below.
-      drawer: const PublicDrawer(), // Replace with your drawer widget
+       // Custom drawer widget for navigation.
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,7 +49,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
             SizedBox(
               height: 55,
               width: 55,
-              child: Image.asset('assets/images/logowhite.png'), // Replace with your logo asset
+              child: Image.asset('assets/images/logowhite.png'), // Your logo asset.
             ),
           ],
         ),
@@ -72,13 +66,14 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
         controller: _tabController,
         children: [
           _buildEventList(upcomingEvents),
-          _buildEventList([upcomingEvents[0]]),
+          // Assuming _buildEventList is a method that returns a list of event cards.
+          _buildEventList([upcomingEvents[0]]), // Example for 'My Events' tab.
         ],
       ),
     );
   }
 
-  // Build a ListView of event cards.
+  // Method to build a list view of event cards.
   Widget _buildEventList(List<Event> events) {
     return ListView.builder(
       itemCount: events.length,
@@ -88,24 +83,26 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
     );
   }
 
-  // Build a single event card.
+  // Method to build a single event card widget.
   Widget _buildEventCard(Event event) {
     return Card(
       margin: const EdgeInsets.all(10),
       child: ListTile(
-        leading: Image.asset('assets/images/logoSquare.png', width: 100), // Replace with your event image asset
+        leading: Image.asset('assets/images/logoSquare.png', width: 100),
         title: Text(event.title),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${event.date}  ${event.time}'),
-            Text(event.description),
+            Text('${event.date} at ${event.time}'),
+            Text(event.description, maxLines: 3, overflow: TextOverflow.ellipsis),
+            Text('Host: ${event.host}'), // Display the host of the event.
+            Text('Location: ${event.location}'), // Display the location of the event.
           ],
         ),
         trailing: IconButton(
           icon: const Icon(Icons.info_outline),
           onPressed: () {
-            // Navigate to the EventInfoScreen when the info button is pressed.
+            // When the info button is pressed, navigate to the EventInfoScreen.
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -119,11 +116,9 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
   }
 }
 
-
-// Define a list of example events.
+// Example list of events with host and location included.
 final List<Event> upcomingEvents = [
-  Event('Music Concert', '25th Dec', '6:00 PM', 'An amazing music experience'),
-  Event('Art Exhibition', '1st Jan', '12:00 PM', 'Explore the works of modern artists'),
-  Event('Tech Conference', '15th Jan', '9:00 AM', 'Discover cutting-edge technology trends'),
+  Event('Music Concert', '25th Dec', '6:00 PM', 'An amazing music experience lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'DJ Mike', 'The Grand Arena'),
+  Event('Art Exhibition', '1st Jan', '12:00 PM', 'Explore the works of modern artists', 'Art Collective', 'Downtown Gallery'),
+  Event('Tech Conference', '15th Jan', '9:00 AM', 'Discover cutting-edge technology trends', 'Tech Innovators', 'Convention Center'),
 ];
-
