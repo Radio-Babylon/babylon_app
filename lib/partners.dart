@@ -1,24 +1,29 @@
+import 'package:babylon_app/models/partner.dart';
 import 'package:babylon_app/navigation_menu.dart';
+import 'package:babylon_app/service/partner/partnerService.dart';
 import 'package:flutter/material.dart';
 import 'events-info.dart'; // Assuming you have this file for navigating to events info
 
 class PartnersScreen extends StatelessWidget {
-  // Example list of partners
-  final List<Partner> partners = [
-    Partner(name: 'BUSINESS NAME', location: 'location of the business', discount: 'discount, deals'),
-    Partner(name: 'BUSINESS NAME', location: 'location of the business', discount: 'discount, deals'),
-    Partner(name: 'BUSINESS NAME', location: 'location of the business', discount: 'discount, deals'),
-    Partner(name: 'BUSINESS NAME', location: 'location of the business', discount: 'discount, deals'),
-    Partner(name: 'BUSINESS NAME', location: 'location of the business', discount: 'discount, deals'),
-    Partner(name: 'BUSINESS NAME', location: 'location of the business', discount: 'discount, deals'),
-    Partner(name: 'BUSINESS NAME', location: 'location of the business', discount: 'discount, deals'),
-    Partner(name: 'BUSINESS NAME', location: 'location of the business', discount: 'discount, deals'),
-    Partner(name: 'BUSINESS NAME', location: 'location of the business', discount: 'discount, deals'),
-    Partner(name: 'BUSINESS NAME', location: 'location of the business', discount: 'discount, deals'),
-    Partner(name: 'BUSINESS NAME', location: 'location of the business', discount: 'discount, deals'),
-    Partner(name: 'BUSINESS NAME', location: 'location of the business', discount: 'discount, deals'),
-    // Add more partners here
-  ];
+  const PartnersScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: FutureBuilderPartners(),
+    );
+  }
+}
+
+class FutureBuilderPartners extends StatefulWidget {
+  const FutureBuilderPartners({super.key});
+
+  @override
+  State<FutureBuilderPartners> createState() => _FutureBuilderPartnersState();
+}
+
+class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
+  final Future<List<Partner>> _partners = PartnerService.getPartners();
 
   @override
   Widget build(BuildContext context) {
@@ -38,19 +43,63 @@ class PartnersScreen extends StatelessWidget {
         ),
         backgroundColor: Colors.green, // Adjust the color as needed
       ),
-      body: ListView.builder(
-        itemCount: partners.length,
-        itemBuilder: (context, index) {
-          return PartnerTile(partner: partners[index]);
-        },
-      ),
+      body: DefaultTextStyle(
+        style: Theme.of(context).textTheme.displayMedium!,
+        textAlign: TextAlign.center,
+        child: FutureBuilder<List<Partner>>(
+          future: _partners, // a previously-obtained Future<String> or null
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Partner>> snapshot) {
+            List<Widget> children;
+            if (snapshot.hasData) {
+              children = <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(left: 16, top: 16),
+                    child: Text("OUR PARTNERS",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                  ),
+                  ...snapshot.data!.map((aPartner) =>  
+                    Card(
+                      child: ListTile(
+                        leading: FlutterLogo(size: 56.0), // Replace with actual logo
+                        title: Text(aPartner.Name!),
+                        subtitle: Text('What you can get: ${aPartner.Discount}'),
+                        trailing: Icon(Icons.view_list),
+                        onTap: () => 
+                          AlertDialog(
+                            title: Text(aPartner.Name!),
+                            content: Text('You can get ${aPartner.Discount} at ${aPartner.Location}'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text('Close'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          ),
+                      ),
+                  ))
+              ];
+            } else if (snapshot.hasError) {
+              children = <Widget>[];
+            } else {
+              children = <Widget>[];
+            }
+            return ListView(
+              children: children,
+            );
+          },
+        ),
+      )
     );
   }
 }
 
 class PartnerTile extends StatelessWidget {
   final Partner partner;
-
   PartnerTile({required this.partner});
 
   // Function to show details in a pop-up
@@ -59,8 +108,8 @@ class PartnerTile extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(partner.name),
-          content: Text('You can get ${partner.discount} at ${partner.location}'),
+          title: Text(partner.Name!),
+          content: Text('You can get ${partner.Discount} at ${partner.Location}'),
           actions: <Widget>[
             TextButton(
               child: Text('Close'),
@@ -79,20 +128,11 @@ class PartnerTile extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: FlutterLogo(size: 56.0), // Replace with actual logo
-        title: Text(partner.name),
-        subtitle: Text('What you can get: ${partner.discount}'),
+        title: Text(partner.Name!),
+        subtitle: Text('What you can get: ${partner.Discount}'),
         trailing: Icon(Icons.view_list),
         onTap: () => _showDetails(context),
       ),
     );
   }
-}
-
-// Partner data structure
-class Partner {
-  final String name;
-  final String location;
-  final String discount;
-
-  Partner({required this.name, required this.location, required this.discount});
 }
