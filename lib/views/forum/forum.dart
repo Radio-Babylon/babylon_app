@@ -1,6 +1,6 @@
+import 'package:babylon_app/views/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'forumTopic.dart';
-import 'package:babylon_app/navigation_menu.dart';
 
 class ForumScreen extends StatelessWidget {
   @override

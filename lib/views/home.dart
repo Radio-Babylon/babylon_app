@@ -1,15 +1,7 @@
-import 'package:babylon_app/login.dart';
-import 'package:babylon_app/navigation_menu.dart';
-import 'package:babylon_app/service/user/babylon_user.dart';
+import 'package:babylon_app/services/user/babylon_user.dart';
+import 'package:babylon_app/views/navigation_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'partners.dart';
-import 'chats.dart';
-import 'news.dart';
-import 'forum.dart';
-import 'events.dart';
-import 'connections.dart';
-import 'myprofile.dart';
 
 // HomePage with a custom user profile section above the AppBar, a Drawer, and PageView for content navigation
 class HomePage extends StatefulWidget {

@@ -1,12 +1,12 @@
-import 'package:babylon_app/firebase_options.dart';
-import 'package:babylon_app/home.dart';
-import 'package:babylon_app/service/auth/auth_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:babylon_app/services/auth/auth_service.dart';
+import 'package:babylon_app/services/firebase_options.dart';
+import 'package:babylon_app/views/home.dart';
+import 'package:babylon_app/views/register/register1.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'register1.dart';
-import 'login.dart';
+import 'views/login/login.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

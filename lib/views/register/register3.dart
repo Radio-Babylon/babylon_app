@@ -1,7 +1,7 @@
-import 'package:babylon_app/home.dart';
+import 'package:babylon_app/views/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:babylon_app/service/user/user_service.dart';
+import 'package:babylon_app/services/user/user_service.dart';
 
 class RegisterPage3 extends StatefulWidget {
   @override

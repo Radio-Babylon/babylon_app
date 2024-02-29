@@ -1,10 +1,9 @@
-import 'package:babylon_app/service/auth/authExceptions.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:babylon_app/services/auth/authExceptions.dart';
+import 'package:babylon_app/services/auth/auth_service.dart';
+import 'package:babylon_app/services/user/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'register2.dart';
-import 'service/auth/auth_service.dart';
-import 'service/user/user_service.dart';
 
 class CreateAccountPage extends StatelessWidget {
   @override

@@ -1,6 +1,6 @@
+import 'package:babylon_app/views/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:babylon_app/navigation_menu.dart';
 
 class RadioScreen extends StatelessWidget {
   // The URL you want to open

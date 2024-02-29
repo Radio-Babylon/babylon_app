@@ -1,12 +1,12 @@
-import 'package:babylon_app/events.dart';
-import 'package:babylon_app/forum.dart';
-import 'package:babylon_app/home.dart';
-import 'package:babylon_app/myprofile.dart';
-import 'package:babylon_app/news.dart';
-import 'package:babylon_app/radio.dart';
+import 'package:babylon_app/views/events/events.dart';
+import 'package:babylon_app/views/forum/forum.dart';
+import 'package:babylon_app/views/home.dart';
+import 'package:babylon_app/views/news/news.dart';
+import 'package:babylon_app/views/partners/partners.dart';
+import 'package:babylon_app/views/profile/myprofile.dart';
+import 'package:babylon_app/views/radio/radio.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:babylon_app/partners.dart';
 
 
 class PublicDrawer extends StatefulWidget {

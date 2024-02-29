@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
 import 'chat.dart';
 
 class ChatsScreen extends StatelessWidget {

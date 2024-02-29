@@ -1,8 +1,7 @@
 import 'package:babylon_app/models/partner.dart';
-import 'package:babylon_app/navigation_menu.dart';
-import 'package:babylon_app/service/partner/partnerService.dart';
+import 'package:babylon_app/services/partner/partnerService.dart';
+import 'package:babylon_app/views/navigation_menu.dart';
 import 'package:flutter/material.dart';
-import 'events-info.dart'; // Assuming you have this file for navigating to events info
 
 class PartnersScreen extends StatelessWidget {
   const PartnersScreen({super.key});

@@ -1,8 +1,6 @@
-import 'dart:developer';
-//import 'dart:html';
-import 'package:babylon_app/service/user/babylon_user.dart';
+import 'package:babylon_app/services/user/babylon_user.dart';
 import 'package:flutter/material.dart';
-import 'home.dart'; // Make sure this import is correct for your HomeScreen widget
+import '../home.dart'; // Make sure this import is correct for your HomeScreen widget
 
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});

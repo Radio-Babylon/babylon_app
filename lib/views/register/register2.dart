@@ -1,13 +1,9 @@
-import 'package:babylon_app/home.dart';
-import 'package:babylon_app/service/user/user_service.dart';
+import 'package:babylon_app/services/user/user_service.dart';
+import 'package:babylon_app/views/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'register3.dart';
-
-import 'package:image/image.dart' as Img;
 
 class RegisterPage2 extends StatefulWidget {
   @override
