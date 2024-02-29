@@ -1,4 +1,4 @@
-import 'package:babylon_app/services/user/babylon_user.dart';
+import 'package:babylon_app/models/babylonUser.dart';
 import 'package:flutter/material.dart';
 import '../home.dart'; // Make sure this import is correct for your HomeScreen widget
 

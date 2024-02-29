@@ -1,4 +1,4 @@
-import 'package:babylon_app/services/user/babylon_user.dart';
+import 'package:babylon_app/models/babylonUser.dart';
 import 'package:babylon_app/views/navigation_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

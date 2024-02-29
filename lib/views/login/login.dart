@@ -1,4 +1,4 @@
-import 'package:babylon_app/services/auth/auth_service.dart';
+import 'package:babylon_app/services/auth/authService.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../home.dart'; // Asegúrate de que home.dart esté en el directorio correcto y tenga una clase HomePage
