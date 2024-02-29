@@ -89,7 +89,7 @@ class EventInfoScreen extends StatelessWidget {
                       style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
                       children: [
                         TextSpan(
-                          text: 'Hosted by: ', // Texto inicial
+                          text: 'Hosted by: ',
                         ),
                         WidgetSpan(
                           child: Padding(
@@ -101,7 +101,7 @@ class EventInfoScreen extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: event.host, // Nombre del anfitrión
+                          text: event.host,
                         ),
                       ],
                     ),
