@@ -63,23 +63,28 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
                   ...snapshot.data!.map((aPartner) =>  
                     Card(
                       child: ListTile(
-                        leading: FlutterLogo(size: 56.0), // Replace with actual logo
+                        leading: Image.network(aPartner.PictureURL!),
                         title: Text(aPartner.Name!),
                         subtitle: Text('What you can get: ${aPartner.Discount}'),
                         trailing: Icon(Icons.view_list),
                         onTap: () => 
-                          AlertDialog(
-                            title: Text(aPartner.Name!),
-                            content: Text('You can get ${aPartner.Discount} at ${aPartner.Location}'),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text('Close'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          ),
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(aPartner.Name!),
+                                content: Text('You can get ${aPartner.Discount} at ${aPartner.Location}'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text('Close'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          )
                       ),
                   ))
               ];
