@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'events-info.dart'; // This file should contain the EventInfoScreen class.
+import 'events-info.dart';
+import 'create_event.dart';
+// This file should contain the EventInfoScreen class.
 
 // Define the Event class with all necessary information about an event, including the host and location.
 class Event {
@@ -41,6 +43,18 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return Scaffold(
        // Custom drawer widget for navigation.
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CreateEventScreen()),
+          );
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.green,
+        // Alineación en la parte inferior izquierda
+
+      ),
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
