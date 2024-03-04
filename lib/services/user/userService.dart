@@ -98,4 +98,8 @@ class UserService {
     Image image = Image.memory(uint8list);
     return image;
   }
+
+  static Future<BabylonUser> getBabylonUser(String userUID) async {
+    return BabylonUser();
+  }
 }
