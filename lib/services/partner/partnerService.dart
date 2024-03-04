@@ -8,11 +8,13 @@ class PartnerService {
     try {
       final db = FirebaseFirestore.instance;
       var snapShot = await db.collection('partners').get();
-      snapShot.docs.forEach((snapShot) async{
+      
+      await Future.forEach(snapShot.docs, (snapShot) async {
         final partner = snapShot.data();
         final imageUrl = await FirebaseStorage.instance.ref().child(partner["picture"]).getDownloadURL();
         result.add(Partner(partner["name"],imageUrl,partner["shortDescription"],partner["fullDescription"],partner["discount"],partner["location"])); 
       });
+      
       print(result);
     } catch (error) {
       print(error);
