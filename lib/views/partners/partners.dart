@@ -51,6 +51,8 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
               (BuildContext context, AsyncSnapshot<List<Partner>> snapshot) {
             List<Widget> children;
             if (snapshot.hasData) {
+              print(1);
+              print(snapshot.data);
               children = <Widget>[
                 Padding(
                     padding: EdgeInsets.only(left: 16, top: 16),
@@ -88,10 +90,43 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
                   ))
               ];
             } else if (snapshot.hasError) {
-              children = <Widget>[];
-            } else {
-              children = <Widget>[];
-            }
+                children = <Widget>[
+                  const Icon(
+                    Icons.error_outline,
+                    color: Colors.red,
+                    size: 60,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text('Error: ${snapshot.error}'),
+                  ),
+                ];
+              } else {
+                children = <Widget>[
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 16),
+                        child: SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: CircularProgressIndicator(
+                              color: Color(0xFF006400)),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16),
+                        child: Text('Loading...'),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 128),
+                        child: Image.asset('assets/images/logoSquare.png',
+                            height: 185, width: 185),
+                      ),
+                    ],
+                  )
+                ];
+              }
             return ListView(
               children: children,
             );
