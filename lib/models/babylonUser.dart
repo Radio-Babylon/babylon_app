@@ -9,6 +9,7 @@ class BabylonUser {
   String about = '';
 
   BabylonUser();
+  BabylonUser.withData(this.fullName,this.email,this.imagePath,this.about);
   BabylonUser.fromUser({required User? currentUser}) {
     imagePath = currentUser?.photoURL ?? '';
     email = currentUser?.email ?? '';

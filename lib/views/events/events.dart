@@ -1,19 +1,21 @@
+import 'package:babylon_app/models/event.dart';
+import 'package:babylon_app/services/event/eventService.dart';
 import 'package:flutter/material.dart';
 import 'events-info.dart';
 import 'create_event.dart';
 // This file should contain the EventInfoScreen class.
 
 // Define the Event class with all necessary information about an event, including the host and location.
-class Event {
-  final String title;
-  final String date;
-  final String time;
-  final String description;
-  final String host;
-  final String location;
+// class Event {
+//   final String title;
+//   final String date;
+//   final String time;
+//   final String description;
+//   final String host;
+//   final String location;
 
-  Event(this.title, this.date, this.time, this.description, this.host, this.location);
-}
+//   Event(this.title, this.date, this.time, this.description, this.host, this.location);
+// }
 
 // Define the EventsScreen as a StatefulWidget to handle dynamic content like user events.
 class EventsScreen extends StatefulWidget {
@@ -40,15 +42,17 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
        // Custom drawer widget for navigation.
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => CreateEventScreen()),
-          );
+        onPressed: () async {
+          var ui = await EventService.getEvents();
+          print(ui);
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => CreateEventScreen()),
+          // );
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.green,
@@ -79,9 +83,9 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
       body: TabBarView(
         controller: _tabController,
         children: [
-          _buildEventList(upcomingEvents),
-          // Assuming _buildEventList is a method that returns a list of event cards.
-          _buildEventList([upcomingEvents[0]]), // Example for 'My Events' tab.
+          // _buildEventList(upcomingEvents),
+          // // Assuming _buildEventList is a method that returns a list of event cards.
+          // _buildEventList([upcomingEvents[0]]), // Example for 'My Events' tab.
         ],
       ),
     );
@@ -103,20 +107,20 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
       margin: const EdgeInsets.all(10),
       child: ListTile(
         leading: Image.asset('assets/images/logoSquare.png', width: 100),
-        title: Text(event.title),
+        title: Text(event.Title!),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${event.date} at ${event.time}'),
-            Text(event.description, maxLines: 3, overflow: TextOverflow.ellipsis),
-            Text('Host: ${event.host}'), // Display the host of the event.
-            Text('Location: ${event.location}'), // Display the location of the event.
+            Text('${event.Date!.day} at ${event.Date!.hour}'),
+            Text(event.ShortDescription!, maxLines: 3, overflow: TextOverflow.ellipsis),
+            Text('Host: ${event.Creator!.fullName}'), // Display the host of the event.
+            Text('Location: ${event.Place}'), // Display the location of the event.
           ],
         ),
         trailing: IconButton(
           icon: const Icon(Icons.info_outline),
-          onPressed: () {
-            // When the info button is pressed, navigate to the EventInfoScreen.
+          onPressed: () async{
+            // When the info button is pressed, navigate to the EvonPentInfoScreen.
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -129,10 +133,3 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
     );
   }
 }
-
-// Example list of events with host and location included.
-final List<Event> upcomingEvents = [
-  Event('Music Concert', '25th Dec', '6:00 PM', 'An amazing music experience lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'DJ Mike', 'The Grand Arena'),
-  Event('Art Exhibition', '1st Jan', '12:00 PM', 'Explore the works of modern artists', 'Art Collective', 'Downtown Gallery'),
-  Event('Tech Conference', '15th Jan', '9:00 AM', 'Discover cutting-edge technology trends', 'Tech Innovators', 'Convention Center'),
-];

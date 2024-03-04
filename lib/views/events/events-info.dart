@@ -1,5 +1,5 @@
+import 'package:babylon_app/models/event.dart';
 import 'package:flutter/material.dart';
-import 'events.dart'; // Ensure this file contains the Event class with all necessary fields.
 
 // EventInfoScreen displays detailed information about an event including the host and location.
 class EventInfoScreen extends StatelessWidget {
@@ -21,7 +21,7 @@ class EventInfoScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          event.title,
+          event.Title!,
           style: TextStyle(
               fontSize: 24), // Increase font size for AppBar title for better visibility.
         ),
@@ -48,13 +48,13 @@ class EventInfoScreen extends StatelessWidget {
                 children: <Widget>[
                   // Event title with increased font size.
                   Text(
-                    event.title,
+                    event.Title!,
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   // Event description with appropriate styling.
                   Text(
-                    event.description,
+                    event.FullDescription!,
                     style: TextStyle(fontSize: 18),
                   ),
                   SizedBox(height: 16),
@@ -65,7 +65,7 @@ class EventInfoScreen extends StatelessWidget {
                       SizedBox(width: 8),
                       // Text for the event date and time.
                       Text(
-                        '${event.date} at ${event.time}',
+                        '${event.Date!.day} at ${event.Date!.hour}',
                         style: TextStyle(fontSize: 18),
                       ),
                     ],
@@ -78,7 +78,7 @@ class EventInfoScreen extends StatelessWidget {
                       SizedBox(width: 8),
                       // Text for the event location.
                       Text(
-                        event.location,
+                        event.Place!,
                         style: TextStyle(fontSize: 18),
                       ),
                     ],
@@ -101,7 +101,7 @@ class EventInfoScreen extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: event.host,
+                          text: event.Creator!.fullName,
                         ),
                       ],
                     ),

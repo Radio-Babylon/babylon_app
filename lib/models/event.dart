@@ -9,21 +9,14 @@ class Event {
   String? PictureURL;
   String? Place;
   String? ShortDescription;
-  String? Tittle;
+  String? Title;
 
   Event(this.Creator, this.Date, this.FullDescription, this.PictureURL,
-      this.Place, this.ShortDescription, this.Tittle);
+      this.Place, this.ShortDescription, this.Title);
 
-  Event.withCreator(String userUID, DateTime newDate, String newShortDescription, String newFullDescription, String newPlace, String newTittle
-  ){
-    Creator = UserService.getBabylonUser(userUID);
-    Date = newDate;
-    FullDescription = newShortDescription;
-    PictureURL = newFullDescription;
-    Place = newPlace;
-    ShortDescription = newShortDescription;
-    Tittle = newTittle;
-
+  static Future<Event> create(userUID, newDate, newFullDescription, newPictureURL, newPlace, newShortDescription, newTitle) async {
+    BabylonUser? user = await UserService.getBabylonUser(userUID);
+    return Event(user, newDate, newFullDescription, newPictureURL, newPlace, newShortDescription, newTitle);
   }
 }
 

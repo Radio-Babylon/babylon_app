@@ -99,7 +99,17 @@ class UserService {
     return image;
   }
 
-  static Future<BabylonUser> getBabylonUser(String userUID) async {
-    return BabylonUser();
+  static Future<BabylonUser?> getBabylonUser(String userUID) async {
+    BabylonUser? result;
+    try {
+      final db = FirebaseFirestore.instance;
+      final docUser = await db.collection('users').doc(userUID).get();
+      final userData = docUser.data();
+      result = BabylonUser.withData("${userData!["Name"]}-${userData["Surname"]}", userData["Email Address"], userData["ImageUrl"], "");
+      print(userData);
+    } catch (e) {
+      print(e);
+    }
+    return result;
   }
 }
