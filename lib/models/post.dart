@@ -4,10 +4,5 @@ class Post {
   String? featuredImageURL;
   String? url;
 
-  Post(String newTitle, String newExcerpt, String newFeaturedImageURL, String newUrl){
-      title = newTitle;
-      excerpt = newExcerpt;
-      featuredImageURL = newFeaturedImageURL;
-      url = newUrl;
-  }
+  Post(this.title, this.excerpt, this.featuredImageURL, this.url);
 }

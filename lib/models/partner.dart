@@ -6,12 +6,5 @@ class Partner{
   String? Discount;
   String? Location;
 
-  Partner(String newName, String newPictureURL, String newshortDescription, String newfullDescription, String newDiscount, String newLocation){
-      Name = newName;
-      PictureURL = newPictureURL;
-      ShortDescription = newshortDescription;
-      FullDescription = newfullDescription;
-      Discount = newDiscount;
-      Location = newLocation;
-  }
+  Partner(this.Name, this.PictureURL, this.ShortDescription, this.FullDescription, this.Discount, this.Location);
 }
