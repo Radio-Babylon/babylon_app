@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -58,7 +61,31 @@ class AuthService {
       idToken: googleAuth?.idToken,
     );
 
+    var signedIdUser = await FirebaseAuth.instance.signInWithCredential(credential);
+
+    await hasCurrentUserData();
     // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return signedIdUser;
   }
+
+  static Future<void> hasCurrentUserData() async{
+    try {
+      User currUser = FirebaseAuth.instance.currentUser!;
+      final db = FirebaseFirestore.instance;
+      final docUser = await db.collection('users').doc(currUser.uid).get();
+      final userData = docUser.data();
+      if(userData == null){
+        final userNewData = <String, String>{
+          "Country of Origin": "*",
+          "Date of Birth": DateTime.now().toLocal().toString(),
+          "Email Address": currUser.email!,
+          "Name" : currUser.displayName!,
+          "Surname" : ""
+        };
+        await db.collection("users").doc(currUser.uid).set(userNewData);
+      }
+    } catch (e) {
+      throw(e);
+    }
+  } 
 }
