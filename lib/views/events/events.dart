@@ -3,19 +3,6 @@ import 'package:babylon_app/services/event/eventService.dart';
 import 'package:flutter/material.dart';
 import 'events-info.dart';
 import 'create_event.dart';
-// This file should contain the EventInfoScreen class.
-
-// Define the Event class with all necessary information about an event, including the host and location.
-// class Event {
-//   final String title;
-//   final String date;
-//   final String time;
-//   final String description;
-//   final String host;
-//   final String location;
-
-//   Event(this.title, this.date, this.time, this.description, this.host, this.location);
-// }
 
 // Define the EventsScreen as a StatefulWidget to handle dynamic content like user events.
 class EventsScreen extends StatefulWidget {
@@ -28,6 +15,7 @@ class EventsScreen extends StatefulWidget {
 // Define the corresponding State class for EventsScreen with TabController for tab navigation.
 class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final Future<List<Event>> _events = EventService.getEvents();
 
   @override
   void initState() {
@@ -49,10 +37,10 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
         onPressed: () async {
           var ui = await EventService.getEvents();
           print(ui);
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => CreateEventScreen()),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CreateEventScreen()),
+          );
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.green,
@@ -83,7 +71,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
       body: TabBarView(
         controller: _tabController,
         children: [
-          // _buildEventList(upcomingEvents),
+          _buildEventList(),
           // // Assuming _buildEventList is a method that returns a list of event cards.
           // _buildEventList([upcomingEvents[0]]), // Example for 'My Events' tab.
         ],
@@ -92,12 +80,67 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
   }
 
   // Method to build a list view of event cards.
-  Widget _buildEventList(List<Event> events) {
-    return ListView.builder(
-      itemCount: events.length,
-      itemBuilder: (context, index) {
-        return _buildEventCard(events[index]);
-      },
+  Widget _buildEventList() {
+    return FutureBuilder<List<Event>>(
+      future: _events, // a previously-obtained Future<String> or null
+      builder:
+          (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
+        List<Widget> children;
+        if (snapshot.hasData) {
+          print(1);
+          print(snapshot.data);
+          children = <Widget>[
+            Padding(
+                padding: EdgeInsets.only(left: 16, top: 16),
+                child: Text("Upcoming events",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold)),
+              ),
+              ...snapshot.data!.map((anEvent) => _buildEventCard(anEvent) )
+          ];
+        } else if (snapshot.hasError) {
+            children = <Widget>[
+              const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              ),
+            ];
+          } else {
+            children = <Widget>[
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 16),
+                    child: SizedBox(
+                      width: 60,
+                      height: 60,
+                      child: CircularProgressIndicator(
+                          color: Color(0xFF006400)),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 16),
+                    child: Text('Loading...'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 128),
+                    child: Image.asset('assets/images/logoSquare.png',
+                        height: 185, width: 185),
+                  ),
+                ],
+              )
+            ];
+          }
+        return ListView(
+          children: children,
+        );
+      }
     );
   }
 
@@ -106,7 +149,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
     return Card(
       margin: const EdgeInsets.all(10),
       child: ListTile(
-        leading: Image.asset('assets/images/logoSquare.png', width: 100),
+        leading: Image.network(event.PictureURL!),
         title: Text(event.Title!),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
