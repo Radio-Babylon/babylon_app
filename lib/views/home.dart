@@ -11,6 +11,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+  late User? currentUser = FirebaseAuth.instance.currentUser;
   // Controller for the tabs
   late TabController _tabController;
 
@@ -67,16 +68,52 @@ class _HomePageState extends State<HomePage>
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final String name = user?.displayName ?? 'User';
+    final String photoUrl = user?.photoURL ?? 'assets/default_avatar.png'; // Asegúrate de tener una imagen predeterminada en tus assets.
+
     return ListView(
-      // Using a ListView for scrollable content
       children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(top: 20, bottom: 20),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.green, Colors.white], // Ajusta estos colores para que se adapten a tu tema.
+            ),
+          ),
+          child: Column(
+            children: [
+              CircleAvatar(
+                backgroundImage: photoUrl.startsWith('http') ? NetworkImage(photoUrl) : AssetImage(photoUrl) as ImageProvider, // Maneja tanto las URL de la red como los assets locales.
+                radius: 50.0,
+                backgroundColor: Colors.transparent,
+              ),
+              SizedBox(height: 10), // Agrega un poco de espacio entre la imagen y el texto
+              Text(
+                'Welcome, $name',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+        ),
         _buildUpcomingEventsSection(context),
         _buildForumsParticipationSection(context),
         _buildChatsSection(context),
-        // Add more sections or widgets here if needed
+        // Agrega más secciones o widgets aquí si es necesario
       ],
     );
   }
+
+// Tus otros métodos para construir secciones...
+}
+
 
   Widget _buildUpcomingEventsSection(BuildContext context) {
     return Padding(
@@ -306,7 +343,7 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-}
+
 
 /*  THE FIRST REMOVED SECTION
 
