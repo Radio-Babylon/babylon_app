@@ -1,5 +1,6 @@
 import 'package:babylon_app/models/event.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 // EventInfoScreen displays detailed information about an event including the host and location.
 class EventInfoScreen extends StatelessWidget {
@@ -33,8 +34,8 @@ class EventInfoScreen extends StatelessWidget {
             // Container for the event image, taking full width of the screen.
             Container(
               width: screenWidth,
-              child: Image.asset(
-                'assets/images/eventexample.jpg',
+              child: Image.network(
+                event.PictureURL!,
                 height: 250, // Increase height for a more prominent image.
                 fit: BoxFit.cover,
               ),
@@ -65,7 +66,7 @@ class EventInfoScreen extends StatelessWidget {
                       SizedBox(width: 8),
                       // Text for the event date and time.
                       Text(
-                        '${event.Date!.day} at ${event.Date!.hour}',
+                        '${DateFormat('dd MMMM yyyy').format(event.Date!)} at ${DateFormat('hh:mm aaa').format(event.Date!)}',
                         style: TextStyle(fontSize: 18),
                       ),
                     ],
@@ -95,7 +96,7 @@ class EventInfoScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10.0),
                             child: CircleAvatar(
-                              backgroundImage: AssetImage('assets/images/default_user_logo.png'),
+                              backgroundImage: NetworkImage(event.Creator!.imagePath),
                               radius: 20,
                             ),
                           ),

@@ -1,6 +1,7 @@
 import 'package:babylon_app/models/event.dart';
 import 'package:babylon_app/services/event/eventService.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'events-info.dart';
 import 'create_event.dart';
 
@@ -154,7 +155,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${event.Date!.day} at ${event.Date!.hour}'),
+            Text('${DateFormat('dd MMMM yyyy').format(event.Date!)} at ${DateFormat('hh:mm aaa').format(event.Date!)}'),
             Text(event.ShortDescription!, maxLines: 3, overflow: TextOverflow.ellipsis),
             Text('Host: ${event.Creator!.fullName}'), // Display the host of the event.
             Text('Location: ${event.Place}'), // Display the location of the event.
