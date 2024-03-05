@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'events-info.dart';
 import 'create_event.dart';
+import 'package:babylon_app/views/navigation_menu.dart';
+
 
 // Define the EventsScreen as a StatefulWidget to handle dynamic content like user events.
 class EventsScreen extends StatefulWidget {
@@ -48,6 +50,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
         // Alineación en la parte inferior izquierda
 
       ),
+      drawer: const PublicDrawer(),
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
