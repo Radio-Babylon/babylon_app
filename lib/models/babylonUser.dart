@@ -7,6 +7,7 @@ class BabylonUser {
   //final String dataOfBirth;
   //final String originCountry
   String about = '';
+  List<String> listedEvents = [];
 
   BabylonUser();
   BabylonUser.withData(this.fullName,this.email,this.imagePath,this.about);

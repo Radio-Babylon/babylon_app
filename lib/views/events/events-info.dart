@@ -1,4 +1,5 @@
 import 'package:babylon_app/models/event.dart';
+import 'package:babylon_app/services/event/eventService.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -113,7 +114,7 @@ class EventInfoScreen extends StatelessWidget {
                   ElevatedButton(
                     child: Text('ATTEND', style: TextStyle(fontSize: 18)),
                     onPressed: () {
-                      // TODO: Implement event attendance functionality.
+                      EventService.addUserToEvent(event);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
