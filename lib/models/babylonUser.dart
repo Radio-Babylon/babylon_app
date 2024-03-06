@@ -10,7 +10,7 @@ class BabylonUser {
   List<String> listedEvents = [];
 
   BabylonUser();
-  BabylonUser.withData(this.fullName,this.email,this.imagePath,this.about);
+  BabylonUser.withData(this.fullName,this.email,this.imagePath,this.about,this.listedEvents);
   BabylonUser.fromUser({required User? currentUser}) {
     imagePath = currentUser?.photoURL ?? '';
     email = currentUser?.email ?? '';

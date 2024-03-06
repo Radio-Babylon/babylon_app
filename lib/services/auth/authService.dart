@@ -81,7 +81,9 @@ class AuthService {
           "Email Address": currUser.email!,
           "Name" : currUser.displayName!,
           "Surname" : ""
+          
         };
+        userNewData["ImageUrl"] = currUser.photoURL!;
         await db.collection("users").doc(currUser.uid).set(userNewData);
       }
     } catch (e) {

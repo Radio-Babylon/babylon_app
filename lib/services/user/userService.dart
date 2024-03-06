@@ -102,10 +102,16 @@ class UserService {
   static Future<BabylonUser?> getBabylonUser(String userUID) async {
     BabylonUser? result;
     try {
+      List<String> eventsLists = List.empty(growable: true);
       final db = FirebaseFirestore.instance;
       final docUser = await db.collection('users').doc(userUID).get();
       final userData = docUser.data();
-      result = BabylonUser.withData("${userData!["Name"]}-${userData["Surname"]}", userData["Email Address"], userData["ImageUrl"], "");
+
+      final docsListedEvents = await db.collection('users').doc(userUID).collection('listedEvents').get();
+      await Future.forEach(docsListedEvents.docs, (snapShot) async {
+        eventsLists.add(snapShot.reference.id);
+      });
+      result = BabylonUser.withData("${userData!["Name"]}-${userData["Surname"]}", userData["Email Address"], userData["ImageUrl"], "", eventsLists);
       print(userData);
     } catch (e) {
       print(e);
