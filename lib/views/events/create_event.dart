@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:babylon_app/services/event/eventService.dart';
+import 'package:babylon_app/views/events/events.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -143,8 +146,12 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    // Logic to create the event would go here
+                  onPressed: () async {
+                    await EventService.createEvent(_nameController.text, File(_image!.path), Timestamp.fromDate(DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour,  _selectedTime!.minute)), _descriptionShortController.text, _descriptionController.text);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const EventsScreen()),
+                    );
                   },
                   child: Text('CREATE'),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.green),

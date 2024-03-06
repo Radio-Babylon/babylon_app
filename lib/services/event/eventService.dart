@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:babylon_app/models/babylonUser.dart';
 import 'package:babylon_app/models/event.dart';
 import 'package:babylon_app/services/user/userService.dart';
@@ -56,13 +58,27 @@ class EventService {
     }
   }
 
-  static Future<void> createEvent(Event event) async{
+  static Future<void> createEvent(String eventName, File image, Timestamp eventTimeStamp, String shortDescription, String description) async{
     try {
       User currUser = FirebaseAuth.instance.currentUser!;
       final db = FirebaseFirestore.instance;
-      final docUserListedEvents = await db.collection('users').doc(currUser.uid).collection('listedEvents').get();
-      final userListedEvents = docUserListedEvents.docs;
-      await db.collection("users").doc(currUser.uid).collection('listedEvents').doc(event.EventDocumentID).set({});
+      Reference referenceRoot = FirebaseStorage.instance.ref();
+      Reference referenceDirImages = referenceRoot.child('images');
+
+      final String imgName = '${DateTime.now().millisecondsSinceEpoch.toString()}.jpg';
+      Reference referenceImageToUpload = referenceDirImages.child(imgName);
+      await referenceImageToUpload.putFile(image);
+      
+      final newEvent = <String, dynamic>{
+        "title": eventName,
+        "creator": currUser.uid,
+        "shortDescription": shortDescription,
+        "fullDescription": description,
+        "date": eventTimeStamp,
+        "place": "somewhere",
+        "picture": "/images/"+imgName
+      };
+      db.collection("events").doc().set(newEvent);
     } catch (e) {
       print(e);
       throw(e);
