@@ -11,13 +11,18 @@ class Event {
   String? Place;
   String? ShortDescription;
   String? Title;
+  List<BabylonUser?> Attendees = []; 
 
   Event(this.Creator, this.Date, this.FullDescription, this.PictureURL,
-      this.Place, this.ShortDescription, this.Title, this.EventDocumentID);
+      this.Place, this.ShortDescription, this.Title, this.EventDocumentID, this.Attendees);
 
-  static Future<Event> create(userUID, newDate, newFullDescription, newPictureURL, newPlace, newShortDescription, newTitle, newEventDocumentID) async {
+  static Future<Event> create(userUID, newDate, newFullDescription, newPictureURL, newPlace, newShortDescription, newTitle, newEventDocumentID, List<String> attendeesID) async {
     BabylonUser? user = await UserService.getBabylonUser(userUID);
-    return Event(user, newDate, newFullDescription, newPictureURL, newPlace, newShortDescription, newTitle, newEventDocumentID);
+    List<BabylonUser?> attendees = List.empty(growable: true);
+    await Future.forEach(attendeesID, (attendee) async {
+        attendees.add(await UserService.getBabylonUser(attendee));
+      });
+    return Event(user, newDate, newFullDescription, newPictureURL, newPlace, newShortDescription, newTitle, newEventDocumentID, attendees);
   }
 }
 

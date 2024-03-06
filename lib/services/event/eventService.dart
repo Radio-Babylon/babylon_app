@@ -13,11 +13,16 @@ class EventService {
     try {
       final db = FirebaseFirestore.instance;
       var snapShot = await db.collection('events').get();
-      
       await Future.forEach(snapShot.docs, (snapShot) async {
+        List<String> attendeesID = List.empty(growable: true);
+        var attendeesSnapshot = await db.collection('events').doc(snapShot.id).collection("attendees").get();
+        attendeesSnapshot.docs.forEach((anAttendee) {
+          attendeesID.add(anAttendee.id);  
+        });
+
         final event = snapShot.data();
         final imageUrl = await FirebaseStorage.instance.ref().child(event["picture"]).getDownloadURL();
-        result.add(await Event.create(event["creator"], (event["date"] as Timestamp).toDate(), event["fullDescription"], imageUrl, event["place"], event["shortDescription"], event["title"], snapShot.reference.id));
+        result.add(await Event.create(event["creator"], (event["date"] as Timestamp).toDate(), event["fullDescription"], imageUrl, event["place"], event["shortDescription"], event["title"], snapShot.reference.id, attendeesID));
       });
     } catch (error) {
       print(error);
@@ -34,8 +39,14 @@ class EventService {
       await Future.forEach(snapShot.docs, (snapShot) async {
         final event = snapShot.data();
         if(babylonUser!.listedEvents.contains(snapShot.reference.id)){
+          List<String> attendeesID = List.empty(growable: true);
+          var attendeesSnapshot = await db.collection('events').doc(snapShot.id).collection("attendees").get();
+          attendeesSnapshot.docs.forEach((anAttendee) {
+            attendeesID.add(anAttendee.id);  
+          });
+
           final imageUrl = await FirebaseStorage.instance.ref().child(event["picture"]).getDownloadURL();
-          result.add(await Event.create(event["creator"], (event["date"] as Timestamp).toDate(), event["fullDescription"], imageUrl, event["place"], event["shortDescription"], event["title"], snapShot.reference.id));
+          result.add(await Event.create(event["creator"], (event["date"] as Timestamp).toDate(), event["fullDescription"], imageUrl, event["place"], event["shortDescription"], event["title"], snapShot.reference.id, attendeesID));
         }
       });
     } catch (error) {
@@ -48,8 +59,6 @@ class EventService {
     try {
       User currUser = FirebaseAuth.instance.currentUser!;
       final db = FirebaseFirestore.instance;
-      final docUserListedEvents = await db.collection('users').doc(currUser.uid).collection('listedEvents').get();
-      final userListedEvents = docUserListedEvents.docs;
       await db.collection("users").doc(currUser.uid).collection('listedEvents').doc(event.EventDocumentID).set({});
       await db.collection("events").doc(event.EventDocumentID).collection('attendees').doc(currUser.uid).set({});
     } catch (e) {

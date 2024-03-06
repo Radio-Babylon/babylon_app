@@ -136,8 +136,6 @@ class EventInfoScreen extends StatelessWidget {
   // Widget to build the 'People Attending' section.
   Widget _buildPeopleAttendingSection(BuildContext context) {
     // Replace with actual data
-    List<String> attendingUsers = List.generate(15, (index) => 'Person ${index + 1}');
-
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25),
       child: Column(
@@ -155,19 +153,19 @@ class EventInfoScreen extends StatelessWidget {
             height: 70, // Adjusted height to accommodate the border.
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: attendingUsers.length, // The total number of avatars to display.
+              itemCount: event.Attendees.length, // The total number of avatars to display.
               itemBuilder: (context, index) {
                 // Wrapping each avatar with a Transform.translate to create an overlap effect.
                 return Transform.translate(
                   offset: Offset(-30.0 * index, 0), // Shifts each avatar to the left; adjust the multiplier as needed.
                   child: Container(
-                    margin: EdgeInsets.only(right: index != attendingUsers.length - 1 ? 20 : 0), // Adjust the right margin to control the overlap
+                    margin: EdgeInsets.only(right: index != event.Attendees.length - 1 ? 20 : 0), // Adjust the right margin to control the overlap
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.white, width: 3), // White border around the avatar
                     ),
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/default_user_logo.png'),
+                      backgroundImage: NetworkImage(event.Attendees[index]!.imagePath),
                       radius: 30, // The radius of avatars.
                     ),
                   ),
@@ -180,11 +178,11 @@ class EventInfoScreen extends StatelessWidget {
             child: OutlinedButton.icon(
               onPressed: () {
                 // Opens a bottom sheet showing all attendees. The function to show the bottom sheet needs to be defined.
-                _showAllAttendeesBottomSheet(context, attendingUsers);
+                _showAllAttendeesBottomSheet(context);
               },
               icon: Icon(Icons.person, size: 24), // Icon for the 'See all' button.
               label: Text(
-                'See all (${attendingUsers.length})',
+                'See all (${event.Attendees.length})',
                 style: TextStyle(fontSize: 16), // Text style for the 'See all' button.
               ),
               style: OutlinedButton.styleFrom(
@@ -198,7 +196,7 @@ class EventInfoScreen extends StatelessWidget {
   }
 
   // Function to show a dialog with all attending users.
-  void _showAllAttendeesBottomSheet(BuildContext context, List<String> attendingUsers) {
+  void _showAllAttendeesBottomSheet(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     final double bottomSheetHeight = screenSize.height * 0.75;
 
@@ -235,14 +233,14 @@ class EventInfoScreen extends StatelessWidget {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
               ),
               child: ListView.builder(
-                itemCount: attendingUsers.length,
+                itemCount: event.Attendees.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/default_user_logo.png'),
+                      backgroundImage: NetworkImage(event.Attendees[index]!.imagePath),
                       radius: 20,
                     ),
-                    title: Text(attendingUsers[index], style: TextStyle(fontSize: 16)),
+                    title: Text(event.Attendees[index]!.fullName, style: TextStyle(fontSize: 16)),
                     onTap: () {
                       // TODO: Implement navigation to attendee's profile
                     },
