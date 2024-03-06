@@ -49,6 +49,20 @@ class EventService {
       final docUserListedEvents = await db.collection('users').doc(currUser.uid).collection('listedEvents').get();
       final userListedEvents = docUserListedEvents.docs;
       await db.collection("users").doc(currUser.uid).collection('listedEvents').doc(event.EventDocumentID).set({});
+      await db.collection("events").doc(event.EventDocumentID).collection('attendees').doc(currUser.uid).set({});
+    } catch (e) {
+      print(e);
+      throw(e);
+    }
+  }
+
+  static Future<void> createEvent(Event event) async{
+    try {
+      User currUser = FirebaseAuth.instance.currentUser!;
+      final db = FirebaseFirestore.instance;
+      final docUserListedEvents = await db.collection('users').doc(currUser.uid).collection('listedEvents').get();
+      final userListedEvents = docUserListedEvents.docs;
+      await db.collection("users").doc(currUser.uid).collection('listedEvents').doc(event.EventDocumentID).set({});
     } catch (e) {
       print(e);
       throw(e);
