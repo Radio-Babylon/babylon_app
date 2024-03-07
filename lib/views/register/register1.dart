@@ -30,7 +30,6 @@ class CreateAccountFormState extends State<CreateAccountForm> {
   final _formKey = GlobalKey<FormState>(); // Key for identifying the form.
 
   late final TextEditingController _name;
-  late final TextEditingController _surname;
   late final TextEditingController _dateOfBirth;
   late final TextEditingController _email;
   late final TextEditingController _county;
@@ -40,7 +39,6 @@ class CreateAccountFormState extends State<CreateAccountForm> {
 
   late final Map<String, TextEditingController> userInfoController = {
     'Name': _name,
-    'Surname': _surname,
     'Date of Birth': _dateOfBirth,
     'Email Address': _email,
     'Country of Origin': _county,
@@ -51,7 +49,6 @@ class CreateAccountFormState extends State<CreateAccountForm> {
 
   late final Map<String, String> userInfo = {
     'Name': _name.text,
-    'Surname': _surname.text,
     'Date of Birth': _dateOfBirth.text,
     'Email Address': _email.text,
     'Country of Origin': _county.text,
@@ -60,7 +57,6 @@ class CreateAccountFormState extends State<CreateAccountForm> {
   @override
   void initState() {
     _name = TextEditingController();
-    _surname = TextEditingController();
     _dateOfBirth = TextEditingController();
     _email = TextEditingController();
     _county = TextEditingController();
@@ -73,7 +69,6 @@ class CreateAccountFormState extends State<CreateAccountForm> {
   @override
   void dispose() {
     _name.dispose();
-    _surname.dispose();
     _dateOfBirth.dispose();
     _email.dispose();
     _county.dispose();
@@ -144,7 +139,6 @@ class CreateAccountFormState extends State<CreateAccountForm> {
             SizedBox(height: 30), // Bottom padding for the logo.
             // Calls the helper method to build text fields.
             _buildTextField(labelText: 'Name'),
-            _buildTextField(labelText: 'Surname'),
             _buildTextField(labelText: 'Date of Birth', hasDatePicker: true),
             _buildTextField(labelText: 'Email Address'),
             // _buildTextField(labelText: 'Country of Origin'),
@@ -169,9 +163,9 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                   ),
                 ),
                 onPressed: () async {
-                  final fullName = '${_name.text} ${_surname.text}';
+                  final fullName = '${_name.text}';
                   try {
-                    AuthException.validateRegisterForm(_name.text, _surname.text, _email.text, _password.text, _rePassword.text, _dateOfBirth.text);
+                    AuthException.validateRegisterForm(_name.text, _email.text, _password.text, _rePassword.text, _dateOfBirth.text);
                     User? currentUser =
                       await AuthService.registerUsingEmailPassword(
                           name: fullName,

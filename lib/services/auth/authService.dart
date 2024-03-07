@@ -79,9 +79,7 @@ class AuthService {
           "Country of Origin": "*",
           "Date of Birth": DateTime.now().toLocal().toString(),
           "Email Address": currUser.email!,
-          "Name" : currUser.displayName!,
-          "Surname" : ""
-          
+          "Name" : currUser.displayName!,          
         };
         userNewData["ImageUrl"] = currUser.photoURL!;
         await db.collection("users").doc(currUser.uid).set(userNewData);
