@@ -13,6 +13,7 @@ class CreateEventScreen extends StatefulWidget {
 
 class _CreateEventScreenState extends State<CreateEventScreen> {
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _placeController = TextEditingController();
   final TextEditingController _descriptionShortController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   DateTime? _selectedDate;
@@ -114,6 +115,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
               readOnly: true,
               onTap: () => _pickDateTime(context),
             ),
+
             SizedBox(height: 8.0), // Add spacing between the elements
             GestureDetector(
               onTap: _pickImage,
@@ -130,7 +132,10 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
               ),
             ),
             SizedBox(height: 8.0), // Add spacing between the elements
-
+            _buildTextField(
+              controller: _placeController,
+              labelText: 'Location',
+            ),
             _buildTextField(
               controller: _descriptionShortController,
               labelText: 'Short Description',

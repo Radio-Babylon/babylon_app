@@ -53,7 +53,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      drawer: const PublicDrawer(),
+
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

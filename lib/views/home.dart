@@ -1,5 +1,8 @@
 import 'package:babylon_app/models/babylonUser.dart';
+import 'package:babylon_app/views/connection/connections.dart';
+import 'package:babylon_app/views/events/events.dart';
 import 'package:babylon_app/views/navigation_menu.dart';
+import 'package:babylon_app/views/news/news.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -9,57 +12,72 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> {
   late User? currentUser = FirebaseAuth.instance.currentUser;
-  // Controller for the tabs
-  late TabController _tabController;
+  int _selectedIndex = 0; // Index for BottomNavigationBar
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Global key for the Scaffold
+
+  // Define your screens here. For now, I'll use placeholders.
+  final List<Widget> _screens = [
+    HomeScreen(), // Your main Home screen
+    ConnectionsScreen(), // Placeholder for Community
+    NewsScreen(), // Placeholder for News
+    EventsScreen(), // Placeholder for Events
+  ];
 
   @override
   void initState() {
     super.initState();
-    // Initialize TabController with the number of tabs
-    _tabController = TabController(length: 7, vsync: this);
+    // Update the BabylonUser data with the current user
+    BabylonUser.changeBabylonUserData(currentUser: FirebaseAuth.instance.currentUser);
   }
 
-  @override
-  void dispose() {
-    // Dispose of the TabController when the widget is disposed
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  void _selectTab(int index) {
-    // Function to handle drawer item tap events
-    Navigator.pop(context); // Close the drawer
-    _tabController.animateTo(index); // Change the tab to the selected index
+  void _onItemTapped(int index) {
+    if (index == 4) {
+      // If it's the last index, open the Drawer
+      _scaffoldKey.currentState?.openEndDrawer();
+    } else {
+      setState(() {
+        _selectedIndex = index; // Update the selected item
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    BabylonUser.changeBabylonUserData(
-        currentUser: FirebaseAuth.instance.currentUser);
-
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            const Text('Home'),
-            SizedBox(
-              height: 55,
-              width: 55,
-              child: Image.asset('assets/images/logowhite.png'),
-            ),
-          ],
-        ),
+      key: _scaffoldKey, // Use the global key here
+      appBar: _selectedIndex == 0 ? AppBar(
+        title: Text('Home'),
         backgroundColor: Colors.green,
+        iconTheme: IconThemeData(color: Colors.green),
+        // Set your preferred shade of green here
+        // Add other AppBar properties if needed
+      ) : null, // Only show AppBar when HomeScreen is displayed
+      body: _screens.elementAt(_selectedIndex), // Display the selected screen
+      endDrawer: const PublicDrawer(),
+
+
+      // Your already defined Drawer
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.green, // This sets the background color of the BottomNavigationBar
+        selectedItemColor: Colors.white, // This sets the color of the selected item, for example, white
+        unselectedItemColor: Colors.black,// Ensures that all items are displayed correctly
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.group), label: 'Community'),
+          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'News'),
+          BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Events'),
+          BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'More'), // Button to open the Drawer
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
-      body: HomeScreen(),
-      drawer: const PublicDrawer(),
     );
   }
 }
+
 
 // Define other screens like HomeScreen, NewsScreen, etc., similar to the HomeScreen class
 // Each screen will have its own layout and widgets
@@ -71,8 +89,7 @@ class HomeScreen extends StatelessWidget {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     final String name = user?.displayName ?? 'User';
-    final String photoUrl = user?.photoURL ?? 'assets/default_avatar.png'; // Asegúrate de tener una imagen predeterminada en tus assets.
-
+    final String photoUrl = user?.photoURL ?? 'assets/default_avatar.png';
     return ListView(
       children: <Widget>[
         Container(
@@ -81,7 +98,7 @@ class HomeScreen extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Colors.green, Colors.white], // Ajusta estos colores para que se adapten a tu tema.
+              colors: [Colors.green, Colors.white],
             ),
           ),
           child: Column(
@@ -91,7 +108,7 @@ class HomeScreen extends StatelessWidget {
                 radius: 50.0,
                 backgroundColor: Colors.transparent,
               ),
-              SizedBox(height: 10), // Agrega un poco de espacio entre la imagen y el texto
+              SizedBox(height: 10),
               Text(
                 'Welcome, $name',
                 style: TextStyle(

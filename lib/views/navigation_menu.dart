@@ -1,3 +1,4 @@
+import 'package:babylon_app/views/connection/connections.dart';
 import 'package:babylon_app/views/events/events.dart';
 import 'package:babylon_app/views/forum/forum.dart';
 import 'package:babylon_app/views/home.dart';
@@ -78,7 +79,8 @@ class _PublicDrawerState extends State<PublicDrawer> {
           ListTile(
             leading: const Icon(Icons.connect_without_contact),
             title: const Text('Connections'),
-            //onTap: () => _selectTab(5),
+            onTap: () =>  Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => ConnectionsScreen())),
           ),
           ListTile(
             leading: const Icon(Icons.business),

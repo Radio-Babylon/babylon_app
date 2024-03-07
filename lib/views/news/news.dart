@@ -29,7 +29,6 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: const PublicDrawer(),
         appBar: AppBar(
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -52,7 +52,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
         // Alineación en la parte inferior izquierda
 
       ),
-      drawer: const PublicDrawer(),
+
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
