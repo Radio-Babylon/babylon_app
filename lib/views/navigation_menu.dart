@@ -57,13 +57,12 @@ class _PublicDrawerState extends State<PublicDrawer> {
           ListTile(
             leading: const Icon(Icons.radio),
             title: const Text('Radio'),
-            onTap: () => widget.onItemSelected(7),
+            onTap: () => widget.onItemSelected(6),
           ),
           ListTile(
             leading: const Icon(Icons.business),
             title: const Text('Partners'),
-            onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => PartnersScreen())),
+            onTap: () => widget.onItemSelected(5),
           ),
           ListTile(
             leading: const Icon(Icons.settings),
