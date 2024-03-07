@@ -12,7 +12,7 @@ class PartnerService {
       await Future.forEach(snapShot.docs, (snapShot) async {
         final partner = snapShot.data();
         final imageUrl = await FirebaseStorage.instance.ref().child(partner["picture"]).getDownloadURL();
-        result.add(Partner(partner["name"],imageUrl,partner["shortDescription"],partner["fullDescription"],partner["discount"],partner["location"])); 
+        result.add(Partner(partner["name"],imageUrl,partner["shortDescription"],partner["fullDescription"],partner["discount"],partner["location"],snapShot.id)); 
       });
       
       print(result);

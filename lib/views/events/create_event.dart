@@ -152,7 +152,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    await EventService.createEvent(_nameController.text, File(_image!.path), Timestamp.fromDate(DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour,  _selectedTime!.minute)), _descriptionShortController.text, _descriptionController.text);
+                    await EventService.createEvent(_nameController.text, File(_image!.path), Timestamp.fromDate(DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour,  _selectedTime!.minute)), _descriptionShortController.text, _descriptionController.text, _placeController.text);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const EventsScreen()),

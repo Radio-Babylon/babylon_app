@@ -5,6 +5,7 @@ class Partner{
   String? FullDescription;
   String? Discount;
   String? Location;
+  String? DocumentID;
 
-  Partner(this.Name, this.PictureURL, this.ShortDescription, this.FullDescription, this.Discount, this.Location);
+  Partner(this.Name, this.PictureURL, this.ShortDescription, this.FullDescription, this.Discount, this.Location, this.DocumentID);
 }

@@ -111,7 +111,7 @@ class UserService {
       await Future.forEach(docsListedEvents.docs, (snapShot) async {
         eventsLists.add(snapShot.reference.id);
       });
-      result = BabylonUser.withData("${userData!["Name"]}-${userData["Surname"]}", userData["Email Address"], userData["ImageUrl"], "", eventsLists);
+      result = BabylonUser.withData("${userData!["Name"]}-${userData["Surname"]}", userData["Email Address"], userData["ImageUrl"], "", eventsLists, docUser.id);
       print(userData);
     } catch (e) {
       print(e);

@@ -8,9 +8,10 @@ class BabylonUser {
   //final String originCountry
   String about = '';
   List<String> listedEvents = [];
+  String UserUID = '';
 
   BabylonUser();
-  BabylonUser.withData(this.fullName,this.email,this.imagePath,this.about,this.listedEvents);
+  BabylonUser.withData(this.fullName,this.email,this.imagePath,this.about,this.listedEvents,this.UserUID);
   BabylonUser.fromUser({required User? currentUser}) {
     imagePath = currentUser?.photoURL ?? '';
     email = currentUser?.email ?? '';

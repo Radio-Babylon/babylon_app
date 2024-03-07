@@ -1,16 +1,33 @@
 import 'package:babylon_app/models/event.dart';
 import 'package:babylon_app/services/event/eventService.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 // EventInfoScreen displays detailed information about an event including the host and location.
-class EventInfoScreen extends StatelessWidget {
-  // Event object passed through the constructor containing all event details.
+
+class EventInfoScreen extends StatefulWidget {
+  @override
   final Event event;
-
-  // Requiring the event parameter when the widget is constructed.
   const EventInfoScreen({Key? key, required this.event}) : super(key: key);
+  EventInfoState createState() => EventInfoState(event);
+}
 
+class EventInfoState extends State<EventInfoScreen> {
+  final Event event;
+  EventInfoState(this.event);
+
+  bool _isAttending = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Update the BabylonUser data with the current user
+
+    _isAttending = event.Attendees.any((anAttendee) => anAttendee!.UserUID == FirebaseAuth.instance.currentUser!.uid);
+  }
+  
+  // Event object passed through the constructor containing all event details.
   @override
   Widget build(BuildContext context) {
     // Use MediaQuery to get device width for responsive design.
@@ -112,12 +129,18 @@ class EventInfoScreen extends StatelessWidget {
                   SizedBox(height: 24),
                   // Attend button with larger text and padding.
                   ElevatedButton(
-                    child: Text('ATTEND', style: TextStyle(fontSize: 18)),
-                    onPressed: () {
-                      EventService.addUserToEvent(event);
+                    child: Text( _isAttending ? 'ATTENDING' : 'ATTEND', style: TextStyle(fontSize: 18)),
+                    onPressed: () async{
+                      if(!_isAttending){
+                        bool added = await EventService.addUserToEvent(event);
+                        if(added) 
+                          setState(() {
+                            _isAttending = true; 
+                          });
+                      }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: _isAttending ? Color.fromARGB(255, 53, 136, 55) : Colors.green,
                       padding: EdgeInsets.symmetric(
                           horizontal: 32, vertical: 12),
                     ),

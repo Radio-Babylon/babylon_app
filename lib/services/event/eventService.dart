@@ -55,19 +55,20 @@ class EventService {
     return result;
   }
 
-  static Future<void> addUserToEvent(Event event) async{
+  static Future<bool> addUserToEvent(Event event) async{
     try {
       User currUser = FirebaseAuth.instance.currentUser!;
       final db = FirebaseFirestore.instance;
       await db.collection("users").doc(currUser.uid).collection('listedEvents').doc(event.EventDocumentID).set({});
       await db.collection("events").doc(event.EventDocumentID).collection('attendees').doc(currUser.uid).set({});
+      return true;
     } catch (e) {
       print(e);
       throw(e);
     }
   }
 
-  static Future<void> createEvent(String eventName, File image, Timestamp eventTimeStamp, String shortDescription, String description) async{
+  static Future<void> createEvent(String eventName, File image, Timestamp eventTimeStamp, String shortDescription, String description, String place) async{
     try {
       User currUser = FirebaseAuth.instance.currentUser!;
       final db = FirebaseFirestore.instance;
@@ -84,7 +85,7 @@ class EventService {
         "shortDescription": shortDescription,
         "fullDescription": description,
         "date": eventTimeStamp,
-        "place": "somewhere",
+        "place": place,
         "picture": "/images/"+imgName
       };
       db.collection("events").doc().set(newEvent);
