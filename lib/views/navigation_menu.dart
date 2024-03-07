@@ -39,46 +39,25 @@ class _PublicDrawerState extends State<PublicDrawer> {
             onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => HomePage())),
           ),
-
+          ListTile(
+            leading: const Icon(Icons.group),
+            title: const Text('Community'),
+            onTap: () => widget.onItemSelected(1),
+          ),
           ListTile(
             leading: const Icon(Icons.newspaper),
             title: const Text('News'),
             onTap: () => widget.onItemSelected(2),
           ),
           ListTile(
+            leading: const Icon(Icons.event),
+            title: const Text('Events'),
+            onTap: () => widget.onItemSelected(3),
+          ),
+          ListTile(
             leading: const Icon(Icons.radio),
             title: const Text('Radio'),
             onTap: () => widget.onItemSelected(7),
-          ),
-
-          ListTile(
-            leading: const Icon(Icons.forum),
-            title: const Text('Forum'),
-            onTap: () => widget.onItemSelected(5),
-          ),
-
-          ListTile(
-            leading: const Icon(Icons.event),
-            title: const Text('Events'),
-            onTap: () => widget.onItemSelected(3),
-          ),
-
-
-          ListTile(
-            leading: const Icon(Icons.chat),
-            title: const Text('Chats'),
-            //onTap: () => _selectTab(4),
-          ),
-
-          ListTile(
-            leading: const Icon(Icons.event),
-            title: const Text('Events'),
-            onTap: () => widget.onItemSelected(3),
-          ),
-          ListTile(
-            leading: const Icon(Icons.connect_without_contact),
-            title: const Text('Connections'),
-            onTap: () => widget.onItemSelected(-1),
           ),
           ListTile(
             leading: const Icon(Icons.business),

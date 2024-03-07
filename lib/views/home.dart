@@ -27,7 +27,6 @@ class _HomePageState extends State<HomePage> {
     NewsScreen(), // Placeholder for News
     EventsScreen(),
     ForumScreen(),
-    ConnectionsScreen(),
     PartnersScreen(),
     RadioScreen()
 
@@ -44,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     if (index == 4) {
       // If it's the last index, open the Drawer
       _scaffoldKey.currentState?.openEndDrawer();
-    } else {
+    } else if(index < 5) {
       setState(() {
         _selectedIndex = index; // Update the selected item
       });
@@ -62,7 +61,7 @@ class _HomePageState extends State<HomePage> {
         // Set your preferred shade of green here
         // Add other AppBar properties if needed
       ) : null, // Only show AppBar when HomeScreen is displayed
-      body: _screens.elementAt(_selectedIndex), // Display the selected screen
+      body: _screens[_selectedIndex], // Display the selected screen
       endDrawer: PublicDrawer(
         onItemSelected: (index) {
           setState(() {
@@ -84,7 +83,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Events'),
           BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'More'), // Button to open the Drawer
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: _selectedIndex > 4 ? 4 : _selectedIndex,
         onTap: _onItemTapped,
       ),
     );
