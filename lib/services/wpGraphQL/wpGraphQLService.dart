@@ -42,4 +42,5 @@ class WpGraphQLService {
     });
     return result;
   }
+
 }

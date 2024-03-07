@@ -69,12 +69,14 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
                           Padding(
                             padding: EdgeInsets.only(left: 8, top: 16),
                             child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular(20), // Image border
+                              borderRadius: BorderRadius.circular(20), // Image border
                               child: SizedBox.fromSize(
                                 size: Size.fromRadius(50), // Image radius
                                 child: Image.network(aPost.featuredImageURL!,
-                                    fit: BoxFit.cover),
+                                    fit: BoxFit.cover, errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                      // Here you can return the default image widget
+                                      return Image.asset('assets/images/newsphoto.png', fit: BoxFit.cover);
+                                    }),
                               ),
                             ),
                           ),
