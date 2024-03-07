@@ -1,8 +1,11 @@
 import 'package:babylon_app/models/babylonUser.dart';
 import 'package:babylon_app/views/connection/connections.dart';
 import 'package:babylon_app/views/events/events.dart';
+import 'package:babylon_app/views/forum/forum.dart';
 import 'package:babylon_app/views/navigation_menu.dart';
 import 'package:babylon_app/views/news/news.dart';
+import 'package:babylon_app/views/partners/partners.dart';
+import 'package:babylon_app/views/radio/radio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +25,12 @@ class _HomePageState extends State<HomePage> {
     HomeScreen(), // Your main Home screen
     ConnectionsScreen(), // Placeholder for Community
     NewsScreen(), // Placeholder for News
-    EventsScreen(), // Placeholder for Events
+    EventsScreen(),
+    ForumScreen(),
+    ConnectionsScreen(),
+    PartnersScreen(),
+    RadioScreen()
+
   ];
 
   @override
@@ -55,9 +63,14 @@ class _HomePageState extends State<HomePage> {
         // Add other AppBar properties if needed
       ) : null, // Only show AppBar when HomeScreen is displayed
       body: _screens.elementAt(_selectedIndex), // Display the selected screen
-      endDrawer: const PublicDrawer(),
-
-
+      endDrawer: PublicDrawer(
+        onItemSelected: (index) {
+          setState(() {
+            _selectedIndex = index; // Actualiza el índice seleccionado
+          });
+          Navigator.of(context).pop(); // Cierra el drawer
+        },
+      ),
       // Your already defined Drawer
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

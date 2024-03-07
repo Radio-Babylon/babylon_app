@@ -27,7 +27,7 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const PublicDrawer(), // Your drawer widget
+       // Your drawer widget
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

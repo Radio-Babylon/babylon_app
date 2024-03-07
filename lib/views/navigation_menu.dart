@@ -11,10 +11,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 
 class PublicDrawer extends StatefulWidget {
-  const PublicDrawer({super.key});
+  final Function(int) onItemSelected;
+
+  const PublicDrawer({Key? key, required this.onItemSelected}) : super(key: key);
 
   @override
-  State<PublicDrawer> createState() => _PublicDrawerState();
+  _PublicDrawerState createState() => _PublicDrawerState();
 }
 
 class _PublicDrawerState extends State<PublicDrawer> {
@@ -34,58 +36,54 @@ class _PublicDrawerState extends State<PublicDrawer> {
           ListTile(
             leading: const Icon(Icons.home),
             title: const Text('Home'),
-            onTap: () => Navigator.of(context).pushReplacement(
+            onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => HomePage())),
           ),
+
           ListTile(
-              leading: const Icon(Icons.newspaper),
-              title: const Text('News'),
-              onTap: () {
-                //Navigator.pop(context);
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const FutureBuilderNews()));
-              }),
+            leading: const Icon(Icons.newspaper),
+            title: const Text('News'),
+            onTap: () => widget.onItemSelected(2),
+          ),
           ListTile(
-              leading: const Icon(Icons.radio),
-              title: const Text('Radio'),
-              onTap: () {
-                //Navigator.pop(context);
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => RadioScreen()));
-              }),
+            leading: const Icon(Icons.radio),
+            title: const Text('Radio'),
+            onTap: () => widget.onItemSelected(7),
+          ),
+
           ListTile(
-              leading: const Icon(Icons.forum),
-              title: const Text('Forum'),
-              onTap: () {
-                // Navigator.pop(context);
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ForumScreen()));
-              }),
+            leading: const Icon(Icons.forum),
+            title: const Text('Forum'),
+            onTap: () => widget.onItemSelected(5),
+          ),
+
           ListTile(
-              leading: const Icon(Icons.event),
-              title: const Text('Events'),
-              onTap: () {
-                //Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const EventsScreen()),
-                );
-              }),
+            leading: const Icon(Icons.event),
+            title: const Text('Events'),
+            onTap: () => widget.onItemSelected(3),
+          ),
+
+
           ListTile(
             leading: const Icon(Icons.chat),
             title: const Text('Chats'),
             //onTap: () => _selectTab(4),
           ),
+
+          ListTile(
+            leading: const Icon(Icons.event),
+            title: const Text('Events'),
+            onTap: () => widget.onItemSelected(3),
+          ),
           ListTile(
             leading: const Icon(Icons.connect_without_contact),
             title: const Text('Connections'),
-            onTap: () =>  Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => ConnectionsScreen())),
+            onTap: () => widget.onItemSelected(-1),
           ),
           ListTile(
             leading: const Icon(Icons.business),
             title: const Text('Partners'),
-            onTap: () => Navigator.of(context).pushReplacement(
+            onTap: () => Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => PartnersScreen())),
           ),
           ListTile(
