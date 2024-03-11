@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "766184958846-fkkk14jasmj698grq644rk2i4qdgbcle.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.babylonradio",
+            "certificate_hash": "a5b443ec4a6ae3bb54c624f7a3419b3d3b957a38"
+          }
+        },
+        {
           "client_id": "766184958846-o5jphh8me8pgpngbrp2uof2kjl46a1vf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
