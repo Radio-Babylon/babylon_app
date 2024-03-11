@@ -12,7 +12,8 @@ class MyProfile extends StatefulWidget {
 
 class _MyProfileState extends State<MyProfile> {
   bool firstToggle = false;
-
+  
+  bool _isSaving = false;
   late final TextEditingController _fullname;
   late final TextEditingController _dateOfBirth;
   late final TextEditingController _country;
@@ -53,11 +54,18 @@ class _MyProfileState extends State<MyProfile> {
 
     Widget saveButton() => ButtonWidget(
       text: 'Save changes',
-      onClicked: () {
-        UserService.updateUserInfo(uuid: user.UserUID, newData: {
+      onClicked: () async {
+        setState(() {
+          _isSaving = true;
+        });
+        await UserService.updateUserInfo(uuid: user.UserUID, newData: {
           "originCountry": _country.text,
           "birthDate": _dateOfBirth.text,
           "about": _about.text 
+        });
+        await Future.delayed(Duration(seconds: 1));
+        setState(() {
+          _isSaving = false;
         });
       },
       toSave: toggles['Save'] ?? true,
@@ -127,6 +135,16 @@ class _MyProfileState extends State<MyProfile> {
           Center(
             child: saveButton(),
           ),
+           if(_isSaving)
+            Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(
+                    color: Color(0xFF006400)),
+              ),
+            )
         ],
       ),
     );
