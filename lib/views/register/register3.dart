@@ -145,8 +145,8 @@ class _RegisterPage3State extends State<RegisterPage3> {
                 final currentUser = FirebaseAuth.instance.currentUser;
 
                 if (currentUser != null) {
-                  await UserService.addAdditionalInfo(
-                      user: currentUser,
+                  await UserService.updateUserInfo(
+                      uuid: currentUser.uid,
                       activities: interest1,
                       music: interest2,
                       hobbies: interest3);

@@ -48,36 +48,42 @@ class UserService {
     }
   }
 
-  static Future<void> addAdditionalInfo(
-      {required User user,
-      required Map<String, bool> activities,
-      required Map<String, bool> music,
-      required Map<String, bool> hobbies}) async {
+  static Future<void> updateUserInfo(
+      {required String uuid,
+      Map<String, String>? newData,
+      Map<String, bool>? activities,
+      Map<String, bool>? music,
+      Map<String, bool>? hobbies}) async {
     final userActivities = [], userMusic = [], userHobbies = [];
-    //final music = [];
-    //final hobbies = [];
-    for (final activity in activities.entries) {
-      if (activity.value) userActivities.add(activity.key);
-    }
 
-    for (final music in music.entries) {
-      if (music.value) userMusic.add(music.key);
-    }
+    if(activities != null)
+      for (final activity in activities.entries) {
+        if (activity.value) userActivities.add(activity.key);
+      }
 
-    for (final hobby in hobbies.entries) {
-      if (hobby.value) userHobbies.add(hobby.key);
-    }
+    if(music != null)
+      for (final music in music.entries) {
+        if (music.value) userMusic.add(music.key);
+      }
+
+    if(hobbies != null)
+      for (final hobby in hobbies.entries) {
+        if (hobby.value) userHobbies.add(hobby.key);
+      }
 
     if (userActivities.isNotEmpty ||
         userMusic.isNotEmpty ||
-        userHobbies.isNotEmpty) {
+        userHobbies.isNotEmpty || newData!.isNotEmpty) {
       FirebaseFirestore.instance
           .collection('users')
-          .doc(user.uid)
-          .update({
+          .doc(uuid)
+          .set({
             'activities': userActivities,
             'music': userMusic,
-            'hobbies': userHobbies
+            'hobbies': userHobbies,
+            'Country of Origin' : newData!.containsKey("originCountry") ? newData["originCountry"] : "",
+            'Date of Birth' : newData.containsKey("birthDate") ? newData["birthDate"] : "",
+            'About' : newData.containsKey("about") ? newData["about"] : "",
           })
           .then((value) => print("User Updated and additionalInfo added"))
           .catchError(

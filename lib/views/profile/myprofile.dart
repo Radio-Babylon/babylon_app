@@ -1,4 +1,5 @@
 import 'package:babylon_app/models/babylonUser.dart';
+import 'package:babylon_app/services/user/userService.dart';
 import 'package:flutter/material.dart';
 import '../home.dart'; // Make sure this import is correct for your HomeScreen widget
 
@@ -49,6 +50,19 @@ class _MyProfileState extends State<MyProfile> {
   @override
   Widget build(BuildContext context) {
     final user = BabylonUser.currentBabylonUser;
+
+    Widget saveButton() => ButtonWidget(
+      text: 'Save changes',
+      onClicked: () {
+        UserService.updateUserInfo(uuid: user.UserUID, newData: {
+          "originCountry": _country.text,
+          "birthDate": _dateOfBirth.text,
+          "about": _about.text 
+        });
+      },
+      toSave: toggles['Save'] ?? true,
+    );
+
     return Scaffold(
       appBar: AppBar(
         // Replaced the menu icon with an arrow back icon
@@ -142,12 +156,6 @@ class _MyProfileState extends State<MyProfile> {
         text: 'Upgrade To PRO',
         onClicked: () {},
         toSave: true,
-      );
-
-  Widget saveButton() => ButtonWidget(
-        text: 'Save changes',
-        onClicked: () {},
-        toSave: toggles['Save'] ?? true,
       );
 
   Widget buildAbout(BabylonUser user) => Container(

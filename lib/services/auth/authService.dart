@@ -76,10 +76,11 @@ class AuthService {
       final userData = docUser.data();
       if(userData == null){
         final userNewData = <String, String>{
-          "Country of Origin": "*",
+          "Country of Origin": "",
           "Date of Birth": DateTime.now().toLocal().toString(),
           "Email Address": currUser.email!,
-          "Name" : currUser.displayName!,          
+          "Name" : currUser.displayName!,
+          "About" : "",     
         };
         userNewData["ImageUrl"] = currUser.photoURL!;
         await db.collection("users").doc(currUser.uid).set(userNewData);
