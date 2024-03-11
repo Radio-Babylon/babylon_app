@@ -14,10 +14,9 @@ class _MyProfileState extends State<MyProfile> {
 
   late final TextEditingController _fullname;
   late final TextEditingController _dateOfBirth;
-  late final TextEditingController _email;
-  late final TextEditingController _county;
-  late final TextEditingController _password;
-  late final TextEditingController _rePassword;
+  late final TextEditingController _country;
+  late final TextEditingController _about;
+
   String? _error;
 
   final Map<String, bool> toggles = {
@@ -30,11 +29,9 @@ class _MyProfileState extends State<MyProfile> {
   void initState() {
     _fullname =
         TextEditingController(text: BabylonUser.currentBabylonUser.fullName);
-    _email = TextEditingController(text: BabylonUser.currentBabylonUser.email);
     _dateOfBirth = TextEditingController();
-    _county = TextEditingController();
-    _password = TextEditingController();
-    _rePassword = TextEditingController();
+    _country = TextEditingController();
+    _about = TextEditingController();
     _error = "";
     super.initState();
   }
@@ -43,10 +40,8 @@ class _MyProfileState extends State<MyProfile> {
   void dispose() {
     _fullname.dispose();
     _dateOfBirth.dispose();
-    _email.dispose();
-    _county.dispose();
-    _password.dispose();
-    _rePassword.dispose();
+    _country.dispose();
+    _about.dispose();
     _error = "";
     super.dispose();
   }
@@ -88,20 +83,32 @@ class _MyProfileState extends State<MyProfile> {
           const SizedBox(height: 10),*/
           //NumbersWidget(),
           const SizedBox(height: 30),
-          //buildAbout(user),
-          //infoField(),
-          infoField(
-              icon: Icons.email,
-              hintText: 'example@gmail.com',
-              labelText: 'Email',
-              controller: _email,
-              onClicked: () {}),
-          //const SizedBox(height: 30),
+          //infoField(),_
           infoField(
               icon: Icons.person,
               hintText: 'example name',
-              labelText: 'Name',
+              labelText: 'Full name',
               controller: _fullname,
+              onClicked: () {}),
+          infoField(
+              icon: Icons.cake,
+              hintText: 'Birth Date',
+              labelText: 'Birth Date',
+              controller: _dateOfBirth,
+              onClicked: () {},
+              hasDatePicker: true),
+          //const SizedBox(height: 30),
+          infoField(
+              icon: Icons.public,
+              hintText: 'Origin country',
+              labelText: 'Origin country',
+              controller: _country,
+              onClicked: () {}),
+          infoField(
+              icon: Icons.chat,
+              hintText: 'About',
+              labelText: 'About',
+              controller: _about,
               onClicked: () {}),
           Center(
             child: saveButton(),
@@ -154,7 +161,7 @@ class _MyProfileState extends State<MyProfile> {
             ),
             const SizedBox(height: 16),
             Text(
-              user.about,
+              user.about!,
               style: TextStyle(fontSize: 16, height: 1.4),
             ),
           ],
@@ -166,7 +173,8 @@ class _MyProfileState extends State<MyProfile> {
       required String hintText,
       required String labelText,
       required TextEditingController controller,
-      required Function onClicked}) {
+      required Function onClicked,
+      bool hasDatePicker = false}) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       child: Center(
@@ -185,6 +193,22 @@ class _MyProfileState extends State<MyProfile> {
                     child: TextField(
                       enabled: toggles[labelText],
                       controller: controller,
+                      readOnly: hasDatePicker,
+                      onTap: () async {
+                        if(hasDatePicker){
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context, initialDate: DateTime.now(),
+                            firstDate: DateTime(1901),
+                            lastDate: DateTime(2101)
+                          );
+                                
+                          if(pickedDate != null ){
+                            setState(() {
+                                _dateOfBirth.text = "${pickedDate.year}-${pickedDate.month < 10 ? "0${pickedDate.month}" : pickedDate.month}-${pickedDate.day}";
+                            });
+                          }
+                        }
+                      },
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Color.fromRGBO(239, 237, 237, 0.5),
@@ -219,11 +243,6 @@ class _MyProfileState extends State<MyProfile> {
                         if (toggle.key == 'Name') {
                           if (_fullname.text ==
                               BabylonUser.currentBabylonUser.fullName) {
-                            toggles[toggle.key] = false;
-                          }
-                        } else if (toggle.key == 'Email') {
-                          if (_email.text ==
-                              BabylonUser.currentBabylonUser.email) {
                             toggles[toggle.key] = false;
                           }
                         }

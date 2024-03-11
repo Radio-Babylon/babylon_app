@@ -1,4 +1,5 @@
 import 'package:babylon_app/models/babylonUser.dart';
+import 'package:babylon_app/services/user/userService.dart';
 import 'package:babylon_app/views/connection/connections.dart';
 import 'package:babylon_app/views/events/events.dart';
 import 'package:babylon_app/views/forum/forum.dart';
@@ -36,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     // Update the BabylonUser data with the current user
-    BabylonUser.changeBabylonUserData(currentUser: FirebaseAuth.instance.currentUser);
+    BabylonUser.updateCurrentBabylonUserData(currentUser: FirebaseAuth.instance.currentUser);
   }
 
   void _onItemTapped(int index) {

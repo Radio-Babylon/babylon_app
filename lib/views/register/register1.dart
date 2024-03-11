@@ -32,7 +32,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
   late final TextEditingController _name;
   late final TextEditingController _dateOfBirth;
   late final TextEditingController _email;
-  late final TextEditingController _county;
+  late final TextEditingController _country;
   late final TextEditingController _password;
   late final TextEditingController _rePassword;
   String? _error;
@@ -41,7 +41,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
     'Name': _name,
     'Date of Birth': _dateOfBirth,
     'Email Address': _email,
-    'Country of Origin': _county,
+    'Country of Origin': _country,
     'Password': _password,
     'Confirm Password': _rePassword,
 
@@ -51,7 +51,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
     'Name': _name.text,
     'Date of Birth': _dateOfBirth.text,
     'Email Address': _email.text,
-    'Country of Origin': _county.text,
+    'Country of Origin': _country.text,
   };
 
   @override
@@ -59,7 +59,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
     _name = TextEditingController();
     _dateOfBirth = TextEditingController();
     _email = TextEditingController();
-    _county = TextEditingController();
+    _country = TextEditingController();
     _password = TextEditingController();
     _rePassword = TextEditingController();
     _error = "";
@@ -71,7 +71,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
     _name.dispose();
     _dateOfBirth.dispose();
     _email.dispose();
-    _county.dispose();
+    _country.dispose();
     _password.dispose();
     _rePassword.dispose();
     _error = "";

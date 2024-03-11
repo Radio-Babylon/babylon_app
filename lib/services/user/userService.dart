@@ -101,17 +101,35 @@ class UserService {
 
   static Future<BabylonUser?> getBabylonUser(String userUID) async {
     BabylonUser? result;
+    Map<String, String> userInfo = {};
+
     try {
       List<String> eventsLists = List.empty(growable: true);
       final db = FirebaseFirestore.instance;
       final docUser = await db.collection('users').doc(userUID).get();
       final userData = docUser.data();
+      userInfo["name"] = userData!.containsKey("Name") ? userData["Name"]: "" ;
+      userInfo["email"] = userData.containsKey("Email Address") ? userData["Email Address"] : "" ;
+      userInfo["imgURL"] = userData.containsKey("ImageUrl") ? userData["ImageUrl"] : "" ;
+      userInfo["UUID"] = docUser.id;
+      userInfo["about"] =  userData.containsKey("About") ? userData["About"] : "";
+      userInfo["country"] = userData.containsKey("Country of Origin") ? userData["Country of Origin"] : "";
+      userInfo["birthDate"] = userData.containsKey("Date of Birth") ? userData["Date of Birth"] : "";
 
       final docsListedEvents = await db.collection('users').doc(userUID).collection('listedEvents').get();
       await Future.forEach(docsListedEvents.docs, (snapShot) async {
         eventsLists.add(snapShot.reference.id);
       });
-      result = BabylonUser.withData("${userData!["Name"]}", userData["Email Address"], userData["ImageUrl"], "", eventsLists, docUser.id);
+      result = BabylonUser.withData(
+        userInfo["name"]!, 
+        userInfo["email"]!, 
+        userInfo["imgURL"]!, 
+        eventsLists,
+        userInfo["UUID"]!,
+        userData["about"],
+        userData["country"],
+        userData["birthDate"]
+      );
       print(userData);
     } catch (e) {
       print(e);
