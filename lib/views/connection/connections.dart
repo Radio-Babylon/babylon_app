@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:babylon_app/views/navigation_menu.dart';
 
-// Define the Person class with all necessary information about a person.
+// Define the Person class to hold necessary information about a person.
 class Person {
   final String name;
   final String bio;
@@ -11,7 +11,7 @@ class Person {
   Person(this.name, this.bio, this.interests, this.languages);
 }
 
-// Define the ConnectionsScreen as a StatefulWidget to handle dynamic content like user connections.
+// Define ConnectionsScreen as a StatefulWidget to manage dynamic content.
 class ConnectionsScreen extends StatefulWidget {
   const ConnectionsScreen({Key? key}) : super(key: key);
 
@@ -19,12 +19,11 @@ class ConnectionsScreen extends StatefulWidget {
   State<ConnectionsScreen> createState() => _ConnectionsScreenState();
 }
 
-// Define the corresponding State class for ConnectionsScreen with TabController for tab navigation.
+// Define the corresponding State class for ConnectionsScreen with a TabController for navigation.
 class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  // Initialize the TextEditingController for the search functionality.
-  TextEditingController searchController = TextEditingController();
-  List<Person> searchResults = []; // This will hold the search results.
+  TextEditingController searchController = TextEditingController(); // For search functionality.
+  List<Person> searchResults = []; // Holds the search results.
 
   @override
   void initState() {
@@ -39,13 +38,12 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
     super.dispose();
   }
 
-  // Implement the search logic here.
-  // For now, it's just a placeholder that sets the searchResults list based on the search query.
+  // Placeholder for search logic, currently updates searchResults based on query.
   void _search(String query) {
-    // Implement your search logic and set the state to display the results.
     setState(() {
+      // Future implementation of search logic.
       searchResults = [
-        // This should be a filtered list based on the search query.
+        // Filtered list based on search query.
       ];
     });
   }
@@ -53,7 +51,6 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
   @override
   Widget build(BuildContext context){
     return Scaffold(
-
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,7 +59,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
             SizedBox(
               height: 55,
               width: 55,
-              child: Image.asset('assets/images/logowhite.png'), // Your logo asset.
+              child: Image.asset('assets/images/logowhite.png'), // Logo asset.
             ),
           ],
         ),
@@ -78,31 +75,29 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
       body: TabBarView(
         controller: _tabController,
         children: [
-          _buildMyConnectionsTab(), // Build 'My Connections' tab with search and sections.
-          _buildExploreWorldTab(),  // Build 'Explore The World' tab with search.
+          _buildMyConnectionsTab(), // 'My Connections' tab with search and sections.
+          _buildExploreWorldTab(),  // 'Explore The World' tab with search functionality.
         ],
       ),
     );
   }
 
-  // Build 'My Connections' tab which includes a search bar, 'New Connections', and 'My Connections' sections.
+  // Constructs 'My Connections' tab with a search bar and sections for connections.
   Widget _buildMyConnectionsTab() {
-    return Column(
-      children: [
-        _buildSearchBar(),
-        Expanded(
-          child: ListView(
-            children: [
-              _buildNewConnectionsSection(),
-              _buildMyConnectionsSection(),
-            ],
-          ),
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _buildSearchBar(),
+          _buildFriendRequestsWidget(), // Friend Requests section.
+          _buildNewUsersWidget(),      // New Users section.
+          _buildChatsWidget(),         // Chats section.
+          _buildGroupChatsWidget(),    // Group Chats section.
+        ],
+      ),
     );
   }
 
-  // Build the search bar widget.
+  // Constructs the search bar widget.
   Widget _buildSearchBar() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -112,116 +107,163 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
           labelText: 'Search Connections',
           suffixIcon: Icon(Icons.search),
         ),
-        onChanged: _search, // Call the search function with the current query.
+        onChanged: _search, // Invokes the search function with the current query.
       ),
     );
   }
 
-  // Build the 'New Connections' section with title and placeholder for connection requests.
-  Widget _buildNewConnectionsSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text('New Connections', style: Theme.of(context).textTheme.headline6),
-        ),
-        // Here you would build a list of connection request cards.
-        // Placeholder for one connection request.
-        _buildConnectionRequestCard(),
-        // Add more cards...
-      ],
-    );
-  }
-
-  // Build a placeholder for a connection request card.
-  Widget _buildConnectionRequestCard() {
-    // This should be a list of connection requests.
-    return ListTile(
-      leading: CircleAvatar(), // Placeholder for profile picture.
-      title: Text('Person\'s Name'),
-      subtitle: Text('Person\'s Bio'),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
+  // Constructs the 'Friend Requests' widget with a horizontal list of profiles.
+  Widget _buildFriendRequestsWidget() {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextButton(
-            child: Text('Profile'),
-            onPressed: () {
-              // Implement profile viewing logic.
-            },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Friend Requests', style: Theme.of(context).textTheme.headline6),
           ),
-          TextButton(
-            child: Text('Accept'),
-            onPressed: () {
-              // Implement accept connection logic.
-            },
-          ),
-          TextButton(
-            child: Text('Decline'),
-            onPressed: () {
-              // Implement decline connection logic.
-            },
+          Container(
+            height: 200, // Fixed height for the horizontal list.
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 5, // Five exemplary profiles.
+              itemBuilder: (context, index) {
+                // Each item is a profile card with image, name, and action buttons.
+                return _buildProfileCard('assets/images/default_user_logo.png', 'Person $index', ['View Profile', 'Accept', 'Decline']);
+              },
+            ),
           ),
         ],
       ),
     );
   }
 
-  // Build the 'My Connections' section with title and placeholder for existing connections.
-  Widget _buildMyConnectionsSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text('My Connections', style: Theme.of(context).textTheme.headline6),
-        ),
-        // Here you would build a list of existing connection cards.
-        // Placeholder for one existing connection.
-        _buildConnectionCard(),
-        // Add more cards...
-      ],
-    );
-  }
-
-  // Build a placeholder for an existing connection card.
-  Widget _buildConnectionCard() {
-    // This should be a list of existing connections.
-    return ListTile(
-      leading: CircleAvatar(), // Placeholder for profile picture.
-      title: Text('Person\'s Name'),
-      subtitle: Text('Person\'s Bio'),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
+  // Constructs the 'New Users' widget with a horizontal list of new user profiles.
+  Widget _buildNewUsersWidget() {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextButton(
-            child: Text('Profile'),
-            onPressed: () {
-              // Implement profile viewing logic.
-            },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('New Users', style: Theme.of(context).textTheme.headline6),
           ),
-          TextButton(
-            child: Text('Chat'),
-            onPressed: () {
-              // Implement chat logic.
-            },
+          Container(
+            height: 200, // Fixed height for the horizontal list.
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 5, // Five exemplary profiles.
+              itemBuilder: (context, index) {
+                // Each item is a profile card with image, name, and action buttons.
+                return _buildProfileCard('assets/images/default_user_logo.png', 'New User $index', ['View Profile', 'Chat']);
+              },
+            ),
           ),
         ],
       ),
     );
   }
 
-  // Build 'Explore The World' tab which includes a search bar and placeholder content.
+  // Constructs the 'Chats' widget with a horizontal list of ongoing chats.
+  Widget _buildChatsWidget() {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Chats', style: Theme.of(context).textTheme.headline6),
+          ),
+          Container(
+            height: 200, // Fixed height for the horizontal list.
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 5, // Five ongoing chats.
+              itemBuilder: (context, index) {
+                // Each item is a chat card with image, name, and action buttons.
+                return _buildProfileCard('assets/images/default_user_logo.png', 'Chat $index', ['View Profile', 'Chat']);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Constructs the 'Group Chats' widget with a vertical list of group chats.
+  Widget _buildGroupChatsWidget() {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Group Chats', style: Theme.of(context).textTheme.headline6),
+          ),
+          ListView.builder(
+            physics: NeverScrollableScrollPhysics(), // Disables scrolling within ListView.
+            shrinkWrap: true, // Allows ListView to occupy space only for its children.
+            itemCount: 5, // Five group chats.
+            itemBuilder: (context, index) {
+              // Each item represents a group chat with title and member snapshot.
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: AssetImage('assets/images/logowhite.png'), // Placeholder for group snapshot.
+                ),
+                title: Text('Group Chat $index'),
+                subtitle: Text('Members, Topics, etc.'),
+                trailing: IconButton(
+                  icon: Icon(Icons.chat),
+                  onPressed: () {
+                    // Placeholder for opening group chat.
+                  },
+                ),
+              );
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: FloatingActionButton(
+                onPressed: () {
+                  // Placeholder for creating new group chat.
+                },
+                child: Icon(Icons.add),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Helper method to construct a profile card with image, name, and action buttons.
+  Widget _buildProfileCard(String imagePath, String name, List<String> buttonLabels) {
+    return Card(
+      child: Column(
+        children: [
+          Image.asset(imagePath, height: 100, width: 100), // User profile picture.
+          Text(name), // User name.
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: buttonLabels.map((label) => TextButton(onPressed: () {}, child: Text(label))).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Constructs 'Explore The World' tab with a search bar and search results.
   Widget _buildExploreWorldTab() {
     return Column(
       children: [
-        _buildSearchBar(), // Re-use the same search bar builder.
+        _buildSearchBar(), // Reuses the same search bar builder.
         Expanded(
           child: ListView.builder(
             itemCount: searchResults.length, // Number of search results.
             itemBuilder: (context, index) {
-              // Build a card for each search result.
-              return _buildConnectionCard(); // Replace with actual data.
+              return _buildProfileCard('assets/images/logowhite.png', 'Result $index', ['View Profile', 'Chat']); // Replace with actual data.
             },
           ),
         ),
@@ -229,5 +271,5 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
     );
   }
 
-// Add other helper methods for building connection cards, handling accept/decline logic, etc., here.
+// Additional helper methods for building connection cards, handling accept/decline logic, etc., can be added here.
 }
