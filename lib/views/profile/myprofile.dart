@@ -12,6 +12,7 @@ class MyProfile extends StatefulWidget {
 
 class _MyProfileState extends State<MyProfile> {
   bool firstToggle = false;
+  BabylonUser user = BabylonUser.currentBabylonUser;
   
   bool _isSaving = false;
   late final TextEditingController _fullname;
@@ -31,9 +32,9 @@ class _MyProfileState extends State<MyProfile> {
   void initState() {
     _fullname =
         TextEditingController(text: BabylonUser.currentBabylonUser.fullName);
-    _dateOfBirth = TextEditingController();
-    _country = TextEditingController();
-    _about = TextEditingController();
+    _dateOfBirth = TextEditingController(text: BabylonUser.currentBabylonUser.dataOfBirth);
+    _country = TextEditingController(text: BabylonUser.currentBabylonUser.originCountry);
+    _about = TextEditingController(text: BabylonUser.currentBabylonUser.about);
     _error = "";
     super.initState();
   }
@@ -50,7 +51,6 @@ class _MyProfileState extends State<MyProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final user = BabylonUser.currentBabylonUser;
 
     Widget saveButton() => ButtonWidget(
       text: 'Save changes',
@@ -59,13 +59,16 @@ class _MyProfileState extends State<MyProfile> {
           _isSaving = true;
         });
         await UserService.updateUserInfo(uuid: user.UserUID, newData: {
+          "name": _fullname.text,
           "originCountry": _country.text,
           "birthDate": _dateOfBirth.text,
           "about": _about.text 
         });
+        await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.UserUID);
         await Future.delayed(Duration(seconds: 1));
         setState(() {
           _isSaving = false;
+          user = BabylonUser.currentBabylonUser;
         });
       },
       toSave: toggles['Save'] ?? true,

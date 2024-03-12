@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     // Update the BabylonUser data with the current user
-    BabylonUser.updateCurrentBabylonUserData(currentUser: FirebaseAuth.instance.currentUser);
+    BabylonUser.updateCurrentBabylonUserData(currentUserUID: FirebaseAuth.instance.currentUser!.uid);
   }
 
   void _onItemTapped(int index) {

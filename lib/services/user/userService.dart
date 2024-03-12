@@ -84,6 +84,7 @@ class UserService {
             'Country of Origin' : newData!.containsKey("originCountry") ? newData["originCountry"] : "",
             'Date of Birth' : newData.containsKey("birthDate") ? newData["birthDate"] : "",
             'About' : newData.containsKey("about") ? newData["about"] : "",
+            'Name' : newData.containsKey("name") ? newData["name"] : "",
           })
           .then((value) => print("User Updated and additionalInfo added"))
           .catchError(
@@ -132,9 +133,9 @@ class UserService {
         userInfo["imgURL"]!, 
         eventsLists,
         userInfo["UUID"]!,
-        userData["about"],
-        userData["country"],
-        userData["birthDate"]
+        userInfo["about"]!,
+        userInfo["country"]!,
+        userInfo["birthDate"]!
       );
       print(userData);
     } catch (e) {

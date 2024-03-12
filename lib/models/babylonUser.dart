@@ -31,8 +31,8 @@ class BabylonUser {
 
   static BabylonUser currentBabylonUser = BabylonUser();
 
-  static void updateCurrentBabylonUserData({required User? currentUser}) async {
-    BabylonUser? currentUserDBData = await UserService.getBabylonUser(currentUser!.uid);
+  static Future<void> updateCurrentBabylonUserData({required String currentUserUID}) async {
+    BabylonUser? currentUserDBData = await UserService.getBabylonUser(currentUserUID);
     currentBabylonUser.imagePath = currentUserDBData!.imagePath;
     currentBabylonUser.email = currentUserDBData.email;
     currentBabylonUser.fullName = currentUserDBData.fullName;
