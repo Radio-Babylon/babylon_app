@@ -40,8 +40,6 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
        // Custom drawer widget for navigation.
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          var ui = await EventService.getEvents();
-          print(ui);
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => CreateEventScreen()),
@@ -92,8 +90,6 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
           (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
         List<Widget> children;
         if (snapshot.hasData) {
-          print(1);
-          print(snapshot.data);
           children = <Widget>[
             Padding(
                 padding: EdgeInsets.only(left: 16, top: 16),
@@ -157,8 +153,6 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
           (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
         List<Widget> children;
         if (snapshot.hasData) {
-          print(1);
-          print(snapshot.data);
           children = <Widget>[
             Padding(
                 padding: EdgeInsets.only(left: 16, top: 16),
@@ -235,12 +229,13 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
           icon: const Icon(Icons.info_outline),
           onPressed: () async{
             // When the info button is pressed, navigate to the EvonPentInfoScreen.
-            Navigator.push(
+            await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => EventInfoScreen(event: event),
               ),
             );
+            setState(() {});
           },
         ),
       ),

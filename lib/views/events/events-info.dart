@@ -46,8 +46,7 @@ class EventInfoState extends State<EventInfoScreen> {
           builder: (BuildContext context) {
             return IconButton(
               icon: const Icon(Icons.arrow_back),
-              onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => EventsScreen())),
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              onPressed: () => Navigator.pop(context),
             );
           },
         ),
