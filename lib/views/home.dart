@@ -37,7 +37,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     // Update the BabylonUser data with the current user
-    BabylonUser.updateCurrentBabylonUserData(currentUserUID: FirebaseAuth.instance.currentUser!.uid);
   }
 
   void _onItemTapped(int index) {
@@ -99,10 +98,7 @@ class _HomePageState extends State<HomePage> {
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    final String name = user?.displayName ?? 'User';
-    final String photoUrl = user?.photoURL ?? 'assets/default_avatar.png';
+    final BabylonUser user = BabylonUser.currentBabylonUser; 
     return ListView(
       children: <Widget>[
         Container(
@@ -117,13 +113,13 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               CircleAvatar(
-                backgroundImage: photoUrl.startsWith('http') ? NetworkImage(photoUrl) : AssetImage(photoUrl) as ImageProvider, // Maneja tanto las URL de la red como los assets locales.
+                backgroundImage: user.imagePath.startsWith('http') ? NetworkImage(user.imagePath) : AssetImage(user.imagePath) as ImageProvider, // Maneja tanto las URL de la red como los assets locales.
                 radius: 50.0,
                 backgroundColor: Colors.transparent,
               ),
               SizedBox(height: 10),
               Text(
-                'Welcome, $name',
+                'Welcome, ${user.fullName}',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,

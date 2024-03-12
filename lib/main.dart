@@ -1,4 +1,5 @@
 
+import 'package:babylon_app/models/babylonUser.dart';
 import 'package:babylon_app/services/auth/authService.dart';
 import 'package:babylon_app/services/firebase_options.dart';
 import 'package:babylon_app/views/home.dart';
@@ -11,6 +12,7 @@ import 'views/login/login.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await BabylonUser.updateCurrentBabylonUserData(currentUserUID: FirebaseAuth.instance.currentUser!.uid);
   runApp(const MyApp());
 }
 
