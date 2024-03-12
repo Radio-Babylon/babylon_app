@@ -77,7 +77,7 @@ class UserService {
       FirebaseFirestore.instance
           .collection('users')
           .doc(uuid)
-          .set({
+          .update({
             'activities': userActivities,
             'music': userMusic,
             'hobbies': userHobbies,

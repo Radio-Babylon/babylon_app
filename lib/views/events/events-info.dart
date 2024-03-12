@@ -1,5 +1,8 @@
+import 'package:babylon_app/models/babylonUser.dart';
 import 'package:babylon_app/models/event.dart';
 import 'package:babylon_app/services/event/eventService.dart';
+import 'package:babylon_app/services/user/userService.dart';
+import 'package:babylon_app/views/events/events.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -39,6 +42,15 @@ class EventInfoState extends State<EventInfoScreen> {
     // Scaffold provides the AppBar at the top and a body for the content.
     return Scaffold(
       appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => EventsScreen())),
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        ),
         title: Text(
           event.Title!,
           style: TextStyle(
@@ -134,9 +146,12 @@ class EventInfoState extends State<EventInfoScreen> {
                       if(!_isAttending){
                         bool added = await EventService.addUserToEvent(event);
                         if(added) 
-                          setState(() {
-                            _isAttending = true; 
-                          });
+                          {
+                            setState(() {
+                              _isAttending = true; 
+                              event.Attendees.add(BabylonUser.currentBabylonUser);
+                            });
+                          }
                       }
                     },
                     style: ElevatedButton.styleFrom(
