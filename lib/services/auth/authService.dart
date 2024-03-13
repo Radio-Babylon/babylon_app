@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:babylon_app/models/babylonUser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -21,6 +22,7 @@ class AuthService {
       await user!.updateDisplayName(name);
       await user.reload();
       user = auth.currentUser;
+      await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user!.uid);
     } catch (e) {
       print(e);
       throw (e);
@@ -40,6 +42,7 @@ class AuthService {
         password: password,
       );
       user = userCredential.user;
+      await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user!.uid);
     } catch (e) {
       print(e);
       throw (e);
@@ -64,6 +67,7 @@ class AuthService {
     var signedIdUser = await FirebaseAuth.instance.signInWithCredential(credential);
 
     await hasCurrentUserData();
+    await BabylonUser.updateCurrentBabylonUserData(currentUserUID: signedIdUser.user!.uid);
     // Once signed in, return the UserCredential
     return signedIdUser;
   }

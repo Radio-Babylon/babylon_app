@@ -18,6 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late User? currentUser = FirebaseAuth.instance.currentUser;
+  BabylonUser oui = BabylonUser.currentBabylonUser;
   int _selectedIndex = 0; // Index for BottomNavigationBar
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Global key for the Scaffold
 
@@ -98,7 +99,6 @@ class _HomePageState extends State<HomePage> {
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context){
-    BabylonUser.updateCurrentBabylonUserData(currentUserUID: FirebaseAuth.instance.currentUser!.uid);
     final BabylonUser user = BabylonUser.currentBabylonUser; 
     return ListView(
       children: <Widget>[
