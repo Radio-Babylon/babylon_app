@@ -1,14 +1,17 @@
-import 'package:babylon_app/firebase_options.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:babylon_app/models/babylonUser.dart';
+import 'package:babylon_app/services/auth/authService.dart';
+import 'package:babylon_app/services/firebase_options.dart';
+import 'package:babylon_app/views/home.dart';
+import 'package:babylon_app/views/register/register1.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'register1.dart';
-import 'login.dart';
+import 'views/login/login.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform); 
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -17,6 +20,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    print(currentUser);
+
     return MaterialApp(
       title: 'Babylon Radio',
       theme: ThemeData(
@@ -29,7 +35,11 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(fontFamily: 'Lato'),
         ),
       ),
-      home: const LogoScreen(),
+      home: currentUser != null ? HomePage() : LogoScreen(),
+      routes: {
+        '/logo/': (context) => const LogoScreen(),
+        '/register/': (context) => CreateAccountPage()
+      },
     );
   }
 }
@@ -41,14 +51,12 @@ class LogoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 60), // Padding top for logo
-          SizedBox(
-            height: 185,
-            width: 185,
-            child: Image.asset('assets/images/logoSquare.png'),
+          Container(
+            margin: EdgeInsets.only(bottom: 45),
+            child: Image.asset('assets/images/logoSquare.png', width: 185, height: 185),
           ),
-          const SizedBox(height: 45), // Space between logo and text
           const Text(
             'Welcome to Babylon Radio!',
             textAlign: TextAlign.center,
@@ -58,35 +66,31 @@ class LogoScreen extends StatelessWidget {
               fontFamily: 'Lato',
             ),
           ),
-          const SizedBox(
-              height: 60), // Space between Welcome text and catchphrase
-          const Text(
-            'Celebrating cultures,\n' //\n breaks the line
-            ' promoting integration',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w300,
-              fontFamily: 'Lato',
+          Container(
+            margin: EdgeInsets.only(top: 50, bottom: 50),
+            child: const Text(
+              'Celebrating cultures,\n' //\n breaks the line
+              ' promoting integration',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w300,
+                fontFamily: 'Lato',
+              ),
             ),
           ),
-          const SizedBox(height: 90), // Space between catchphrase and buttons
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 21),
+          Container(
+            margin: const EdgeInsets.all(21),
             child: ElevatedButton(
               onPressed: () async {
-                // await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                //   email: "barry.allen@example.com",
-                //   password: "SuperSecretPassword!"
-                // );
-                // var data = FirebaseFirestore.instance.collection('test');
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF006400), // Background color of the button
+                backgroundColor:
+                    Color(0xFF006400), // Background color of the button
                 minimumSize: const Size(350, 80), // Set the button size
               ),
               child: Text(
@@ -99,9 +103,8 @@ class LogoScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 25), // Space between buttons
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 21),
+          Container(
+            margin: const EdgeInsets.only(left: 21, right: 21, bottom: 21),
             child: OutlinedButton(
               onPressed: () {
                 // Usa Navigator.push to navigate into RegisterScreen
@@ -119,7 +122,66 @@ class LogoScreen extends StatelessWidget {
               ),
             ),
           ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 42),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Flexible(
+                  flex: 3,
+                  child: Text("Continue with", style: TextStyle(fontSize: 24, fontFamily: 'Lato')),
+                ),
+                Flexible(
+                  flex: 1,
+                  child:
+                    _buildSocialButton(
+                    'assets/images/google.png', // Replace with your asset
+                    () async {
+                      try {
+                        UserCredential? loginUser = await AuthService.signInWithGoogle();
+                        if(loginUser is UserCredential){
+                          await BabylonUser.updateCurrentBabylonUserData(currentUserUID: loginUser.user!.uid);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomePage()),
+                          );
+                        }
+                      } catch (e) {
+                          print(e.toString()); 
+                        }; 
+                      }, 55)
+                ),
+                Flexible(
+                  flex: 1,
+                  child:
+                    _buildSocialButton(
+                      'assets/images/facebook.png', // Replace with your asset
+                      () async {
+                        try {
+                          
+                        } catch (e) {
+                          print(e.toString()); 
+                        }; 
+                      }, 55)
+                )
+              ] 
+            )
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSocialButton(
+    String iconPath, VoidCallback onPressed, double height) {
+    return Container(
+      height: height,
+      child: FloatingActionButton(
+        onPressed: onPressed,
+        child: Image.asset(iconPath), // The social icon
+        backgroundColor: Colors.white,
+        elevation: 0, // Remove shadow
       ),
     );
   }

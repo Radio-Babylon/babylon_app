@@ -12,7 +12,36 @@
           "package_name": "com.babylonradio"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "766184958846-fkkk14jasmj698grq644rk2i4qdgbcle.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.babylonradio",
+            "certificate_hash": "a5b443ec4a6ae3bb54c624f7a3419b3d3b957a38"
+          }
+        },
+        {
+          "client_id": "766184958846-o5jphh8me8pgpngbrp2uof2kjl46a1vf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.babylonradio",
+            "certificate_hash": "9ff2b24f30668a25a2129764f1dff337b4670054"
+          }
+        },
+        {
+          "client_id": "766184958846-t68b3c6og4nr75mjd44h7cr1if347iiv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.babylonradio",
+            "certificate_hash": "c51f0fde16e34095b5964233e064522b486bab86"
+          }
+        },
+        {
+          "client_id": "766184958846-lr5fat70pq8senfldulfbr6t2jgmskhu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBsiAXO-bLAREFNULzVzaGTCZLHHdPyvEU"
@@ -20,7 +49,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766184958846-3sbmtjp3uv3rbd1mnmoa5k5o8a451ses.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "766184958846-95058shn7rlabq4bf0l59qn9nt7sdfmc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.babylonradio"
+              }
+            }
+          ]
         }
       }
     }

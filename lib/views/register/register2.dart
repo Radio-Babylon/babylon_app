@@ -1,7 +1,9 @@
+import 'package:babylon_app/services/user/userService.dart';
+import 'package:babylon_app/views/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'register3.dart';
 
 class RegisterPage2 extends StatefulWidget {
   @override
@@ -9,14 +11,16 @@ class RegisterPage2 extends StatefulWidget {
 }
 
 class _RegisterPage2State extends State<RegisterPage2> {
-  File? _image;
+  File? _fileImage;
+  //Image? smallImage;
 
   Future getImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final image = await ImagePicker().pickImage(
+        source: ImageSource.gallery, maxWidth: 400, imageQuality: 70);
 
     if (image != null) {
       setState(() {
-        _image = File(image.path);
+        _fileImage = File(image.path);
       });
     }
   }
@@ -28,13 +32,15 @@ class _RegisterPage2State extends State<RegisterPage2> {
         title: const Text('Photo Profile'),
       ),
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20), // Adjust overall horizontal spacing
+        margin: EdgeInsets.symmetric(
+            horizontal: 20), // Adjust overall horizontal spacing
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(bottom: 25), // Adjust space below the logo
+              margin:
+                  EdgeInsets.only(bottom: 25), // Adjust space below the logo
               child: Image.asset(
                 'assets/images/logoRectangle.png',
                 height: 90,
@@ -51,8 +57,9 @@ class _RegisterPage2State extends State<RegisterPage2> {
               child: CircleAvatar(
                 radius: 125,
                 backgroundColor: Color(0xFF006400),
-                backgroundImage: _image != null ? FileImage(_image!) : null,
-                child: _image == null ? Text('Photo') : null,
+                backgroundImage:
+                    _fileImage != null ? FileImage(_fileImage!) : null,
+                child: _fileImage == null ? Text('Photo') : null,
               ),
             ),
             const SizedBox(height: 20),
@@ -65,17 +72,37 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 backgroundColor: Color(0xFF006400),
                 minimumSize: Size(365, 60), // Size of the button.
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(60.0), // Rounded edges for the button.
+                  borderRadius: BorderRadius.circular(
+                      60.0), // Rounded edges for the button.
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
+                final currentUser = FirebaseAuth.instance.currentUser;
+
+                if (currentUser != null) {
+                  if (_fileImage != null) {
+                    await UserService.addPhoto(
+                        user: currentUser, file: _fileImage!);
+                  } /*else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Please upload an image')));
+                  }*/
+                }
+                if (!mounted) return;
+
+                // disable register's second view
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => RegisterPage3()),
+                // );
+
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RegisterPage3()),
+                  MaterialPageRoute(builder: (context) => HomePage()),
                 );
               },
               child: const Text(
-                'Next',
+                'Finish',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -84,17 +111,25 @@ class _RegisterPage2State extends State<RegisterPage2> {
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 20), // Adjust space above and below the "Skip" button
+              margin: EdgeInsets.symmetric(
+                  vertical:
+                      20), // Adjust space above and below the "Skip" button
               child: TextButton(
                 onPressed: () {
+                  // disable 3rd register screen
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => RegisterPage3()),
+                  // );
+
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => RegisterPage3()),
+                    MaterialPageRoute(builder: (context) => HomePage()),
                   );
                 },
                 child: const Text('Skip'),
                 style: OutlinedButton.styleFrom(
-                    minimumSize: Size(365, 60), // Set the button size
+                  minimumSize: Size(365, 60), // Set the button size
                   textStyle: const TextStyle(fontSize: 24, fontFamily: 'Lato'),
                   side: const BorderSide(width: 2.0, color: Colors.grey),
                 ),

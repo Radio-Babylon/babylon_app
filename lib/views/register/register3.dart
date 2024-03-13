@@ -1,5 +1,7 @@
+import 'package:babylon_app/views/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'login.dart';
+import 'package:babylon_app/services/user/userService.dart';
 
 class RegisterPage3 extends StatefulWidget {
   @override
@@ -11,15 +13,50 @@ class _RegisterPage3State extends State<RegisterPage3> {
   List<String> selectedLanguages = [];
   // A list of languages that users can choose from.
   List<String> languages = [
-    "Arabic", "Bengali", "Bosnian", "Bulgarian", "Cantonese",
-    "Chinese", "Croatian", "Czech", "Danish", "Dutch",
-    "English", "Finnish", "French", "German", "Greek",
-    "Hebrew", "Hindi", "Hungarian", "Indonesian", "Italian",
-    "Japanese", "Korean", "Malay", "Marathi", "Norwegian",
-    "Pashto", "Persian", "Polish", "Portuguese", "Punjabi",
-    "Romanian", "Russian", "Serbian", "Sindhi", "Slovak",
-    "Spanish", "Swahili", "Swedish", "Tamil", "Telugu",
-    "Thai", "Turkish", "Urdu", "Vietnamese"
+    "Arabic",
+    "Bengali",
+    "Bosnian",
+    "Bulgarian",
+    "Cantonese",
+    "Chinese",
+    "Croatian",
+    "Czech",
+    "Danish",
+    "Dutch",
+    "English",
+    "Finnish",
+    "French",
+    "German",
+    "Greek",
+    "Hebrew",
+    "Hindi",
+    "Hungarian",
+    "Indonesian",
+    "Italian",
+    "Japanese",
+    "Korean",
+    "Malay",
+    "Marathi",
+    "Norwegian",
+    "Pashto",
+    "Persian",
+    "Polish",
+    "Portuguese",
+    "Punjabi",
+    "Romanian",
+    "Russian",
+    "Serbian",
+    "Sindhi",
+    "Slovak",
+    "Spanish",
+    "Swahili",
+    "Swedish",
+    "Tamil",
+    "Telugu",
+    "Thai",
+    "Turkish",
+    "Urdu",
+    "Vietnamese"
   ];
 
   // Maps to manage the interests' selections.
@@ -71,8 +108,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Image.asset('assets/images/logoRectangle.png',
-                height: 90,
-                width: 365),
+                height: 90, width: 365),
             const SizedBox(height: 20),
             const Text(
               'Almost there, just a few more steps',
@@ -84,7 +120,9 @@ class _RegisterPage3State extends State<RegisterPage3> {
             ListTile(
               title: Text('Select the languages that you speak'),
               subtitle: Text(
-                selectedLanguages.isNotEmpty ? selectedLanguages.join(', ') : 'None selected',
+                selectedLanguages.isNotEmpty
+                    ? selectedLanguages.join(', ')
+                    : 'None selected',
                 style: TextStyle(color: Theme.of(context).primaryColor),
               ),
               onTap: () => _showMultiSelectLanguages(context),
@@ -99,21 +137,38 @@ class _RegisterPage3State extends State<RegisterPage3> {
                 backgroundColor: Color(0xFF006400),
                 minimumSize: Size(365, 60), // Size of the button.
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(60.0), // Rounded edges for the button.
+                  borderRadius: BorderRadius.circular(
+                      60.0), // Rounded edges for the button.
                 ),
               ),
-                onPressed: () { Navigator.push(
+              onPressed: () async {
+                final currentUser = FirebaseAuth.instance.currentUser;
+
+                if (currentUser != null) {
+                  await UserService.updateUserInfo(
+                      uuid: currentUser.uid,
+                      activities: interest1,
+                      music: interest2,
+                      hobbies: interest3);
+                }
+
+                if (!mounted) return;
+
+                Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(builder: (context) => HomePage()),
                 );
-                },
-              child: const Text('Finish',
+              },
+              child: const Text(
+                'Finish',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
-                  fontFamily: 'Lato',),
-            ),
-            )],
+                  fontFamily: 'Lato',
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -163,6 +218,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
       },
     );
   }
+
   Widget _buildCheckboxGridSection(String title, Map<String, bool> options) {
     int crossAxisCount = 2; // Number of columns in the grid
 
@@ -184,7 +240,8 @@ class _RegisterPage3State extends State<RegisterPage3> {
             ),
             borderRadius: BorderRadius.circular(15), // The border radius
           ),
-          padding: const EdgeInsets.all(5), // Padding for the inside of the Container
+          padding: const EdgeInsets.all(
+              5), // Padding for the inside of the Container
           // GridView for the checkbox grid
           child: GridView.builder(
             shrinkWrap: true,
@@ -204,8 +261,10 @@ class _RegisterPage3State extends State<RegisterPage3> {
                     options[key] = value!;
                   });
                 },
-                controlAffinity: ListTileControlAffinity.leading, // Position the checkbox after the text
-                contentPadding: EdgeInsets.symmetric(horizontal: 2),// Position the checkbox on the left side
+                controlAffinity: ListTileControlAffinity
+                    .leading, // Position the checkbox after the text
+                contentPadding: EdgeInsets.symmetric(
+                    horizontal: 2), // Position the checkbox on the left side
               );
             },
           ),
@@ -213,6 +272,4 @@ class _RegisterPage3State extends State<RegisterPage3> {
       ],
     );
   }
-
-  }
-
+}
