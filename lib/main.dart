@@ -12,7 +12,6 @@ import 'views/login/login.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await BabylonUser.updateCurrentBabylonUserData(currentUserUID: FirebaseAuth.instance.currentUser!.uid);
   runApp(const MyApp());
 }
 

@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
     // Update the BabylonUser data with the current user
   }
@@ -97,7 +97,8 @@ class _HomePageState extends State<HomePage> {
 // Example HomeScreen class
 class HomeScreen extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    BabylonUser.updateCurrentBabylonUserData(currentUserUID: FirebaseAuth.instance.currentUser!.uid);
     final BabylonUser user = BabylonUser.currentBabylonUser; 
     return ListView(
       children: <Widget>[

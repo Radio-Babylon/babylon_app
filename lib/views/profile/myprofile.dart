@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:babylon_app/models/babylonUser.dart';
 import 'package:babylon_app/services/user/userService.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../home.dart'; // Make sure this import is correct for your HomeScreen widget
 
 class MyProfile extends StatefulWidget {
@@ -19,6 +23,7 @@ class _MyProfileState extends State<MyProfile> {
   late final TextEditingController _dateOfBirth;
   late final TextEditingController _country;
   late final TextEditingController _about;
+  File? _fileImage;
 
   String? _error;
 
@@ -65,6 +70,7 @@ class _MyProfileState extends State<MyProfile> {
           "about": _about.text 
         });
         await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.UserUID);
+        await UserService.addPhoto(user: FirebaseAuth.instance.currentUser!, file: _fileImage!);
         await Future.delayed(Duration(seconds: 1));
         setState(() {
           _isSaving = false;
@@ -89,10 +95,7 @@ class _MyProfileState extends State<MyProfile> {
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
-          ProfileWidget(
-            imagePath: user.imagePath,
-            onClicked: () async {},
-          ),
+          buildProfile(context),
           const SizedBox(height: 24),
           buildName(user),
           const SizedBox(height: 24),
@@ -149,6 +152,54 @@ class _MyProfileState extends State<MyProfile> {
               ),
             )
         ],
+      ),
+    );
+  }
+
+  Widget buildProfile(BuildContext context) {
+    final color = Theme.of(context).colorScheme.primary;
+    return Center(
+      child: Stack(
+        children: [
+          buildImage(),
+          Positioned(bottom: 0, right: 4, child: buildEditIcon(color, onClicked: getImage)),
+        ],
+      )
+    );
+  }
+
+  Future getImage() async {
+    activateButton();
+    final image = await ImagePicker().pickImage(
+        source: ImageSource.gallery, maxWidth: 400, imageQuality: 70);
+
+    if (image != null) {
+      setState(() {
+        _fileImage = File(image.path);
+      });
+    }
+  }
+
+  Widget buildImage() {
+    ImageProvider image;
+    if (_fileImage != null ){
+      image = FileImage(_fileImage!);
+    }
+    else if (user.imagePath == '') {
+      image = const AssetImage('assets/images/default_user_logo.png');
+    } else {
+      image = NetworkImage(user.imagePath);
+    }
+    return ClipOval(
+      child: Material(
+        color: Colors.transparent,
+        child: Ink.image(
+          image: image,
+          fit: BoxFit.cover,
+          width: 128,
+          height: 128,
+          child: InkWell(onTap: getImage),
+        ),
       ),
     );
   }
@@ -224,6 +275,7 @@ class _MyProfileState extends State<MyProfile> {
                       controller: controller,
                       readOnly: hasDatePicker,
                       onTap: () async {
+                        activateButton();
                         if(hasDatePicker){
                           DateTime? pickedDate = await showDatePicker(
                             context: context, initialDate: DateTime.now(),
@@ -257,30 +309,30 @@ class _MyProfileState extends State<MyProfile> {
               ),
             ],
           ),
-          Positioned(
-              top: 0,
-              right: 5,
-              child: buildEditIcon(Theme.of(context).colorScheme.primary,
-                  onClicked: () {
-                toggles[labelText] = true;
-                toggles['Save'] = true;
-                setState(() {
-                  this.toggles[labelText] = toggles[labelText]!;
-                  for (MapEntry<String, bool> toggle in toggles.entries) {
-                    if (toggle.key != labelText) {
-                      if (toggle.value) {
-                        if (toggle.key == 'Name') {
-                          if (_fullname.text ==
-                              BabylonUser.currentBabylonUser.fullName) {
-                            toggles[toggle.key] = false;
-                          }
-                        }
-                      }
-                    }
-                  }
-                  //activateButton();
-                });
-              })),
+          // Positioned(
+          //     top: 0,
+          //     right: 5,
+          //     child: buildEditIcon(Theme.of(context).colorScheme.primary,
+          //         onClicked: () {
+          //       toggles[labelText] = true;
+          //       toggles['Save'] = true;
+          //       setState(() {
+          //         this.toggles[labelText] = toggles[labelText]!;
+          //         for (MapEntry<String, bool> toggle in toggles.entries) {
+          //           if (toggle.key != labelText) {
+          //             if (toggle.value) {
+          //               if (toggle.key == 'Name') {
+          //                 if (_fullname.text ==
+          //                     BabylonUser.currentBabylonUser.fullName) {
+          //                   toggles[toggle.key] = false;
+          //                 }
+          //               }
+          //             }
+          //           }
+          //         }
+          //         //activateButton();
+          //       });
+          //     })),
         ]),
       ),
     );
@@ -325,70 +377,6 @@ class _MyProfileState extends State<MyProfile> {
   // Method to build interests chips
 
   // Method to build languages chips
-}
-
-class ProfileWidget extends StatelessWidget {
-  final String imagePath;
-  final Function() onClicked;
-
-  const ProfileWidget(
-      {super.key, required this.imagePath, required this.onClicked});
-
-  @override
-  Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.primary;
-    return Center(
-        child: Stack(
-      children: [
-        buildImage(),
-        Positioned(bottom: 0, right: 4, child: buildEditIcon(color)),
-      ],
-    ));
-  }
-
-  Widget buildImage() {
-    ImageProvider image;
-    if (imagePath == '') {
-      image = const AssetImage('assets/images/default_user_logo.png');
-    } else {
-      image = NetworkImage(imagePath);
-    }
-    return ClipOval(
-      child: Material(
-        color: Colors.transparent,
-        child: Ink.image(
-          image: image,
-          fit: BoxFit.cover,
-          width: 128,
-          height: 128,
-          child: InkWell(onTap: onClicked),
-        ),
-      ),
-    );
-  }
-
-  Widget buildEditIcon(Color color) => buildCircle(
-        color: Colors.white,
-        all: 3,
-        child: buildCircle(
-          color: color,
-          all: 8,
-          child: Icon(Icons.edit, color: Colors.white, size: 20),
-        ),
-      );
-
-  Widget buildCircle({
-    required Widget child,
-    required double all,
-    required Color color,
-  }) =>
-      ClipOval(
-        child: Container(
-          padding: EdgeInsets.all(all),
-          color: color,
-          child: child,
-        ),
-      );
 }
 
 class ButtonWidget extends StatelessWidget {
