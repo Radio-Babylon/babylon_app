@@ -70,7 +70,7 @@ class _MyProfileState extends State<MyProfile> {
           "about": _about.text 
         });
         await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.UserUID);
-        await UserService.addPhoto(user: FirebaseAuth.instance.currentUser!, file: _fileImage!);
+        if (_fileImage != null) UserService.addPhoto(user: FirebaseAuth.instance.currentUser!, file: _fileImage!);
         await Future.delayed(Duration(seconds: 1));
         setState(() {
           _isSaving = false;
@@ -142,13 +142,15 @@ class _MyProfileState extends State<MyProfile> {
             child: saveButton(),
           ),
            if(_isSaving)
-            Padding(
-              padding: EdgeInsets.only(top: 16),
+            Container(
+              margin: EdgeInsets.all(16),
+              child: Center(
               child: SizedBox(
-                width: 60,
-                height: 60,
-                child: CircularProgressIndicator(
-                    color: Color(0xFF006400)),
+                  width: 50,
+                  height: 50,
+                  child: CircularProgressIndicator(
+                      color: Color(0xFF006400)),
+                ),
               ),
             )
         ],
