@@ -1,3 +1,4 @@
+import 'package:babylon_app/models/babylonUser.dart';
 import 'package:babylon_app/views/connection/connections.dart';
 import 'package:babylon_app/views/events/events.dart';
 import 'package:babylon_app/views/forum/forum.dart';
@@ -108,7 +109,7 @@ class DrawerHeaderWithUserInfo extends StatefulWidget {
 }
 
 class _DrawerHeaderWithUserInfoState extends State<DrawerHeaderWithUserInfo> {
-  late final User? currentUser = FirebaseAuth.instance.currentUser;
+  late final BabylonUser? currentUser = BabylonUser.currentBabylonUser;
   @override
   void initState() {
     super.initState();
@@ -123,9 +124,9 @@ class _DrawerHeaderWithUserInfoState extends State<DrawerHeaderWithUserInfo> {
 
   @override
   Widget build(BuildContext context) {
-    String fullName = currentUser?.displayName ?? 'Unknown user';
+    String fullName = currentUser?.fullName ?? 'Unknown user';
     String email = currentUser?.email ?? 'email';
-    String? imgUrl = currentUser?.photoURL;
+    String? imgUrl = currentUser?.imagePath;
     final ImageProvider currentImg;
 
     if (imgUrl != null) {
