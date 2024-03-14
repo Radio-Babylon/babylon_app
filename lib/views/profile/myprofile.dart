@@ -269,9 +269,7 @@ class _MyProfileState extends State<MyProfile> {
                 children: [
                   Icon(icon),
                   const SizedBox(width: 15),
-                  SizedBox(
-                    width: 300,
-                    height: 50,
+                  Expanded( 
                     child: TextField(
                       enabled: toggles[labelText],
                       controller: controller,
@@ -306,7 +304,7 @@ class _MyProfileState extends State<MyProfile> {
                         labelText: labelText,
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ],
