@@ -17,8 +17,7 @@ class MyProfile extends StatefulWidget {
 class _MyProfileState extends State<MyProfile> {
   bool firstToggle = false;
   BabylonUser user = BabylonUser.currentBabylonUser;
-  
-  bool _isSaving = false;
+  String formState = "unchanged";
   late final TextEditingController _fullname;
   late final TextEditingController _dateOfBirth;
   late final TextEditingController _country;
@@ -26,12 +25,6 @@ class _MyProfileState extends State<MyProfile> {
   File? _fileImage;
 
   String? _error;
-
-  final Map<String, bool> toggles = {
-    'Name': false,
-    'Email': false,
-    'Save': false,
-  };
 
   @override
   void initState() {
@@ -56,30 +49,6 @@ class _MyProfileState extends State<MyProfile> {
 
   @override
   Widget build(BuildContext context) {
-
-    Widget saveButton() => ButtonWidget(
-      text: 'Save changes',
-      onClicked: () async {
-        setState(() {
-          _isSaving = true;
-        });
-        await UserService.updateUserInfo(uuid: user.UserUID, newData: {
-          "name": _fullname.text,
-          "originCountry": _country.text,
-          "birthDate": _dateOfBirth.text,
-          "about": _about.text 
-        });
-        await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.UserUID);
-        if (_fileImage != null) UserService.addPhoto(user: FirebaseAuth.instance.currentUser!, file: _fileImage!);
-        await Future.delayed(Duration(seconds: 1));
-        setState(() {
-          _isSaving = false;
-          user = BabylonUser.currentBabylonUser;
-        });
-      },
-      toSave: toggles['Save'] ?? true,
-    );
-
     return Scaffold(
       appBar: AppBar(
         // Replaced the menu icon with an arrow back icon
@@ -87,8 +56,11 @@ class _MyProfileState extends State<MyProfile> {
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             // Navigate back to HomeScreen when the arrow is pressed
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomePage()));
+            formState == "unsaved" ?
+             _showBackPopup() : 
+              Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomePage())
+              );;
           },
         ),
       ),
@@ -139,9 +111,9 @@ class _MyProfileState extends State<MyProfile> {
               controller: _about,
               onClicked: () {}),
           Center(
-            child: saveButton(),
+            child: buildSaveButton(),
           ),
-           if(_isSaving)
+           if(formState == "saving")
             Container(
               margin: EdgeInsets.all(16),
               child: Center(
@@ -158,6 +130,35 @@ class _MyProfileState extends State<MyProfile> {
     );
   }
 
+  Widget buildSaveButton() => ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      shape: StadiumBorder(),
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      foregroundColor: Colors.white,
+      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+    ),
+
+    child: Text("Save changes"),
+    onPressed: formState == "unsaved" ? () async {
+      setState(() {
+        formState = "saving";
+      });
+      await UserService.updateUserInfo(uuid: user.UserUID, newData: {
+        "name": _fullname.text,
+        "originCountry": _country.text,
+        "birthDate": _dateOfBirth.text,
+        "about": _about.text 
+      });
+      await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.UserUID);
+      if (_fileImage != null) UserService.addPhoto(user: FirebaseAuth.instance.currentUser!, file: _fileImage!);
+      await Future.delayed(Duration(seconds: 1));
+      setState(() {
+        formState = "saved";
+        user = BabylonUser.currentBabylonUser;
+      });
+    } : null
+  );
+
   Widget buildProfile(BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
     return Center(
@@ -167,6 +168,42 @@ class _MyProfileState extends State<MyProfile> {
           Positioned(bottom: 0, right: 4, child: buildEditIcon(color, onClicked: getImage)),
         ],
       )
+    );
+  }
+
+  Future<void> _showBackPopup() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('This is a demo alert dialog.'),
+                Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Leave'),
+              onPressed: () {
+                Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomePage())
+                );
+              },
+            ),
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
     );
   }
 
@@ -222,15 +259,21 @@ class _MyProfileState extends State<MyProfile> {
 
   void activateButton() {
     setState(() {
-      toggles['Save'] = true;
+      formState = "unsaved";
     });
   }
 
-  Widget buildUpgradeButton() => ButtonWidget(
-        text: 'Upgrade To PRO',
-        onClicked: () {},
-        toSave: true,
-      );
+  Widget buildUpgradeButton() => ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      shape: StadiumBorder(),
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      foregroundColor: Colors.white,
+      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+    ),
+
+    child: Text("Upgrade To PRO"),
+    onPressed: () => activateButton()
+  );
 
   Widget buildAbout(BabylonUser user) => Container(
         padding: EdgeInsets.symmetric(horizontal: 48),
@@ -271,7 +314,6 @@ class _MyProfileState extends State<MyProfile> {
                   const SizedBox(width: 15),
                   Expanded( 
                     child: TextField(
-                      enabled: toggles[labelText],
                       controller: controller,
                       readOnly: hasDatePicker,
                       onTap: () async {
@@ -377,31 +419,6 @@ class _MyProfileState extends State<MyProfile> {
   // Method to build interests chips
 
   // Method to build languages chips
-}
-
-class ButtonWidget extends StatelessWidget {
-  final String text;
-  final Function() onClicked;
-  final bool toSave;
-
-  const ButtonWidget({
-    Key? key,
-    required this.text,
-    required this.onClicked,
-    required this.toSave,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          shape: StadiumBorder(),
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          foregroundColor: Colors.white,
-          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-        ),
-        child: Text(text),
-        onPressed: toSave ? onClicked : null,
-      );
 }
 
 class NumbersWidget extends StatelessWidget {
