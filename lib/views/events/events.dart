@@ -10,7 +10,7 @@ import "package:babylon_app/views/navigation_menu.dart";
 
 // Define the EventsScreen as a StatefulWidget to handle dynamic content like user events.
 class EventsScreen extends StatefulWidget {
-  const EventsScreen({Key? key}) : super(key: key);
+  const EventsScreen({final Key? key}) : super(key: key);
 
   @override
   State<EventsScreen> createState() => _EventsScreenState();
@@ -35,20 +35,18 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(final BuildContext context){
     return Scaffold(
        // Custom drawer widget for navigation.
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CreateEventScreen()),
+            MaterialPageRoute(builder: (final context) => CreateEventScreen()),
           );
         },
-        child: Icon(Icons.add),
         backgroundColor: Colors.green,
-        // Alineación en la parte inferior izquierda
-
+        child: Icon(Icons.add),
       ),
 
       appBar: AppBar(
@@ -87,7 +85,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
     return FutureBuilder<List<Event>>(
       future: _allEvents, // a previously-obtained Future<String> or null
       builder:
-          (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
+          (final BuildContext context, final AsyncSnapshot<List<Event>> snapshot) {
         List<Widget> children;
         if (snapshot.hasData) {
           children = <Widget>[
@@ -98,7 +96,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
                     style: TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold)),
               ),
-              ...snapshot.data!.map((anEvent) => _buildEventCard(anEvent) )
+              ...snapshot.data!.map((final anEvent) => _buildEventCard(anEvent) )
           ];
         } else if (snapshot.hasError) {
             children = <Widget>[
@@ -150,7 +148,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
     return FutureBuilder<List<Event>>(
       future: _myEvents, // a previously-obtained Future<String> or null
       builder:
-          (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
+          (final BuildContext context, final AsyncSnapshot<List<Event>> snapshot) {
         List<Widget> children;
         if (snapshot.hasData) {
           children = <Widget>[
@@ -161,7 +159,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
                     style: TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold)),
               ),
-              ...snapshot.data!.map((anEvent) => _buildEventCard(anEvent) )
+              ...snapshot.data!.map((final anEvent) => _buildEventCard(anEvent) )
           ];
         } else if (snapshot.hasError) {
             children = <Widget>[
@@ -210,19 +208,19 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
 
 
   // Method to build a single event card widget.
-  Widget _buildEventCard(Event event) {
+  Widget _buildEventCard(final Event event) {
     return Card(
       margin: const EdgeInsets.all(10),
       child: ListTile(
-        leading: event.PictureURL != "" ? Image.network(event.PictureURL!) : Image.asset('assets/images/logoSquare.png'),
-        title: Text(event.Title!),
+        leading: event.getPictureURL != "" ? Image.network(event.getPictureURL!) : Image.asset("assets/images/logoSquare.png"),
+        title: Text(event.getTitle!),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("${DateFormat("dd MMMM yyyy").format(event.Date!)} at ${DateFormat("hh:mm aaa").format(event.Date!)}"),
-            Text(event.ShortDescription!, maxLines: 3, overflow: TextOverflow.ellipsis),
-            Text("Host: ${event.Creator!.fullName}"), // Display the host of the event.
-            Text("Location: ${event.Place}"), // Display the location of the event.
+            Text("${DateFormat("dd MMMM yyyy").format(event.getDate!)} at ${DateFormat("hh:mm aaa").format(event.getDate!)}"),
+            Text(event.getShortDescription!, maxLines: 3, overflow: TextOverflow.ellipsis),
+            Text("Host: ${event.getCreator!.getFullName}"), // Display the host of the event.
+            Text("Location: ${event.getPlace}"), // Display the location of the event.
           ],
         ),
         trailing: IconButton(
@@ -232,7 +230,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
             await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => EventInfoScreen(event: event),
+                builder: (final context) => EventInfoScreen(event: event),
               ),
             );
             setState(() {});

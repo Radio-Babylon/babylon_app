@@ -9,6 +9,10 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  errors:
+    todo: ignore
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
@@ -29,7 +33,7 @@ linter:
     prefer_void_to_null: true
     empty_catches: true
     eol_at_end_of_file: false
-    flutter_style_todos: true
+    flutter_style_todos: true # format:  TODO(username): message, https://URL-to-issue.
     null_check_on_nullable_type_parameter: true
     null_closures: true
     package_api_docs: false
@@ -44,6 +48,11 @@ linter:
     prefer_if_null_operators: true
     prefer_int_literals: false
     prefer_is_empty: true
+    file_names: false
+    avoid_function_literals_in_foreach_calls: false
+    prefer_interpolation_to_compose_strings: true
+    unnecessary_brace_in_string_interps: false
+    sized_box_for_whitespace: false
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

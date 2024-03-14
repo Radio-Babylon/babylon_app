@@ -1,4 +1,4 @@
-import "package:babylon_app/models/babylonUser.dart";
+import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/views/connection/connections.dart";
 import "package:babylon_app/views/events/events.dart";
 import "package:babylon_app/views/forum/forum.dart";
@@ -124,9 +124,9 @@ class _DrawerHeaderWithUserInfoState extends State<DrawerHeaderWithUserInfo> {
 
   @override
   Widget build(BuildContext context) {
-    String fullName = currentUser?.fullName ?? "Unknown user";
-    String email = currentUser?.email ?? "email";
-    String? imgUrl = currentUser?.imagePath;
+    String fullName = currentUser?.getFullName ?? "Unknown user";
+    String email = currentUser?.getEmail ?? "email";
+    String? imgUrl = currentUser?.getImagePath;
     final ImageProvider currentImg;
 
     if (imgUrl != null) {

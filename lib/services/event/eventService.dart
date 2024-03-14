@@ -1,6 +1,6 @@
 import "dart:io";
 
-import "package:babylon_app/models/babylonUser.dart";
+import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/models/event.dart";
 import "package:babylon_app/services/user/userService.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -9,14 +9,14 @@ import "package:firebase_storage/firebase_storage.dart";
 
 class EventService {
   static Future<List<Event>> getEvents() async{
-    List<Event> result = List.empty(growable: true);
+    final List<Event> result = List.empty(growable: true);
     try {
       final db = FirebaseFirestore.instance;
-      var snapShot = await db.collection("events").get();
-      await Future.forEach(snapShot.docs, (snapShot) async {
-        List<String> attendeesID = List.empty(growable: true);
-        var attendeesSnapshot = await db.collection("events").doc(snapShot.id).collection("attendees").get();
-        attendeesSnapshot.docs.forEach((anAttendee) {
+      final snapShot = await db.collection("events").get();
+      await Future.forEach(snapShot.docs, (final snapShot) async {
+        final List<String> attendeesID = List.empty(growable: true);
+        final attendeesSnapshot = await db.collection("events").doc(snapShot.id).collection("attendees").get();
+        attendeesSnapshot.docs.forEach((final anAttendee) {
           attendeesID.add(anAttendee.id);  
         });
 
@@ -30,18 +30,18 @@ class EventService {
     return result;
   }
 
-  static Future<List<Event>> getListedEventsOfUser(String uuid) async{
-    BabylonUser? babylonUser = await UserService.getBabylonUser(uuid);
-    List<Event> result = List.empty(growable: true);
+  static Future<List<Event>> getListedEventsOfUser(final String uuid) async{
+    final BabylonUser? babylonUser = await UserService.getBabylonUser(uuid);
+    final List<Event> result = List.empty(growable: true);
     try {
       final db = FirebaseFirestore.instance;
-      var snapShot = await db.collection("events").get();
-      await Future.forEach(snapShot.docs, (snapShot) async {
+      final snapShot = await db.collection("events").get();
+      await Future.forEach(snapShot.docs, (final snapShot) async {
         final event = snapShot.data();
-        if(babylonUser!.listedEvents.contains(snapShot.reference.id)){
-          List<String> attendeesID = List.empty(growable: true);
-          var attendeesSnapshot = await db.collection("events").doc(snapShot.id).collection("attendees").get();
-          attendeesSnapshot.docs.forEach((anAttendee) {
+        if(babylonUser!.getListedEvents.contains(snapShot.reference.id)){
+          final List<String> attendeesID = List.empty(growable: true);
+          final attendeesSnapshot = await db.collection("events").doc(snapShot.id).collection("attendees").get();
+          attendeesSnapshot.docs.forEach((final anAttendee) {
             attendeesID.add(anAttendee.id);  
           });
 
@@ -55,12 +55,12 @@ class EventService {
     return result;
   }
 
-  static Future<bool> addUserToEvent(Event event) async{
+  static Future<bool> addUserToEvent(final Event event) async{
     try {
-      User currUser = FirebaseAuth.instance.currentUser!;
+      final User currUser = FirebaseAuth.instance.currentUser!;
       final db = FirebaseFirestore.instance;
-      await db.collection("users").doc(currUser.uid).collection("listedEvents").doc(event.EventDocumentID).set({});
-      await db.collection("events").doc(event.EventDocumentID).collection("attendees").doc(currUser.uid).set({});
+      await db.collection("users").doc(currUser.uid).collection("listedEvents").doc(event.getEventDocumentID).set({});
+      await db.collection("events").doc(event.getEventDocumentID).collection("attendees").doc(currUser.uid).set({});
       return true;
     } catch (e) {
       print(e);
@@ -68,9 +68,9 @@ class EventService {
     }
   }
 
-  static Future<void> createEvent({required String eventName, File? image, required Timestamp eventTimeStamp, String? shortDescription, String? description, required String place}) async{
+  static Future<void> createEvent({required final String eventName, final File? image, required final Timestamp eventTimeStamp, final String? shortDescription, final String? description, required final String place}) async{
     try {
-      User currUser = FirebaseAuth.instance.currentUser!;
+      final User currUser = FirebaseAuth.instance.currentUser!;
       final db = FirebaseFirestore.instance;
       Reference referenceRoot = FirebaseStorage.instance.ref();
       Reference referenceDirImages = referenceRoot.child('images');

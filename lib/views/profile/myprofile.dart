@@ -1,6 +1,6 @@
 import "dart:io";
 
-import "package:babylon_app/models/babylonUser.dart";
+import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/services/user/userService.dart";
 import "package:country_picker/country_picker.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -30,10 +30,10 @@ class _MyProfileState extends State<MyProfile> {
   @override
   void initState() {
     _fullname =
-        TextEditingController(text: BabylonUser.currentBabylonUser.fullName);
-    _dateOfBirth = TextEditingController(text: BabylonUser.currentBabylonUser.dataOfBirth);
-    _country = TextEditingController(text: BabylonUser.currentBabylonUser.originCountry);
-    _about = TextEditingController(text: BabylonUser.currentBabylonUser.about);
+        TextEditingController(text: BabylonUser.currentBabylonUser.getFullName);
+    _dateOfBirth = TextEditingController(text: BabylonUser.currentBabylonUser.getDateOfBirth);
+    _country = TextEditingController(text: BabylonUser.currentBabylonUser.getOriginCountry);
+    _about = TextEditingController(text: BabylonUser.currentBabylonUser.getAbout);
     _error = "";
     super.initState();
   }
@@ -158,13 +158,13 @@ class _MyProfileState extends State<MyProfile> {
         setState(() {
           formState = "saving";
         });
-        await UserService.updateUserInfo(uuid: user.UserUID, newData: {
+        await UserService.updateUserInfo(uuid: user.getUserUID, newData: {
           "name": _fullname.text,
           "originCountry": _country.text,
           "birthDate": _dateOfBirth.text,
           "about": _about.text 
         });
-        await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.UserUID);
+        await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.getUserUID);
         if (_fileImage != null) UserService.addPhoto(user: FirebaseAuth.instance.currentUser!, file: _fileImage!);
         await Future.delayed(Duration(seconds: 1));
         setState(() {
@@ -240,10 +240,10 @@ class _MyProfileState extends State<MyProfile> {
     if (_fileImage != null ){
       image = FileImage(_fileImage!);
     }
-    else if (user.imagePath == "") {
+    else if (user.getImagePath == "") {
       image = const AssetImage("assets/images/default_user_logo.png");
     } else {
-      image = NetworkImage(user.imagePath);
+      image = NetworkImage(user.getImagePath);
     }
     return ClipOval(
       child: Material(
@@ -262,12 +262,12 @@ class _MyProfileState extends State<MyProfile> {
   Widget buildName(BabylonUser user) => Column(
         children: [
           Text(
-            user.fullName,
+            user.getFullName,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
           const SizedBox(height: 4),
           Text(
-            user.email,
+            user.getEmail,
             style: TextStyle(color: Colors.grey),
           )
         ],
@@ -302,7 +302,7 @@ class _MyProfileState extends State<MyProfile> {
             ),
             const SizedBox(height: 16),
             Text(
-              user.about!,
+              user.getAbout!,
               style: TextStyle(fontSize: 16, height: 1.4),
             ),
           ],

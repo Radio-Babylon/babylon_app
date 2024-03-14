@@ -1,4 +1,4 @@
-import "package:babylon_app/models/babylonUser.dart";
+import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/models/event.dart";
 import "package:babylon_app/services/event/eventService.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -9,8 +9,7 @@ import "package:intl/intl.dart";
 
 class EventInfoScreen extends StatefulWidget {
   final Event event;
-  @override
-  const EventInfoScreen({Key? key, required this.event}) : super(key: key);
+  const EventInfoScreen({final Key? key, required this.event}) : super(key: key);
   EventInfoState createState() => EventInfoState(event);
 }
 
@@ -25,14 +24,14 @@ class EventInfoState extends State<EventInfoScreen> {
     super.initState();
     // Update the BabylonUser data with the current user
 
-    _isAttending = event.Attendees.any((anAttendee) => anAttendee!.UserUID == FirebaseAuth.instance.currentUser!.uid);
+    _isAttending = event.getAttendees.any((final anAttendee) => anAttendee!.getUserUID == FirebaseAuth.instance.currentUser!.uid);
   }
   
   // Event object passed through the constructor containing all event details.
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     // Use MediaQuery to get device width for responsive design.
-    double screenWidth = MediaQuery
+    final double screenWidth = MediaQuery
         .of(context)
         .size
         .width;
@@ -41,7 +40,7 @@ class EventInfoState extends State<EventInfoScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: Builder(
-          builder: (BuildContext context) {
+          builder: (final BuildContext context) {
             return IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () => Navigator.pop(context),
@@ -49,7 +48,7 @@ class EventInfoState extends State<EventInfoScreen> {
           },
         ),
         title: Text(
-          event.Title!,
+          event.getTitle!,
           style: TextStyle(
               fontSize: 24), // Increase font size for AppBar title for better visibility.
         ),
@@ -61,8 +60,8 @@ class EventInfoState extends State<EventInfoScreen> {
             // Container for the event image, taking full width of the screen.
             Container(
               width: screenWidth,
-              child: event.PictureURL != "" ? Image.network(
-                event.PictureURL!,
+              child: Image.network(
+                event.getPictureURL!,
                 height: 250, // Increase height for a more prominent image.
                 fit: BoxFit.cover,
               ) : Image.asset('assets/images/logoSquare.png', height: 250),
@@ -76,13 +75,13 @@ class EventInfoState extends State<EventInfoScreen> {
                 children: <Widget>[
                   // Event title with increased font size.
                   Text(
-                    event.Title!,
+                    event.getTitle!,
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   // Event description with appropriate styling.
                   Text(
-                    event.FullDescription!,
+                    event.getFullDescription!,
                     style: TextStyle(fontSize: 18),
                   ),
                   SizedBox(height: 16),
@@ -93,7 +92,7 @@ class EventInfoState extends State<EventInfoScreen> {
                       SizedBox(width: 8),
                       // Text for the event date and time.
                       Text(
-                        "${DateFormat("dd MMMM yyyy").format(event.Date!)} at ${DateFormat("hh:mm aaa").format(event.Date!)}",
+                        "${DateFormat("dd MMMM yyyy").format(event.getDate!)} at ${DateFormat("hh:mm aaa").format(event.getDate!)}",
                         style: TextStyle(fontSize: 18),
                       ),
                     ],
@@ -106,7 +105,7 @@ class EventInfoState extends State<EventInfoScreen> {
                       SizedBox(width: 8),
                       // Text for the event location.
                       Text(
-                        event.Place!,
+                        event.getPlace!,
                         style: TextStyle(fontSize: 18),
                       ),
                     ],
@@ -123,13 +122,13 @@ class EventInfoState extends State<EventInfoScreen> {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10.0),
                             child: CircleAvatar(
-                              backgroundImage: NetworkImage(event.Creator!.imagePath),
+                              backgroundImage: NetworkImage(event.getCreator!.getImagePath),
                               radius: 20,
                             ),
                           ),
                         ),
                         TextSpan(
-                          text: event.Creator!.fullName,
+                          text: event.getCreator!.getFullName,
                         ),
                       ],
                     ),
@@ -138,15 +137,14 @@ class EventInfoState extends State<EventInfoScreen> {
                   SizedBox(height: 24),
                   // Attend button with larger text and padding.
                   ElevatedButton(
-                    child: Text( _isAttending ? "ATTENDING" : "ATTEND", style: TextStyle(fontSize: 18)),
                     onPressed: () async{
                       if(!_isAttending){
-                        bool added = await EventService.addUserToEvent(event);
+                        final bool added = await EventService.addUserToEvent(event);
                         if(added) 
                           {
                             setState(() {
                               _isAttending = true; 
-                              event.Attendees.add(BabylonUser.currentBabylonUser);
+                              event.getAttendees.add(BabylonUser.currentBabylonUser);
                             });
                           }
                       }
@@ -156,6 +154,7 @@ class EventInfoState extends State<EventInfoScreen> {
                       padding: EdgeInsets.symmetric(
                           horizontal: 32, vertical: 12),
                     ),
+                    child: Text( _isAttending ? "ATTENDING" : "ATTEND", style: TextStyle(fontSize: 18))
                   ),
                   // Section for people attending the event.
                   _buildPeopleAttendingSection(context),
@@ -170,7 +169,7 @@ class EventInfoState extends State<EventInfoScreen> {
   }
 
   // Widget to build the "People Attending" section.
-  Widget _buildPeopleAttendingSection(BuildContext context) {
+  Widget _buildPeopleAttendingSection(final BuildContext context) {
     // Replace with actual data
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25),
@@ -191,19 +190,19 @@ class EventInfoState extends State<EventInfoScreen> {
               onTap: () => _showAllAttendeesBottomSheet(context),
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: event.Attendees.length, // The total number of avatars to display.
-                itemBuilder: (context, index) {
+                itemCount: event.getAttendees.length, // The total number of avatars to display.
+                itemBuilder: (final context, final index) {
                   // Wrapping each avatar with a Transform.translate to create an overlap effect.
                   return Transform.translate(
                     offset: Offset(-30.0 * index, 0), // Shifts each avatar to the left; adjust the multiplier as needed.
                     child: Container(
-                      margin: EdgeInsets.only(right: index != event.Attendees.length - 1 ? 20 : 0), // Adjust the right margin to control the overlap
+                      margin: EdgeInsets.only(right: index != event.getAttendees.length - 1 ? 20 : 0), // Adjust the right margin to control the overlap
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(color: Colors.white, width: 3), // White border around the avatar
                       ),
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(event.Attendees[index]!.imagePath),
+                        backgroundImage: NetworkImage(event.getAttendees[index]!.getImagePath),
                         radius: 30, // The radius of avatars.
                       ),
                     ),
@@ -221,7 +220,7 @@ class EventInfoState extends State<EventInfoScreen> {
               },
               icon: Icon(Icons.person, size: 24), // Icon for the "See all" button.
               label: Text(
-                "See all (${event.Attendees.length})",
+                "See all (${event.getAttendees.length})",
                 style: TextStyle(fontSize: 16), // Text style for the "See all" button.
               ),
               style: OutlinedButton.styleFrom(
@@ -235,7 +234,7 @@ class EventInfoState extends State<EventInfoScreen> {
   }
 
   // Function to show a dialog with all attending users.
-  void _showAllAttendeesBottomSheet(BuildContext context) {
+  void _showAllAttendeesBottomSheet(final BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     final double bottomSheetHeight = screenSize.height * 0.75;
 
@@ -244,7 +243,7 @@ class EventInfoState extends State<EventInfoScreen> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
+      builder: (final BuildContext context) {
         // Use a Stack to layer the elements correctly
         return Stack(
           alignment: Alignment.topCenter,
@@ -272,16 +271,16 @@ class EventInfoState extends State<EventInfoScreen> {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
               ),
               child: ListView.builder(
-                itemCount: event.Attendees.length,
-                itemBuilder: (BuildContext context, int index) {
+                itemCount: event.getAttendees.length,
+                itemBuilder: (final BuildContext context, final int index) {
                   return ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: NetworkImage(event.Attendees[index]!.imagePath),
+                      backgroundImage: NetworkImage(event.getAttendees[index]!.getImagePath),
                       radius: 20,
                     ),
-                    title: Text(event.Attendees[index]!.fullName, style: TextStyle(fontSize: 16)),
+                    title: Text(event.getAttendees[index]!.getFullName, style: TextStyle(fontSize: 16)),
                     onTap: () {
-                      // TODO: Implement navigation to attendee"s profile
+                      // TODO(Enzo): Implement navigation to attendee"s profile
                     },
                   );
                 },

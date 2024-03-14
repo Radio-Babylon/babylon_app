@@ -1,6 +1,6 @@
 import "dart:convert";
 import "dart:typed_data";
-import "package:babylon_app/models/babylonUser.dart";
+import "package:babylon_app/models/babylon_user.dart";
 import "package:firebase_auth/firebase_auth.dart";
 //import "package:firebase_core/firebase_core.dart";
 import "package:flutter/material.dart";
@@ -10,7 +10,7 @@ import "dart:io";
 
 class UserService {
   static Future<void> fillUser(
-      {required User user, required Map<String, String> userInfo}) async {
+      {required final User user, required final Map<String, String> userInfo}) async {
     final db = FirebaseFirestore.instance;
 
     final docUser = db.collection("users").doc(user.uid);
@@ -22,23 +22,25 @@ class UserService {
     }
   }
 
-  static Future<void> addPhoto({required User user, required File file}) async {
-    Reference referenceRoot = FirebaseStorage.instance.ref();
-    Reference referenceDirImages = referenceRoot.child("images");
+  static Future<void> addPhoto({required final User user, required final File file}) async {
+    final Reference referenceRoot = FirebaseStorage.instance.ref();
+    final Reference referenceDirImages = referenceRoot.child("images");
     final String imgName = "${user.uid}.jpg";
-    Reference referenceImageToUpload = referenceDirImages.child(imgName);
+    final Reference referenceImageToUpload = referenceDirImages.child(imgName);
     String imgUrl = "";
     try {
       await referenceImageToUpload.putFile(file);
       imgUrl = await referenceImageToUpload.getDownloadURL();
-    } catch (error) {}
+    } catch (error) {
+      print(error);
+    }
     if (imgUrl.isNotEmpty) {
       FirebaseFirestore.instance
           .collection("users")
           .doc(user.uid)
           .update({"ImageUrl": imgUrl})
-          .then((value) => print("User Updated and photo added"))
-          .catchError((error) => print("Failed to add the photo: $error"));
+          .then((final value) => print("User Updated and photo added"))
+          .catchError((final error) => print("Failed to add the photo: $error"));
 
       try {
         await user.updatePhotoURL(imgUrl);
@@ -49,27 +51,33 @@ class UserService {
   }
 
   static Future<void> updateUserInfo(
-      {required String uuid,
-      Map<String, String>? newData,
-      Map<String, bool>? activities,
-      Map<String, bool>? music,
-      Map<String, bool>? hobbies}) async {
+      {
+        required final String uuid,
+        final Map<String, String>? newData,
+        final Map<String, bool>? activities,
+        final Map<String, bool>? music,
+        final Map<String, bool>? hobbies
+      }
+    ) async {
     final userActivities = [], userMusic = [], userHobbies = [];
 
-    if(activities != null)
+    if(activities != null) {
       for (final activity in activities.entries) {
         if (activity.value) userActivities.add(activity.key);
       }
+    }
 
-    if(music != null)
+    if(music != null) {
       for (final music in music.entries) {
         if (music.value) userMusic.add(music.key);
       }
+    }
 
-    if(hobbies != null)
+    if(hobbies != null) {
       for (final hobby in hobbies.entries) {
         if (hobby.value) userHobbies.add(hobby.key);
       }
+    }
 
     if (userActivities.isNotEmpty ||
         userMusic.isNotEmpty ||
@@ -86,32 +94,26 @@ class UserService {
             "About" : newData.containsKey("about") ? newData["about"] : "",
             "Name" : newData.containsKey("name") ? newData["name"] : "",
           })
-          .then((value) => print("User Updated and additionalInfo added"))
+          .then((final value) => print("User Updated and additionalInfo added"))
           .catchError(
-              (error) => print("Failed to add the additionalInfo: $error"));
+              (final error) => print("Failed to add the additionalInfo: $error"));
     }
   }
 
-  static Future<void> getUserImgUrl({required User user}) async {
-    final db = FirebaseFirestore.instance;
-
-    final docUser = db.collection("users").doc(user.uid);
-  }
-
-  static Future<Image> convertFileToImage(File picture) async {
-    List<int> imageBase64 = picture.readAsBytesSync();
-    String imageAsString = base64Encode(imageBase64);
-    Uint8List uint8list = base64.decode(imageAsString);
-    Image image = Image.memory(uint8list);
+  static Future<Image> convertFileToImage(final File picture) async {
+    final List<int> imageBase64 = picture.readAsBytesSync();
+    final String imageAsString = base64Encode(imageBase64);
+    final Uint8List uint8list = base64.decode(imageAsString);
+    final Image image = Image.memory(uint8list);
     return image;
   }
 
-  static Future<BabylonUser?> getBabylonUser(String userUID) async {
+  static Future<BabylonUser?> getBabylonUser(final String userUID) async {
     BabylonUser? result;
-    Map<String, String> userInfo = {};
+    final Map<String, String> userInfo = {};
 
     try {
-      List<String> eventsLists = List.empty(growable: true);
+      final List<String> eventsLists = List.empty(growable: true);
       final db = FirebaseFirestore.instance;
       final docUser = await db.collection("users").doc(userUID).get();
       final userData = docUser.data();
@@ -124,18 +126,18 @@ class UserService {
       userInfo["birthDate"] = userData.containsKey("Date of Birth") ? userData["Date of Birth"] : "";
 
       final docsListedEvents = await db.collection("users").doc(userUID).collection("listedEvents").get();
-      await Future.forEach(docsListedEvents.docs, (snapShot) async {
+      await Future.forEach(docsListedEvents.docs, (final snapShot) async {
         eventsLists.add(snapShot.reference.id);
       });
       result = BabylonUser.withData(
+        userInfo["UUID"]!,
         userInfo["name"]!, 
         userInfo["email"]!, 
-        userInfo["imgURL"]!, 
-        eventsLists,
-        userInfo["UUID"]!,
         userInfo["about"]!,
         userInfo["country"]!,
-        userInfo["birthDate"]!
+        userInfo["birthDate"]!,
+        userInfo["imgURL"]!, 
+        eventsLists
       );
       print(userData);
     } catch (e) {

@@ -7,7 +7,7 @@ class PartnersScreen extends StatelessWidget {
   const PartnersScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return const MaterialApp(
       home: FutureBuilderPartners(),
     );
@@ -25,7 +25,7 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
   final Future<List<Partner>> _partners = PartnerService.getPartners();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
        // Your drawer widget
       appBar: AppBar(
@@ -48,7 +48,7 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
         child: FutureBuilder<List<Partner>>(
           future: _partners, // a previously-obtained Future<String> or null
           builder:
-              (BuildContext context, AsyncSnapshot<List<Partner>> snapshot) {
+              (final BuildContext context, final AsyncSnapshot<List<Partner>> snapshot) {
             List<Widget> children;
             if (snapshot.hasData) {
               print(1);
@@ -61,7 +61,7 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
-                  ...snapshot.data!.map((aPartner) =>  
+                  ...snapshot.data!.map((final aPartner) =>  
                     Card(
                       child: ListTile(
                         leading: Image.network(aPartner.PictureURL!),
@@ -71,7 +71,7 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
                         onTap: () => 
                           showDialog(
                             context: context,
-                            builder: (BuildContext context) {
+                            builder: (final BuildContext context) {
                               return AlertDialog(
                                 title: Text(aPartner.Name!),
                                 content: Text("You can get ${aPartner.Discount} at ${aPartner.Location}"),
@@ -142,10 +142,10 @@ class PartnerTile extends StatelessWidget {
   PartnerTile({required this.partner});
 
   // Function to show details in a pop-up
-  void _showDetails(BuildContext context) {
+  void _showDetails(final BuildContext context) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (final BuildContext context) {
         return AlertDialog(
           title: Text(partner.Name!),
           content: Text("You can get ${partner.Discount} at ${partner.Location}"),
@@ -163,7 +163,7 @@ class PartnerTile extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Card(
       child: ListTile(
         leading: FlutterLogo(size: 56.0), // Replace with actual logo
