@@ -142,9 +142,10 @@ class LogoScreen extends StatelessWidget {
                         UserCredential? loginUser = await AuthService.signInWithGoogle();
                         if(loginUser is UserCredential){
                           await BabylonUser.updateCurrentBabylonUserData(currentUserUID: loginUser.user!.uid);
-                          Navigator.push(
+                          Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(builder: (context) => HomePage()),
+                            (route) => false,
                           );
                         }
                       } catch (e) {

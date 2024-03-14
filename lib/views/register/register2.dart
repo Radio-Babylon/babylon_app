@@ -96,9 +96,10 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 //   MaterialPageRoute(builder: (context) => RegisterPage3()),
                 // );
 
-                Navigator.push(
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => HomePage()),
+                  (route) => false,
                 );
               },
               child: const Text(
@@ -122,9 +123,10 @@ class _RegisterPage2State extends State<RegisterPage2> {
                   //   MaterialPageRoute(builder: (context) => RegisterPage3()),
                   // );
 
-                  Navigator.push(
+                  Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => HomePage()),
+                    (route) => false,
                   );
                 },
                 child: const Text('Skip'),
