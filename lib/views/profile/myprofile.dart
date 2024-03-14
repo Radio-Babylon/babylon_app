@@ -1,12 +1,12 @@
-import 'dart:io';
+import "dart:io";
 
-import 'package:babylon_app/models/babylonUser.dart';
-import 'package:babylon_app/services/user/userService.dart';
-import 'package:country_picker/country_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import '../home.dart'; // Make sure this import is correct for your HomeScreen widget
+import "package:babylon_app/models/babylonUser.dart";
+import "package:babylon_app/services/user/userService.dart";
+import "package:country_picker/country_picker.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
+import "package:image_picker/image_picker.dart";
+import "../home.dart"; // Make sure this import is correct for your HomeScreen widget
 
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
@@ -90,29 +90,29 @@ class _MyProfileState extends State<MyProfile> {
                 //infoField(),_
                 infoField(
                     icon: Icons.person,
-                    hintText: 'example name',
-                    labelText: 'Full name',
+                    hintText: "example name",
+                    labelText: "Full name",
                     controller: _fullname,
                     onClicked: () {}),
                 infoField(
                     icon: Icons.cake,
-                    hintText: 'Birth Date',
-                    labelText: 'Birth Date',
+                    hintText: "Birth Date",
+                    labelText: "Birth Date",
                     controller: _dateOfBirth,
                     onClicked: () {},
                     hasDatePicker: true),
                 //const SizedBox(height: 30),
                 infoField(
                     icon: Icons.public,
-                    hintText: 'Origin country',
-                    labelText: 'Origin country',
+                    hintText: "Origin country",
+                    labelText: "Origin country",
                     controller: _country,
                     onClicked: () {},
                     isCountryPicker: true),
                 infoField(
                     icon: Icons.chat,
-                    hintText: 'About',
-                    labelText: 'About',
+                    hintText: "About",
+                    labelText: "About",
                     controller: _about,
                     onClicked: () {}),
                 Center(
@@ -193,18 +193,18 @@ class _MyProfileState extends State<MyProfile> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('AlertDialog Title'),
+          title: const Text("AlertDialog Title"),
           content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('This is a demo alert dialog.'),
-                Text('Would you like to approve of this message?'),
+                Text("This is a demo alert dialog."),
+                Text("Would you like to approve of this message?"),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Leave'),
+              child: const Text("Leave"),
               onPressed: () {
                 Navigator.push(
                   context, MaterialPageRoute(builder: (context) => HomePage())
@@ -212,7 +212,7 @@ class _MyProfileState extends State<MyProfile> {
               },
             ),
             TextButton(
-              child: const Text('Cancel'),
+              child: const Text("Cancel"),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -240,8 +240,8 @@ class _MyProfileState extends State<MyProfile> {
     if (_fileImage != null ){
       image = FileImage(_fileImage!);
     }
-    else if (user.imagePath == '') {
-      image = const AssetImage('assets/images/default_user_logo.png');
+    else if (user.imagePath == "") {
+      image = const AssetImage("assets/images/default_user_logo.png");
     } else {
       image = NetworkImage(user.imagePath);
     }
@@ -297,7 +297,7 @@ class _MyProfileState extends State<MyProfile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'About',
+              "About",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
@@ -382,13 +382,13 @@ class _MyProfileState extends State<MyProfile> {
           //     child: buildEditIcon(Theme.of(context).colorScheme.primary,
           //         onClicked: () {
           //       toggles[labelText] = true;
-          //       toggles['Save'] = true;
+          //       toggles["Save"] = true;
           //       setState(() {
           //         this.toggles[labelText] = toggles[labelText]!;
           //         for (MapEntry<String, bool> toggle in toggles.entries) {
           //           if (toggle.key != labelText) {
           //             if (toggle.value) {
-          //               if (toggle.key == 'Name') {
+          //               if (toggle.key == "Name") {
           //                 if (_fullname.text ==
           //                     BabylonUser.currentBabylonUser.fullName) {
           //                   toggles[toggle.key] = false;
@@ -418,7 +418,7 @@ class _MyProfileState extends State<MyProfile> {
         child: Material(
           color: Colors.white,
           child: Ink.image(
-            image: AssetImage('assets/images/iconEdit.png'),
+            image: AssetImage("assets/images/iconEdit.png"),
             fit: BoxFit.cover,
             width: 30,
             height: 30,
@@ -451,11 +451,11 @@ class NumbersWidget extends StatelessWidget {
   Widget build(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          buildButton(context, 'admin'),
+          buildButton(context, "admin"),
           buildDivider(),
-          buildButton(context, 'member'),
+          buildButton(context, "member"),
           //buildDivider(),
-          //buildButton(context, '50', 'Followers'),
+          //buildButton(context, "50", "Followers"),
         ],
       );
 
@@ -497,14 +497,14 @@ class NumbersWidget extends StatelessWidget {
             CircleAvatar(
               radius: 60,
               backgroundColor: Colors.grey.shade300,
-              child: Text('profile picture',
+              child: Text("profile picture",
                   style: TextStyle(color: Colors.white)),
             ),
             TextButton(
               onPressed: () {
                 // Handle edit profile picture
               },
-              child: Text('edit'),
+              child: Text("edit"),
             ),
             // Profile information and interests
             _buildProfileSection(context),
@@ -515,7 +515,7 @@ class NumbersWidget extends StatelessWidget {
                 onPressed: () {
                   // Handle logout logic
                 },
-                child: Text('Logout'),
+                child: Text("Logout"),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white, // Button background color
                 ),
@@ -538,16 +538,16 @@ class NumbersWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Full Name',
+                    Text("Full Name",
                         style: Theme.of(context).textTheme.headline6),
                     Text(
-                      'short bio short bio short bio short bio short bio short bio',
+                      "short bio short bio short bio short bio short bio short bio",
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],
                 ),
               ),
-              Text('Age', style: Theme.of(context).textTheme.headline6),
+              Text("Age", style: Theme.of(context).textTheme.headline6),
             ],
           ),
         ),
@@ -556,17 +556,17 @@ class NumbersWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Interests', style: Theme.of(context).textTheme.subtitle1),
+              Text("Interests", style: Theme.of(context).textTheme.subtitle1),
               _buildInterests(),
               SizedBox(height: 20),
-              Text('Languages', style: Theme.of(context).textTheme.subtitle1),
+              Text("Languages", style: Theme.of(context).textTheme.subtitle1),
               _buildLanguages(),
             ],
           ),
         ),
         ListTile(
-          title: Text('My Plan'),
-          subtitle: Text('Monthly subscription'),
+          title: Text("My Plan"),
+          subtitle: Text("Monthly subscription"),
           trailing: Wrap(
             spacing: 12,
             children: [
@@ -574,13 +574,13 @@ class NumbersWidget extends StatelessWidget {
                 onPressed: () {
                   // Handle change plan
                 },
-                child: Text('change'),
+                child: Text("change"),
               ),
               TextButton(
                 onPressed: () {
                   // Handle cancel plan
                 },
-                child: Text('cancel'),
+                child: Text("cancel"),
               ),
             ],
           ),
@@ -601,7 +601,7 @@ class NumbersWidget extends StatelessWidget {
       children: List.generate(
         6,
         (index) => Chip(
-          label: Text('interest ${index + 1}'),
+          label: Text("interest ${index + 1}"),
         ),
       ),
     );
@@ -613,7 +613,7 @@ class NumbersWidget extends StatelessWidget {
     return Wrap(
       spacing: 8.0,
       runSpacing: 8.0,
-      children: ['language 1', 'language 2', 'language 3']
+      children: ["language 1", "language 2", "language 3"]
           .map((lang) => Chip(label: Text(lang)))
           .toList(),
     );

@@ -1,11 +1,11 @@
-import 'dart:io';
-import 'package:babylon_app/services/event/eventExceptions.dart';
-import 'package:babylon_app/services/event/eventService.dart';
-import 'package:babylon_app/views/events/events.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import "dart:io";
+import "package:babylon_app/services/event/eventExceptions.dart";
+import "package:babylon_app/services/event/eventService.dart";
+import "package:babylon_app/views/events/events.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
+import "package:image_picker/image_picker.dart";
 
 // This screen allows users to create a new event, complete with an image, name, date, time, short description, and detailed description.
 class CreateEventScreen extends StatefulWidget {
@@ -92,15 +92,15 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
 
   // Helper method to format date and time into a user-friendly string
   String _formatDateTime(DateTime? date, TimeOfDay? time) {
-    if (date == null || time == null) return 'Tap to select date & time';
-    return '${MaterialLocalizations.of(context).formatFullDate(date)} at ${time.format(context)}';
+    if (date == null || time == null) return "Tap to select date & time";
+    return "${MaterialLocalizations.of(context).formatFullDate(date)} at ${time.format(context)}";
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Event'),
+        title: Text("Create Event"),
         backgroundColor: Colors.green,
       ),
       body: SingleChildScrollView(
@@ -141,11 +141,11 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
             ),
             _buildTextField(
               controller: _descriptionShortController,
-              labelText: 'Short Description',
+              labelText: "Short Description",
             ),
             _buildTextField(
               controller: _descriptionController,
-              labelText: 'Event Description',
+              labelText: "Event Description",
             ),
 
 
@@ -183,12 +183,12 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                       });
                     }
                   },
-                  child: Text('CREATE'),
+                  child: Text("CREATE"),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 ),
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('CANCEL'),
+                  child: Text("CANCEL"),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 ),
               ],

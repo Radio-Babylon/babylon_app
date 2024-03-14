@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'chat.dart';
+import "package:flutter/material.dart";
+import "chat.dart";
 
 class ChatsScreen extends StatelessWidget {
   @override
@@ -8,12 +8,12 @@ class ChatsScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           const Text(
-            'Chats Screen',
+            "Chats Screen",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w300,
-              fontFamily: 'Lato',
+              fontFamily: "Lato",
             ),
           ),
           const SizedBox(height: 48), // Space between catchphrase and buttons
@@ -26,10 +26,10 @@ class ChatsScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => chatting()),
                 );
               },
-              child: const Text('Open Chat'),
+              child: const Text("Open Chat"),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(350, 80), // Set the button size
-                textStyle: const TextStyle(fontSize: 24, fontFamily: 'Lato'),
+                textStyle: const TextStyle(fontSize: 24, fontFamily: "Lato"),
               ),
             ),
           ),

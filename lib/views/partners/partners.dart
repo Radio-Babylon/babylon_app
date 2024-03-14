@@ -1,7 +1,7 @@
-import 'package:babylon_app/models/partner.dart';
-import 'package:babylon_app/services/partner/partnerService.dart';
-import 'package:babylon_app/views/navigation_menu.dart';
-import 'package:flutter/material.dart';
+import "package:babylon_app/models/partner.dart";
+import "package:babylon_app/services/partner/partnerService.dart";
+import "package:babylon_app/views/navigation_menu.dart";
+import "package:flutter/material.dart";
 
 class PartnersScreen extends StatelessWidget {
   const PartnersScreen({super.key});
@@ -32,11 +32,11 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            const Text('Partners'),
+            const Text("Partners"),
             SizedBox(
               height: 55,
               width: 55,
-              child: Image.asset('assets/images/logowhite.png'), // Your logo asset
+              child: Image.asset("assets/images/logowhite.png"), // Your logo asset
             ),
           ],
         ),
@@ -66,7 +66,7 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
                       child: ListTile(
                         leading: Image.network(aPartner.PictureURL!),
                         title: Text(aPartner.Name!),
-                        subtitle: Text('What you can get: ${aPartner.Discount}'),
+                        subtitle: Text("What you can get: ${aPartner.Discount}"),
                         trailing: Icon(Icons.view_list),
                         onTap: () => 
                           showDialog(
@@ -74,10 +74,10 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: Text(aPartner.Name!),
-                                content: Text('You can get ${aPartner.Discount} at ${aPartner.Location}'),
+                                content: Text("You can get ${aPartner.Discount} at ${aPartner.Location}"),
                                 actions: <Widget>[
                                   TextButton(
-                                    child: Text('Close'),
+                                    child: Text("Close"),
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
@@ -98,7 +98,7 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
-                    child: Text('Error: ${snapshot.error}'),
+                    child: Text("Error: ${snapshot.error}"),
                   ),
                 ];
               } else {
@@ -116,11 +116,11 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 16),
-                        child: Text('Loading...'),
+                        child: Text("Loading..."),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 128),
-                        child: Image.asset('assets/images/logoSquare.png',
+                        child: Image.asset("assets/images/logoSquare.png",
                             height: 185, width: 185),
                       ),
                     ],
@@ -148,10 +148,10 @@ class PartnerTile extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(partner.Name!),
-          content: Text('You can get ${partner.Discount} at ${partner.Location}'),
+          content: Text("You can get ${partner.Discount} at ${partner.Location}"),
           actions: <Widget>[
             TextButton(
-              child: Text('Close'),
+              child: Text("Close"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -168,7 +168,7 @@ class PartnerTile extends StatelessWidget {
       child: ListTile(
         leading: FlutterLogo(size: 56.0), // Replace with actual logo
         title: Text(partner.Name!),
-        subtitle: Text('What you can get: ${partner.Discount}'),
+        subtitle: Text("What you can get: ${partner.Discount}"),
         trailing: Icon(Icons.view_list),
         onTap: () => _showDetails(context),
       ),

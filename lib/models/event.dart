@@ -1,6 +1,6 @@
-import 'package:babylon_app/models/babylonUser.dart';
-import 'package:babylon_app/services/event/eventService.dart';
-import 'package:babylon_app/services/user/userService.dart';
+import "package:babylon_app/models/babylonUser.dart";
+import "package:babylon_app/services/event/eventService.dart";
+import "package:babylon_app/services/user/userService.dart";
 
 class Event {
   String EventDocumentID;

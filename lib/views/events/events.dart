@@ -1,11 +1,11 @@
-import 'package:babylon_app/models/event.dart';
-import 'package:babylon_app/services/event/eventService.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'events-info.dart';
-import 'create_event.dart';
-import 'package:babylon_app/views/navigation_menu.dart';
+import "package:babylon_app/models/event.dart";
+import "package:babylon_app/services/event/eventService.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
+import "package:intl/intl.dart";
+import "events-info.dart";
+import "create_event.dart";
+import "package:babylon_app/views/navigation_menu.dart";
 
 
 // Define the EventsScreen as a StatefulWidget to handle dynamic content like user events.
@@ -55,11 +55,11 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            const Text('Events'),
+            const Text("Events"),
             SizedBox(
               height: 55,
               width: 55,
-              child: Image.asset('assets/images/logowhite.png'), // Your logo asset.
+              child: Image.asset("assets/images/logowhite.png"), // Your logo asset.
             ),
           ],
         ),
@@ -67,8 +67,8 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
-            Tab(text: 'UPCOMING EVENTS'),
-            Tab(text: 'MY EVENTS'),
+            Tab(text: "UPCOMING EVENTS"),
+            Tab(text: "MY EVENTS"),
           ],
         ),
       ),
@@ -109,7 +109,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
+                child: Text("Error: ${snapshot.error}"),
               ),
             ];
           } else {
@@ -127,11 +127,11 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 16),
-                    child: Text('Loading...'),
+                    child: Text("Loading..."),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 128),
-                    child: Image.asset('assets/images/logoSquare.png',
+                    child: Image.asset("assets/images/logoSquare.png",
                         height: 185, width: 185),
                   ),
                 ],
@@ -172,7 +172,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
+                child: Text("Error: ${snapshot.error}"),
               ),
             ];
           } else {
@@ -190,11 +190,11 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 16),
-                    child: Text('Loading...'),
+                    child: Text("Loading..."),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 128),
-                    child: Image.asset('assets/images/logoSquare.png',
+                    child: Image.asset("assets/images/logoSquare.png",
                         height: 185, width: 185),
                   ),
                 ],
@@ -219,10 +219,10 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${DateFormat('dd MMMM yyyy').format(event.Date!)} at ${DateFormat('hh:mm aaa').format(event.Date!)}'),
+            Text("${DateFormat("dd MMMM yyyy").format(event.Date!)} at ${DateFormat("hh:mm aaa").format(event.Date!)}"),
             Text(event.ShortDescription!, maxLines: 3, overflow: TextOverflow.ellipsis),
-            Text('Host: ${event.Creator!.fullName}'), // Display the host of the event.
-            Text('Location: ${event.Place}'), // Display the location of the event.
+            Text("Host: ${event.Creator!.fullName}"), // Display the host of the event.
+            Text("Location: ${event.Place}"), // Display the location of the event.
           ],
         ),
         trailing: IconButton(

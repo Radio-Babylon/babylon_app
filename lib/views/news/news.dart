@@ -1,9 +1,9 @@
-import 'package:babylon_app/models/post.dart';
-import 'package:babylon_app/services/wpGraphQL/wpGraphQLService.dart';
-import 'package:babylon_app/utils/htmlStrip.dart';
-import 'package:babylon_app/utils/launchUrl.dart';
-import 'package:babylon_app/views/navigation_menu.dart';
-import 'package:flutter/material.dart';
+import "package:babylon_app/models/post.dart";
+import "package:babylon_app/services/wpGraphQL/wpGraphQLService.dart";
+import "package:babylon_app/utils/htmlStrip.dart";
+import "package:babylon_app/utils/launchUrl.dart";
+import "package:babylon_app/views/navigation_menu.dart";
+import "package:flutter/material.dart";
 
 class NewsScreen extends StatelessWidget {
   const NewsScreen({super.key});
@@ -33,11 +33,11 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const Text('News'),
+              const Text("News"),
               SizedBox(
                 height: 55,
                 width: 55,
-                child: Image.asset('assets/images/logowhite.png'),
+                child: Image.asset("assets/images/logowhite.png"),
               ),
             ],
           ),
@@ -75,7 +75,7 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
                                 child: Image.network(aPost.featuredImageURL!,
                                     fit: BoxFit.cover, errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
                                       // Here you can return the default image widget
-                                      return Image.asset('assets/images/newsphoto.png', fit: BoxFit.cover);
+                                      return Image.asset("assets/images/newsphoto.png", fit: BoxFit.cover);
                                     }),
                               ),
                             ),
@@ -123,7 +123,7 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
-                    child: Text('Error: ${snapshot.error}'),
+                    child: Text("Error: ${snapshot.error}"),
                   ),
                 ];
               } else {
@@ -141,11 +141,11 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 16),
-                        child: Text('Loading...'),
+                        child: Text("Loading..."),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 128),
-                        child: Image.asset('assets/images/logoSquare.png',
+                        child: Image.asset("assets/images/logoSquare.png",
                             height: 185, width: 185),
                       ),
                     ],

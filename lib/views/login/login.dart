@@ -1,14 +1,14 @@
-import 'package:babylon_app/services/auth/authService.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import '../home.dart'; // Asegúrate de que home.dart esté en el directorio correcto y tenga una clase HomePage
+import "package:babylon_app/services/auth/authService.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
+import "../home.dart"; // Asegúrate de que home.dart esté en el directorio correcto y tenga una clase HomePage
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login Page'), // Title of the AppBar.
+        title: Text("Login Page"), // Title of the AppBar.
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0), // Padding around the form.
@@ -31,13 +31,13 @@ class LoginFormState extends State<LoginForm> {
   String? _error;
 
   late final Map<String, TextEditingController> userInfoController = {
-    'Email': _email,
-    'Pasword': _password,
+    "Email": _email,
+    "Pasword": _password,
   };
 
   late final Map<String, String> userInfo = {
-    'Email': _email.text,
-    'Pasword': _password.text,
+    "Email": _email.text,
+    "Pasword": _password.text,
   };
 
   @override
@@ -62,11 +62,11 @@ class LoginFormState extends State<LoginForm> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         // Logo
-        Image.asset('assets/images/logoRectangle.png', height: 90, width: 365),
+        Image.asset("assets/images/logoRectangle.png", height: 90, width: 365),
         SizedBox(height: 50), // Space after logo
         // Title
         Text(
-          'Login into your account',
+          "Login into your account",
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         Padding(
@@ -80,7 +80,7 @@ class LoginFormState extends State<LoginForm> {
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.white,
-            labelText: 'Email',
+            labelText: "Email",
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
           ),
@@ -92,7 +92,7 @@ class LoginFormState extends State<LoginForm> {
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.white,
-            labelText: 'Password',
+            labelText: "Password",
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
           ),
@@ -128,11 +128,11 @@ class LoginFormState extends State<LoginForm> {
             }
           },
           child: const Text(
-            'Login',
+            "Login",
             style: TextStyle(
               color: Colors.white,
               fontSize: 24,
-              fontFamily: 'Lato',
+              fontFamily: "Lato",
             ),
           ),
         ),

@@ -1,14 +1,14 @@
-import 'package:babylon_app/models/babylonUser.dart';
-import 'package:babylon_app/views/connection/connections.dart';
-import 'package:babylon_app/views/events/events.dart';
-import 'package:babylon_app/views/forum/forum.dart';
-import 'package:babylon_app/views/home.dart';
-import 'package:babylon_app/views/news/news.dart';
-import 'package:babylon_app/views/partners/partners.dart';
-import 'package:babylon_app/views/profile/myprofile.dart';
-import 'package:babylon_app/views/radio/radio.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import "package:babylon_app/models/babylonUser.dart";
+import "package:babylon_app/views/connection/connections.dart";
+import "package:babylon_app/views/events/events.dart";
+import "package:babylon_app/views/forum/forum.dart";
+import "package:babylon_app/views/home.dart";
+import "package:babylon_app/views/news/news.dart";
+import "package:babylon_app/views/partners/partners.dart";
+import "package:babylon_app/views/profile/myprofile.dart";
+import "package:babylon_app/views/radio/radio.dart";
+import "package:flutter/material.dart";
+import "package:firebase_auth/firebase_auth.dart";
 
 
 class PublicDrawer extends StatefulWidget {
@@ -36,38 +36,38 @@ class _PublicDrawerState extends State<PublicDrawer> {
           const DrawerHeaderWithUserInfo(),
           ListTile(
             leading: const Icon(Icons.home),
-            title: const Text('Home'),
+            title: const Text("Home"),
             onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => HomePage())),
           ),
           ListTile(
             leading: const Icon(Icons.group),
-            title: const Text('Community'),
+            title: const Text("Community"),
             onTap: () => widget.onItemSelected(1),
           ),
           ListTile(
             leading: const Icon(Icons.newspaper),
-            title: const Text('News'),
+            title: const Text("News"),
             onTap: () => widget.onItemSelected(2),
           ),
           ListTile(
             leading: const Icon(Icons.event),
-            title: const Text('Events'),
+            title: const Text("Events"),
             onTap: () => widget.onItemSelected(3),
           ),
           ListTile(
             leading: const Icon(Icons.radio),
-            title: const Text('Radio'),
+            title: const Text("Radio"),
             onTap: () => widget.onItemSelected(6),
           ),
           ListTile(
             leading: const Icon(Icons.business),
-            title: const Text('Partners'),
+            title: const Text("Partners"),
             onTap: () => widget.onItemSelected(5),
           ),
           ListTile(
             leading: const Icon(Icons.settings),
-            title: const Text('My profile'),
+            title: const Text("My profile"),
             onTap: () {
               //Navigator.pop(context);
               Navigator.push(
@@ -78,7 +78,7 @@ class _PublicDrawerState extends State<PublicDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.logout),
-            title: const Text('Log out'),
+            title: const Text("Log out"),
             onTap: () async {
               //Navigator.pop(context);
               final shouldLogout = await showLogOutDialog(context);
@@ -86,7 +86,7 @@ class _PublicDrawerState extends State<PublicDrawer> {
                 await FirebaseAuth.instance.signOut();
                 if (context.mounted) {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/logo/',
+                    "/logo/",
                     (_) => false,
                   );
                 }
@@ -124,15 +124,15 @@ class _DrawerHeaderWithUserInfoState extends State<DrawerHeaderWithUserInfo> {
 
   @override
   Widget build(BuildContext context) {
-    String fullName = currentUser?.fullName ?? 'Unknown user';
-    String email = currentUser?.email ?? 'email';
+    String fullName = currentUser?.fullName ?? "Unknown user";
+    String email = currentUser?.email ?? "email";
     String? imgUrl = currentUser?.imagePath;
     final ImageProvider currentImg;
 
     if (imgUrl != null) {
       currentImg = NetworkImage(imgUrl);
     } else {
-      currentImg = const AssetImage('assets/images/default_user_logo.png');
+      currentImg = const AssetImage("assets/images/default_user_logo.png");
     }
 
     print(currentUser);
@@ -155,7 +155,7 @@ class _DrawerHeaderWithUserInfoState extends State<DrawerHeaderWithUserInfo> {
                   radius: 52,
                   backgroundImage: currentImg,
                   backgroundColor: Colors
-                      .green, //AssetImage('${currentUser?.photoURL}') //currentUser?.photoURL
+                      .green, //AssetImage("${currentUser?.photoURL}") //currentUser?.photoURL
                 ),
                 // Wrap the profile section with GestureDetector
                 onTap: () {
@@ -185,20 +185,20 @@ Future<bool> showLogOutDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text('Log out'),
-        content: const Text('Are you sure you want to log out?'),
+        title: const Text("Log out"),
+        content: const Text("Are you sure you want to log out?"),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(false);
             },
-            child: const Text('Cancel'),
+            child: const Text("Cancel"),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(true);
             },
-            child: const Text('Log out'),
+            child: const Text("Log out"),
           ),
         ],
       );
@@ -219,7 +219,7 @@ Future<bool> showLogOutDialog(BuildContext context) {
 
       /*        CircleAvatar(
           radius: 52,
-          backgroundImage: AssetImage('assets/images/logoSquare.png'),
+          backgroundImage: AssetImage("assets/images/logoSquare.png"),
         ) */
 
 
@@ -241,16 +241,16 @@ Future<bool> showLogOutDialog(BuildContext context) {
                 ),
                 CircleAvatar(
                   radius: 52,
-                  backgroundImage: AssetImage('assets/images/logoSquare.png'),
+                  backgroundImage: AssetImage("assets/images/logoSquare.png"),
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                Text('User name and surname', style: TextStyle(fontSize: 15)),
+                Text("User name and surname", style: TextStyle(fontSize: 15)),
                 SizedBox(
                   height: 5,
                 ),
-                Text('User email', style: TextStyle(fontSize: 10)),
+                Text("User email", style: TextStyle(fontSize: 10)),
               ],
             ),
           ),

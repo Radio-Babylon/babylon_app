@@ -1,7 +1,7 @@
-import 'dart:convert';
+import "dart:convert";
 
-import 'package:babylon_app/models/post.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+import "package:babylon_app/models/post.dart";
+import "package:graphql_flutter/graphql_flutter.dart";
 
 class WpGraphQLService {
 

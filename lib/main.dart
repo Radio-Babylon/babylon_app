@@ -1,13 +1,13 @@
 
-import 'package:babylon_app/models/babylonUser.dart';
-import 'package:babylon_app/services/auth/authService.dart';
-import 'package:babylon_app/services/firebase_options.dart';
-import 'package:babylon_app/views/home.dart';
-import 'package:babylon_app/views/register/register1.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'views/login/login.dart';
+import "package:babylon_app/models/babylonUser.dart";
+import "package:babylon_app/services/auth/authService.dart";
+import "package:babylon_app/services/firebase_options.dart";
+import "package:babylon_app/views/home.dart";
+import "package:babylon_app/views/register/register1.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:firebase_core/firebase_core.dart";
+import "package:flutter/material.dart";
+import "views/login/login.dart";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     print(currentUser);
 
     return MaterialApp(
-      title: 'Babylon Radio',
+      title: "Babylon Radio",
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: Color(0xFF006400),
@@ -32,13 +32,13 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
         textTheme: const TextTheme(
-          bodyMedium: TextStyle(fontFamily: 'Lato'),
+          bodyMedium: TextStyle(fontFamily: "Lato"),
         ),
       ),
       home: currentUser != null ? HomePage() : LogoScreen(),
       routes: {
-        '/logo/': (context) => const LogoScreen(),
-        '/register/': (context) => CreateAccountPage()
+        "/logo/": (context) => const LogoScreen(),
+        "/register/": (context) => CreateAccountPage()
       },
     );
   }
@@ -55,27 +55,27 @@ class LogoScreen extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.only(bottom: 45),
-            child: Image.asset('assets/images/logoSquare.png', width: 185, height: 185),
+            child: Image.asset("assets/images/logoSquare.png", width: 185, height: 185),
           ),
           const Text(
-            'Welcome to Babylon Radio!',
+            "Welcome to Babylon Radio!",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.bold,
-              fontFamily: 'Lato',
+              fontFamily: "Lato",
             ),
           ),
           Container(
             margin: EdgeInsets.only(top: 50, bottom: 50),
             child: const Text(
-              'Celebrating cultures,\n' //\n breaks the line
-              ' promoting integration',
+              "Celebrating cultures,\n" //\n breaks the line
+              " promoting integration",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w300,
-                fontFamily: 'Lato',
+                fontFamily: "Lato",
               ),
             ),
           ),
@@ -94,10 +94,10 @@ class LogoScreen extends StatelessWidget {
                 minimumSize: const Size(350, 80), // Set the button size
               ),
               child: Text(
-                'Login',
+                "Login",
                 style: TextStyle(
                   fontSize: 24,
-                  fontFamily: 'Lato',
+                  fontFamily: "Lato",
                   color: Colors.white, // Text color of the button
                 ),
               ),
@@ -113,10 +113,10 @@ class LogoScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => CreateAccountPage()),
                 );
               },
-              child: const Text('Register'),
+              child: const Text("Register"),
               style: OutlinedButton.styleFrom(
                 minimumSize: const Size(350, 80), // Set the button size
-                textStyle: const TextStyle(fontSize: 24, fontFamily: 'Lato'),
+                textStyle: const TextStyle(fontSize: 24, fontFamily: "Lato"),
                 side: const BorderSide(
                     width: 2.0, color: Colors.grey), // Border width and color
               ),
@@ -130,13 +130,13 @@ class LogoScreen extends StatelessWidget {
               children: [
                 Flexible(
                   flex: 3,
-                  child: Text("Continue with", style: TextStyle(fontSize: 24, fontFamily: 'Lato')),
+                  child: Text("Continue with", style: TextStyle(fontSize: 24, fontFamily: "Lato")),
                 ),
                 Flexible(
                   flex: 1,
                   child:
                     _buildSocialButton(
-                    'assets/images/google.png', // Replace with your asset
+                    "assets/images/google.png", // Replace with your asset
                     () async {
                       try {
                         UserCredential? loginUser = await AuthService.signInWithGoogle();
@@ -157,7 +157,7 @@ class LogoScreen extends StatelessWidget {
                   flex: 1,
                   child:
                     _buildSocialButton(
-                      'assets/images/facebook.png', // Replace with your asset
+                      "assets/images/facebook.png", // Replace with your asset
                       () async {
                         try {
                           

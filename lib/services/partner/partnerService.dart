@@ -1,13 +1,13 @@
-import 'package:babylon_app/models/partner.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import "package:babylon_app/models/partner.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
+import "package:firebase_storage/firebase_storage.dart";
 
 class PartnerService {
   static Future<List<Partner>> getPartners() async{
     List<Partner> result = List.empty(growable: true);
     try {
       final db = FirebaseFirestore.instance;
-      var snapShot = await db.collection('partners').get();
+      var snapShot = await db.collection("partners").get();
       
       await Future.forEach(snapShot.docs, (snapShot) async {
         final partner = snapShot.data();

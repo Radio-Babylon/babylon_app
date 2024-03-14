@@ -1,16 +1,14 @@
-import 'dart:async';
-
-import 'package:babylon_app/models/babylonUser.dart';
-import 'package:babylon_app/services/user/userService.dart';
-import 'package:babylon_app/views/connection/connections.dart';
-import 'package:babylon_app/views/events/events.dart';
-import 'package:babylon_app/views/forum/forum.dart';
-import 'package:babylon_app/views/navigation_menu.dart';
-import 'package:babylon_app/views/news/news.dart';
-import 'package:babylon_app/views/partners/partners.dart';
-import 'package:babylon_app/views/radio/radio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import "dart:async";
+import "package:babylon_app/models/babylonUser.dart";
+import "package:babylon_app/views/connection/connections.dart";
+import "package:babylon_app/views/events/events.dart";
+import "package:babylon_app/views/forum/forum.dart";
+import "package:babylon_app/views/navigation_menu.dart";
+import "package:babylon_app/views/news/news.dart";
+import "package:babylon_app/views/partners/partners.dart";
+import "package:babylon_app/views/radio/radio.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
 
 // HomePage with a custom user profile section above the AppBar, a Drawer, and PageView for content navigation
 class HomePage extends StatefulWidget {
@@ -23,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0; // Index for BottomNavigationBar
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Global key for the Scaffold
 
-  // Define your screens here. For now, I'll use placeholders.
+  // Define your screens here. For now, I"ll use placeholders.
   final List<Widget> _screens = [
     HomeScreen(), // Your main Home screen
     ConnectionsScreen(), // Placeholder for Community
@@ -44,7 +42,7 @@ class _HomePageState extends State<HomePage> {
 
   void _onItemTapped(int index) {
     if (index == 4) {
-      // If it's the last index, open the Drawer
+      // If it"s the last index, open the Drawer
       _scaffoldKey.currentState?.openEndDrawer();
     } else if(index < 5) {
       setState(() {
@@ -59,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       key: _scaffoldKey, // Use the global key here
       appBar: _selectedIndex == 0 ? AppBar(
         automaticallyImplyLeading: false,
-        title: Text('Home'),
+        title: Text("Home"),
         backgroundColor: Colors.green,
         iconTheme: IconThemeData(color: Colors.green),
         // Set your preferred shade of green here
@@ -81,11 +79,11 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Colors.white, // This sets the color of the selected item, for example, white
         unselectedItemColor: Colors.black,// Ensures that all items are displayed correctly
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.group), label: 'Community'),
-          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'News'),
-          BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Events'),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'More'), // Button to open the Drawer
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.group), label: "Community"),
+          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: "News"),
+          BottomNavigationBarItem(icon: Icon(Icons.event), label: "Events"),
+          BottomNavigationBarItem(icon: Icon(Icons.menu), label: "More"), // Button to open the Drawer
         ],
         currentIndex: _selectedIndex > 4 ? 4 : _selectedIndex,
         onTap: _onItemTapped,
@@ -143,13 +141,13 @@ class HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 CircleAvatar(
-                  backgroundImage: user.imagePath.startsWith('http') ? NetworkImage(user.imagePath) : AssetImage(user.imagePath) as ImageProvider, // Maneja tanto las URL de la red como los assets locales.
+                  backgroundImage: user.imagePath.startsWith("http") ? NetworkImage(user.imagePath) : AssetImage(user.imagePath) as ImageProvider, // Maneja tanto las URL de la red como los assets locales.
                   radius: 50.0,
                   backgroundColor: Colors.transparent,
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Welcome, ${user.fullName}',
+                  "Welcome, ${user.fullName}",
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -176,7 +174,7 @@ class HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const Text(
-            'UPCOMING EVENTS',
+            "UPCOMING EVENTS",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Card(
@@ -191,13 +189,13 @@ class HomeScreenState extends State<HomeScreen> {
                 child: const Icon(Icons.image,
                     color: Colors.white), // Placeholder icon
               ),
-              title: const Text('EVENT NAME'),
-              subtitle: const Text('DATE\nTIME\nDescription...'),
+              title: const Text("EVENT NAME"),
+              subtitle: const Text("DATE\nTIME\nDescription..."),
               trailing: ElevatedButton(
                 onPressed: () {
                   // Info button action
                 },
-                child: const Text('+ info'),
+                child: const Text("+ info"),
               ),
             ),
           ),
@@ -214,28 +212,28 @@ class HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const Text(
-            'FORUMS PARTICIPATION',
+            "FORUMS PARTICIPATION",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              _buildForumCard('FORUM TOPIC 1', '0 Replies', true),
-              _buildForumCard('FORUM TOPIC 3', '1 Reply', true),
+              _buildForumCard("FORUM TOPIC 1", "0 Replies", true),
+              _buildForumCard("FORUM TOPIC 3", "1 Reply", true),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              _buildForumCard('FORUM TOPIC 1', '0 Replies', true),
-              _buildForumCard('FORUM TOPIC 3', '1 Reply', true),
+              _buildForumCard("FORUM TOPIC 1", "0 Replies", true),
+              _buildForumCard("FORUM TOPIC 3", "1 Reply", true),
             ],
           ),
           TextButton(
             onPressed: () {
               // Browse on forum action
             },
-            child: const Text('Browse on forum'),
+            child: const Text("Browse on forum"),
           ),
         ],
       ),
@@ -256,12 +254,12 @@ class HomeScreenState extends State<HomeScreen> {
                   height: 4), // Add a small space between the text widgets
               Text(subtitle),
               const SizedBox(height: 8), // Add some space before the button
-              if (isOpen) // Only show the button if the forum is 'Open'
+              if (isOpen) // Only show the button if the forum is "Open"
                 ElevatedButton(
                   onPressed: () {
                     // Your button tap action here
                   },
-                  child: const Text('Open'),
+                  child: const Text("Open"),
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white, // Text Color
                     backgroundColor: Color(0xFF006400),
@@ -281,7 +279,7 @@ class HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const Text(
-            'CHATS',
+            "CHATS",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           ListTile(
@@ -289,13 +287,13 @@ class HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.grey,
               child: Icon(Icons.person, color: Colors.white),
             ),
-            title: const Text('PERSON\'S NAME'),
-            subtitle: const Text('last message sent...'),
+            title: const Text("PERSON\"S NAME"),
+            subtitle: const Text("last message sent..."),
             trailing: TextButton(
               onPressed: () {
                 // Open chat action
               },
-              child: const Text('Open'),
+              child: const Text("Open"),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white, // Text Color
                 backgroundColor: Color(0xFF006400), // Button Background Color
@@ -307,13 +305,13 @@ class HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.grey,
               child: Icon(Icons.person, color: Colors.white),
             ),
-            title: const Text('PERSON\'S NAME'),
-            subtitle: const Text('last message sent...'),
+            title: const Text("PERSON\"S NAME"),
+            subtitle: const Text("last message sent..."),
             trailing: TextButton(
               onPressed: () {
                 // Open chat action
               },
-              child: const Text('Open'),
+              child: const Text("Open"),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white, // Text Color
                 backgroundColor: Color(0xFF006400), // Button Background Color
@@ -325,13 +323,13 @@ class HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.grey,
               child: Icon(Icons.person, color: Colors.white),
             ),
-            title: const Text('PERSON\'S NAME'),
-            subtitle: const Text('last message sent...'),
+            title: const Text("PERSON\"S NAME"),
+            subtitle: const Text("last message sent..."),
             trailing: TextButton(
               onPressed: () {
                 // Open chat action
               },
-              child: const Text('Open'),
+              child: const Text("Open"),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white, // Text Color
                 backgroundColor: Color(0xFF006400), // Button Background Color
@@ -343,13 +341,13 @@ class HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.grey,
               child: Icon(Icons.person, color: Colors.white),
             ),
-            title: const Text('PERSON\'S NAME'),
-            subtitle: const Text('last message sent...'),
+            title: const Text("PERSON\"S NAME"),
+            subtitle: const Text("last message sent..."),
             trailing: TextButton(
               onPressed: () {
                 // Open chat action
               },
-              child: const Text('Open'),
+              child: const Text("Open"),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white, // Text Color
                 backgroundColor: Color(0xFF006400), // Button Background Color
@@ -361,13 +359,13 @@ class HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.grey,
               child: Icon(Icons.person, color: Colors.white),
             ),
-            title: const Text('PERSON\'S NAME'),
-            subtitle: const Text('last message sent...'),
+            title: const Text("PERSON\"S NAME"),
+            subtitle: const Text("last message sent..."),
             trailing: TextButton(
               onPressed: () {
                 // Open chat action
               },
-              child: const Text('Open'),
+              child: const Text("Open"),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white, // Text Color
                 backgroundColor: Color(0xFF006400), // Button Background Color
@@ -379,13 +377,13 @@ class HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.grey,
               child: Icon(Icons.person, color: Colors.white),
             ),
-            title: const Text('PERSON\'S NAME'),
-            subtitle: const Text('last message sent...'),
+            title: const Text("PERSON\"S NAME"),
+            subtitle: const Text("last message sent..."),
             trailing: TextButton(
               onPressed: () {
                 // Open chat action
               },
-              child: const Text('Open'),
+              child: const Text("Open"),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white, // Text Color
                 backgroundColor: Color(0xFF006400), // Button Background Color
@@ -418,15 +416,15 @@ class HomeScreenState extends State<HomeScreen> {
                   CircleAvatar(
                     radius: 50,
                     backgroundColor: Colors.grey.shade300,
-                    child: const Text('PP', style: TextStyle(fontSize: 24, color: Colors.white)),
+                    child: const Text("PP", style: TextStyle(fontSize: 24, color: Colors.white)),
                   ),
                   const SizedBox(width: 20),
                   const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Welcome,', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-                        Text("Person's Name", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
+                        Text("Welcome,", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+                        Text("Person"s Name", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
                       ],
                     ),
                   ),
@@ -441,22 +439,22 @@ class HomeScreenState extends State<HomeScreen> {
             //floating: false,
             expandedHeight: 0.0, // No expanded height
             /*flexibleSpace: const FlexibleSpaceBar(
-              title: Text(''), // No title in the flexible space
+              title: Text(""), // No title in the flexible space
             ),
             bottom: TabBar(
               controller:
                   _tabController, // Setting the controller for the TabBar
               isScrollable: true, // Making the TabBar scrollable
               tabs: const [
-                Tab(icon: Icon(Icons.home), text: 'Home'),
-                Tab(icon: Icon(Icons.newspaper), text: 'News'),
-                Tab(icon: Icon(Icons.forum), text: 'Forum'),
-                Tab(icon: Icon(Icons.event), text: 'Events'),
-                Tab(icon: Icon(Icons.chat), text: 'Chats'),
+                Tab(icon: Icon(Icons.home), text: "Home"),
+                Tab(icon: Icon(Icons.newspaper), text: "News"),
+                Tab(icon: Icon(Icons.forum), text: "Forum"),
+                Tab(icon: Icon(Icons.event), text: "Events"),
+                Tab(icon: Icon(Icons.chat), text: "Chats"),
                 Tab(
                     icon: Icon(Icons.connect_without_contact),
-                    text: 'Connections'),
-                Tab(icon: Icon(Icons.business), text: 'Partners'),
+                    text: "Connections"),
+                Tab(icon: Icon(Icons.business), text: "Partners"),
               ],
             ),*/
           ),

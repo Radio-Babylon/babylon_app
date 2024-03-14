@@ -1,16 +1,16 @@
-import 'package:babylon_app/services/auth/authExceptions.dart';
-import 'package:babylon_app/services/auth/authService.dart';
-import 'package:babylon_app/services/user/userService.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'register2.dart';
+import "package:babylon_app/services/auth/authExceptions.dart";
+import "package:babylon_app/services/auth/authService.dart";
+import "package:babylon_app/services/user/userService.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
+import "register2.dart";
 
 class CreateAccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create a New Account'), // Title of the AppBar.
+        title: Text("Create a New Account"), // Title of the AppBar.
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.0), // Padding around the form.
@@ -38,20 +38,20 @@ class CreateAccountFormState extends State<CreateAccountForm> {
   String? _error;
 
   late final Map<String, TextEditingController> userInfoController = {
-    'Name': _name,
-    'Date of Birth': _dateOfBirth,
-    'Email Address': _email,
-    'Country of Origin': _country,
-    'Password': _password,
-    'Confirm Password': _rePassword,
+    "Name": _name,
+    "Date of Birth": _dateOfBirth,
+    "Email Address": _email,
+    "Country of Origin": _country,
+    "Password": _password,
+    "Confirm Password": _rePassword,
 
   };
 
   late final Map<String, String> userInfo = {
-    'Name': _name.text,
-    'Date of Birth': _dateOfBirth.text,
-    'Email Address': _email.text,
-    'Country of Origin': _country.text,
+    "Name": _name.text,
+    "Date of Birth": _dateOfBirth.text,
+    "Email Address": _email.text,
+    "Country of Origin": _country.text,
   };
 
   @override
@@ -94,10 +94,10 @@ class CreateAccountFormState extends State<CreateAccountForm> {
           filled: true,
           fillColor: Colors.white, // Background color of the text field.
         ),
-        obscureText: isPassword, // Hides text input if it's a password field.
+        obscureText: isPassword, // Hides text input if it"s a password field.
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please enter your $labelText'; // Validation message.
+            return "Please enter your $labelText"; // Validation message.
           }
           return null;
         },
@@ -130,7 +130,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
         child: Column(
           children: <Widget>[
             Image.asset(
-              'assets/images/logoRectangle.png', // Path to the logo image.
+              "assets/images/logoRectangle.png", // Path to the logo image.
               width: 365, // Width of the logo.
               height: 90, // Height of the logo.
               fit: BoxFit
@@ -138,12 +138,12 @@ class CreateAccountFormState extends State<CreateAccountForm> {
             ),
             SizedBox(height: 30), // Bottom padding for the logo.
             // Calls the helper method to build text fields.
-            _buildTextField(labelText: 'Name'),
-            _buildTextField(labelText: 'Date of Birth', hasDatePicker: true),
-            _buildTextField(labelText: 'Email Address'),
-            // _buildTextField(labelText: 'Country of Origin'),
-            _buildTextField(labelText: 'Password', isPassword: true),
-            _buildTextField(labelText: 'Confirm Password', isPassword: true),
+            _buildTextField(labelText: "Name"),
+            _buildTextField(labelText: "Date of Birth", hasDatePicker: true),
+            _buildTextField(labelText: "Email Address"),
+            // _buildTextField(labelText: "Country of Origin"),
+            _buildTextField(labelText: "Password", isPassword: true),
+            _buildTextField(labelText: "Confirm Password", isPassword: true),
             Padding(padding: EdgeInsets.symmetric(vertical: 8),
               child:
                 Text(
@@ -163,7 +163,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                   ),
                 ),
                 onPressed: () async {
-                  final fullName = '${_name.text}';
+                  final fullName = "${_name.text}";
                   try {
                     AuthException.validateRegisterForm(_name.text, _email.text, _password.text, _rePassword.text, _dateOfBirth.text);
                     User? currentUser =
@@ -192,11 +192,11 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                   //Navigator.of(context).pop();
                 },
                 child: Text(
-                  'Next',
+                  "Next",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
-                    fontFamily: 'Lato',
+                    fontFamily: "Lato",
                   ),
                   // Text displayed on the button.
                 ),

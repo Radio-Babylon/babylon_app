@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:babylon_app/views/navigation_menu.dart';
-import 'package:babylon_app/views/profile/otherprofile.dart';
+import "package:flutter/material.dart";
+import "package:babylon_app/views/navigation_menu.dart";
+import "package:babylon_app/views/profile/otherprofile.dart";
 
 // Define the Person class to hold necessary information about a person.
 class Person {
@@ -42,7 +42,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
   // Placeholder for search logic, currently updates searchResults based on query.
   void _search(String query) {
     setState(() {
-      searchResults = List.generate(15, (index) => Person('User $index', 'Bio $index', 'Interests $index', 'Languages $index'))
+      searchResults = List.generate(15, (index) => Person("User $index", "Bio $index", "Interests $index", "Languages $index"))
           .where((person) => person.name.toLowerCase().contains(query.toLowerCase()))
           .toList();
 
@@ -56,11 +56,11 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            const Text('Connections'),
+            const Text("Connections"),
             SizedBox(
               height: 55,
               width: 55,
-              child: Image.asset('assets/images/logowhite.png'), // Logo asset.
+              child: Image.asset("assets/images/logowhite.png"), // Logo asset.
             ),
           ],
         ),
@@ -68,22 +68,22 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
-            Tab(text: 'MY CONNECTIONS'),
-            Tab(text: 'EXPLORE THE WORLD'),
+            Tab(text: "MY CONNECTIONS"),
+            Tab(text: "EXPLORE THE WORLD"),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
-          _buildMyConnectionsTab(), // 'My Connections' tab with search and sections.
-          _buildExploreWorldTab(),  // 'Explore The World' tab with search functionality.
+          _buildMyConnectionsTab(), // "My Connections" tab with search and sections.
+          _buildExploreWorldTab(),  // "Explore The World" tab with search functionality.
         ],
       ),
     );
   }
 
-  // Constructs 'My Connections' tab with a search bar and sections for connections.
+  // Constructs "My Connections" tab with a search bar and sections for connections.
   Widget _buildMyConnectionsTab() {
     return SingleChildScrollView(
       child: Column(
@@ -104,7 +104,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
       child: TextField(
         controller: searchController,
         decoration: InputDecoration(
-          labelText: 'Search Connections',
+          labelText: "Search Connections",
           suffixIcon: Icon(Icons.search),
         ),
         onChanged: _search, // Invokes the search function with the current query.
@@ -112,7 +112,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
     );
   }
 
-  // Constructs the 'Friend Requests' widget with a horizontal list of profiles.
+  // Constructs the "Friend Requests" widget with a horizontal list of profiles.
   Widget _buildFriendRequestsWidget() {
 
       return Column(
@@ -120,7 +120,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
         children: [
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text('Friend Requests', style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold) ),
+            child: Text("Friend Requests", style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold) ),
           ),
           Container(
             height: 200, // Fixed height for the horizontal list of friend request cards.
@@ -141,14 +141,14 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                           padding: EdgeInsets.only(top: 8.0),
                           child: CircleAvatar(
                             radius: 40,
-                            backgroundImage: AssetImage('assets/images/default_user_logo.png'),
+                            backgroundImage: AssetImage("assets/images/default_user_logo.png"),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text('Person $index', style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+                          child: Text("Person $index", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
                         ),
-                        // Horizontal buttons for 'View Profile', 'Accept', and 'Decline' actions.
+                        // Horizontal buttons for "View Profile", "Accept", and "Decline" actions.
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Space buttons evenly.
                           children: [
@@ -163,13 +163,13 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                             IconButton(
                               icon: Icon(Icons.check, color: Colors.green),
                               onPressed: () {
-                                // Placeholder for 'Accept' action.
+                                // Placeholder for "Accept" action.
                               },
                             ),
                             IconButton(
                               icon: Icon(Icons.close, color: Colors.red),
                               onPressed: () {
-                                // Placeholder for 'Decline' action.
+                                // Placeholder for "Decline" action.
                               },
                             ),
                           ],
@@ -188,7 +188,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
 
 
 
-  // Constructs the 'New Users' widget with a horizontal list of new user profiles.
+  // Constructs the "New Users" widget with a horizontal list of new user profiles.
   Widget _buildNewUsersWidget() {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -196,7 +196,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
 
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text('New Users!', style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold)),
+            child: Text("New Users!", style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold)),
           ),
           Container(
             height: 200, // Fixed height for the horizontal list of profile cards.
@@ -219,10 +219,10 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                             children: [
                               CircleAvatar(
                                 radius: 40,
-                                backgroundImage: AssetImage('assets/images/default_user_logo.png'),
+                                backgroundImage: AssetImage("assets/images/default_user_logo.png"),
                               ),
                               SizedBox(height: 10),
-                              Text('New User $index', style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+                              Text("New User $index", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
                               ButtonBar(
                                 alignment: MainAxisAlignment.center,
                                 children: [
@@ -237,7 +237,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                                   IconButton(
                                     icon: Icon(Icons.chat_bubble_outline, color: Colors.blue),
                                     onPressed: () {
-                                      // Placeholder for 'Chat' action.
+                                      // Placeholder for "Chat" action.
                                     },
                                   ),
                                 ],
@@ -258,7 +258,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
   }
 
 
-  // Constructs the 'Chats' widget with a horizontal list of ongoing chats.
+  // Constructs the "Chats" widget with a horizontal list of ongoing chats.
   Widget _buildChatsWidget() {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
@@ -269,7 +269,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
         children: [
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text('Chats', style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold)),
+            child: Text("Chats", style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold)),
           ),
           ListView.builder(
             physics: NeverScrollableScrollPhysics(), // Disables scrolling within ListView.
@@ -280,11 +280,11 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
               return ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                 leading: CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/default_user_logo.png'), // Placeholder for group snapshot.
+                  backgroundImage: AssetImage("assets/images/default_user_logo.png"), // Placeholder for group snapshot.
                   radius: 25, // Adjust the size of the CircleAvatar here.
                 ),
-                title: Text('User $index', style: TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: Text('The last message in the conversation..'),
+                title: Text("User $index", style: TextStyle(fontWeight: FontWeight.bold)),
+                subtitle: Text("The last message in the conversation.."),
                 trailing: IconButton(
                   icon: Icon(Icons.chat_bubble_outline, color: Colors.blue),
                   onPressed: () {
@@ -300,7 +300,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
   }
 
 
-  // Constructs the 'Group Chats' widget with a vertical list of group chats.
+  // Constructs the "Group Chats" widget with a vertical list of group chats.
   Widget _buildGroupChatsWidget() {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
@@ -311,7 +311,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
         children: [
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text('Group Chats', style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold)),
+            child: Text("Group Chats", style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold)),
           ),
           ListView.builder(
             physics: NeverScrollableScrollPhysics(), // Disables scrolling within ListView.
@@ -322,11 +322,11 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
               return ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                 leading: CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/logowhite.png'), // Placeholder for group snapshot.
+                  backgroundImage: AssetImage("assets/images/logowhite.png"), // Placeholder for group snapshot.
                   radius: 25, // Adjust the size of the CircleAvatar here.
                 ),
-                title: Text('Group Chat $index', style: TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: Text('Members, Topics, etc.'),
+                title: Text("Group Chat $index", style: TextStyle(fontWeight: FontWeight.bold)),
+                subtitle: Text("Members, Topics, etc."),
                 trailing: IconButton(
                   icon: Icon(Icons.chat_bubble_outline, color: Colors.blue),
                   onPressed: () {
@@ -365,11 +365,11 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: buttonLabels.map((label) {
-              // Check if the label is 'View Profile' to add navigation functionality.
-              if (label == 'View Profile') {
+              // Check if the label is "View Profile" to add navigation functionality.
+              if (label == "View Profile") {
                 return TextButton(
                   onPressed: () {
-                    // Navigating to OtherProfile when 'View Profile' is tapped.
+                    // Navigating to OtherProfile when "View Profile" is tapped.
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => OtherProfile()),
@@ -393,7 +393,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
     );
   }
 
-  // Constructs 'Explore The World' tab with a search bar and search results.
+  // Constructs "Explore The World" tab with a search bar and search results.
   Widget _buildExploreWorldTab() {
     // Main column for the Explore World tab, containing the search bar and the list view of profiles.
     return Column(
@@ -403,9 +403,9 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
           child: ListView.builder(
             itemCount: searchResults.isEmpty ? 15 : searchResults.length,
             itemBuilder: (context, index) {
-              // Use 'searchResults' if not empty; otherwise, generate default list items.
+              // Use "searchResults" if not empty; otherwise, generate default list items.
               final person = searchResults.isEmpty
-                  ? Person('User $index', 'Bio $index', 'Interests $index', 'Languages $index')
+                  ? Person("User $index", "Bio $index", "Interests $index", "Languages $index")
                   : searchResults[index];
 
               // Card widget for each profile with a photo, name, bio, and action buttons.
@@ -422,7 +422,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                         padding: EdgeInsets.all(8.0),
                         child: CircleAvatar(
                           radius: 30.0, // Adjust the size of the profile picture here.
-                          backgroundImage: AssetImage('assets/images/default_user_logo.png'),
+                          backgroundImage: AssetImage("assets/images/default_user_logo.png"),
                         ),
                       ),
                       Expanded(
@@ -445,9 +445,9 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            _buttonOption('View Profile', Icons.visibility, context, person),
-                            _buttonOption('Send Request', Icons.person_add, context, person),
-                            _buttonOption('Chat', Icons.chat, context, person),
+                            _buttonOption("View Profile", Icons.visibility, context, person),
+                            _buttonOption("Send Request", Icons.person_add, context, person),
+                            _buttonOption("Chat", Icons.chat, context, person),
                           ],
                         ),
                       ),

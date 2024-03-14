@@ -1,10 +1,9 @@
-import 'package:babylon_app/models/babylonUser.dart';
-import 'package:babylon_app/models/event.dart';
-import 'package:babylon_app/services/event/eventService.dart';
-import 'package:babylon_app/views/events/update_events_info.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import "package:babylon_app/models/babylonUser.dart";
+import "package:babylon_app/models/event.dart";
+import "package:babylon_app/services/event/eventService.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
+import "package:intl/intl.dart";
 
 // EventInfoScreen displays detailed information about an event including the host and location.
 
@@ -94,7 +93,7 @@ class EventInfoState extends State<EventInfoScreen> {
                       SizedBox(width: 8),
                       // Text for the event date and time.
                       Text(
-                        '${DateFormat('dd MMMM yyyy').format(event.Date!)} at ${DateFormat('hh:mm aaa').format(event.Date!)}',
+                        "${DateFormat("dd MMMM yyyy").format(event.Date!)} at ${DateFormat("hh:mm aaa").format(event.Date!)}",
                         style: TextStyle(fontSize: 18),
                       ),
                     ],
@@ -118,7 +117,7 @@ class EventInfoState extends State<EventInfoScreen> {
                       style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
                       children: [
                         TextSpan(
-                          text: 'Hosted by: ',
+                          text: "Hosted by: ",
                         ),
                         WidgetSpan(
                           child: Padding(
@@ -139,7 +138,7 @@ class EventInfoState extends State<EventInfoScreen> {
                   SizedBox(height: 24),
                   // Attend button with larger text and padding.
                   ElevatedButton(
-                    child: Text( _isAttending ? 'ATTENDING' : 'ATTEND', style: TextStyle(fontSize: 18)),
+                    child: Text( _isAttending ? "ATTENDING" : "ATTEND", style: TextStyle(fontSize: 18)),
                     onPressed: () async{
                       if(!_isAttending){
                         bool added = await EventService.addUserToEvent(event);
@@ -170,7 +169,7 @@ class EventInfoState extends State<EventInfoScreen> {
     );
   }
 
-  // Widget to build the 'People Attending' section.
+  // Widget to build the "People Attending" section.
   Widget _buildPeopleAttendingSection(BuildContext context) {
     // Replace with actual data
     return Container(
@@ -181,7 +180,7 @@ class EventInfoState extends State<EventInfoScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              'People Attending',
+              "People Attending",
               style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 18), // Larger text for the section title.
             ),
           ),
@@ -220,10 +219,10 @@ class EventInfoState extends State<EventInfoScreen> {
                 // Opens a bottom sheet showing all attendees. The function to show the bottom sheet needs to be defined.
                 _showAllAttendeesBottomSheet(context);
               },
-              icon: Icon(Icons.person, size: 24), // Icon for the 'See all' button.
+              icon: Icon(Icons.person, size: 24), // Icon for the "See all" button.
               label: Text(
-                'See all (${event.Attendees.length})',
-                style: TextStyle(fontSize: 16), // Text style for the 'See all' button.
+                "See all (${event.Attendees.length})",
+                style: TextStyle(fontSize: 16), // Text style for the "See all" button.
               ),
               style: OutlinedButton.styleFrom(
                 side: BorderSide(color: Colors.green), // Border color to match the theme.
@@ -282,13 +281,13 @@ class EventInfoState extends State<EventInfoScreen> {
                     ),
                     title: Text(event.Attendees[index]!.fullName, style: TextStyle(fontSize: 16)),
                     onTap: () {
-                      // TODO: Implement navigation to attendee's profile
+                      // TODO: Implement navigation to attendee"s profile
                     },
                   );
                 },
               ),
             ),
-            // Close button that 'floats' above the bottom sheet and overlay
+            // Close button that "floats" above the bottom sheet and overlay
             Positioned(
               top: screenSize.height - bottomSheetHeight - 30,
               child: FloatingActionButton(

@@ -1,9 +1,9 @@
-import 'dart:ffi';
+import "dart:ffi";
 
-import 'package:babylon_app/models/babylonUser.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import "package:babylon_app/models/babylonUser.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:google_sign_in/google_sign_in.dart";
 
 class AuthService {
   static Future<User?> registerUsingEmailPassword({
@@ -76,7 +76,7 @@ class AuthService {
     try {
       User currUser = FirebaseAuth.instance.currentUser!;
       final db = FirebaseFirestore.instance;
-      final docUser = await db.collection('users').doc(currUser.uid).get();
+      final docUser = await db.collection("users").doc(currUser.uid).get();
       final userData = docUser.data();
       if(userData == null){
         final userNewData = <String, String>{

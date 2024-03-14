@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 // Define the Discussion class to hold information about each forum discussion.
 class Discussion {
@@ -23,8 +23,8 @@ class _ForumScreenState extends State<ForumScreen> {
   // A list of discussions for the forum. In a real app, this would be fetched from a backend.
   List<Discussion> discussions = [
     // Sample discussions. Replace with real data.
-    Discussion('How to implement a ListView in Flutter', 'Alice', 'I am trying to create a list view in Flutter...', DateTime.now().subtract(Duration(minutes: 10))),
-    Discussion('State Management Solutions', 'Bob', 'What are the best state management solutions for large apps in Flutter?', DateTime.now().subtract(Duration(hours: 1))),
+    Discussion("How to implement a ListView in Flutter", "Alice", "I am trying to create a list view in Flutter...", DateTime.now().subtract(Duration(minutes: 10))),
+    Discussion("State Management Solutions", "Bob", "What are the best state management solutions for large apps in Flutter?", DateTime.now().subtract(Duration(hours: 1))),
     // Add more discussions here...
   ];
 
@@ -39,7 +39,7 @@ class _ForumScreenState extends State<ForumScreen> {
   @override
   void initState() {
     super.initState();
-    // You might want to initialize your data here if you're fetching it from a backend.
+    // You might want to initialize your data here if you"re fetching it from a backend.
   }
 
   @override
@@ -53,12 +53,12 @@ class _ForumScreenState extends State<ForumScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Forum'),
+        title: Text("Forum"),
         actions: [
           IconButton(
             icon: Icon(Icons.create),
             onPressed: () {
-              // TODO: Implement navigation to the 'Create Discussion' screen.
+              // TODO: Implement navigation to the "Create Discussion" screen.
             },
           ),
         ],
@@ -70,7 +70,7 @@ class _ForumScreenState extends State<ForumScreen> {
             child: TextField(
               controller: searchController,
               decoration: InputDecoration(
-                labelText: 'Search discussions',
+                labelText: "Search discussions",
                 border: OutlineInputBorder(),
                 suffixIcon: Icon(Icons.search),
               ),
@@ -90,7 +90,7 @@ class _ForumScreenState extends State<ForumScreen> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          // TODO: Implement the 'Create New Discussion' action.
+          // TODO: Implement the "Create New Discussion" action.
         },
       ),
     );
@@ -107,9 +107,9 @@ class _ForumScreenState extends State<ForumScreen> {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
-        trailing: Text('${discussion.timestamp.hour}:${discussion.timestamp.minute}'),
+        trailing: Text("${discussion.timestamp.hour}:${discussion.timestamp.minute}"),
         onTap: () {
-          // TODO: Implement navigation to the 'Discussion Details' screen.
+          // TODO: Implement navigation to the "Discussion Details" screen.
         },
       ),
     );

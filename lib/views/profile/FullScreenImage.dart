@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class FullScreenImage extends StatelessWidget {
   final String imagePath; // Path to the image that will be displayed in full screen.
   final String name; // Name of the person to be displayed in the AppBar.
 
-  // Constructor requiring the image path and the person's name.
+  // Constructor requiring the image path and the person"s name.
   FullScreenImage({required this.imagePath, required this.name});
 
   @override
@@ -12,8 +12,8 @@ class FullScreenImage extends StatelessWidget {
     return Scaffold(
       // AppBar configuration
       appBar: AppBar(
-        title: Text(name), // Display the person's name in the AppBar.
-        backgroundColor: Colors.green, // Sets the AppBar's background color to green.
+        title: Text(name), // Display the person"s name in the AppBar.
+        backgroundColor: Colors.green, // Sets the AppBar"s background color to green.
         leading: IconButton(
           icon: Icon(Icons.arrow_back), // Icon for the back button.
           onPressed: () => Navigator.pop(context), // Action to return to the previous screen when the back button is pressed.

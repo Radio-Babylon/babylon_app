@@ -1,19 +1,19 @@
-import 'dart:convert';
-import 'dart:typed_data';
-import 'package:babylon_app/models/babylonUser.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:io';
+import "dart:convert";
+import "dart:typed_data";
+import "package:babylon_app/models/babylonUser.dart";
+import "package:firebase_auth/firebase_auth.dart";
+//import "package:firebase_core/firebase_core.dart";
+import "package:flutter/material.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
+import "package:firebase_storage/firebase_storage.dart";
+import "dart:io";
 
 class UserService {
   static Future<void> fillUser(
       {required User user, required Map<String, String> userInfo}) async {
     final db = FirebaseFirestore.instance;
 
-    final docUser = db.collection('users').doc(user.uid);
+    final docUser = db.collection("users").doc(user.uid);
 
     try {
       await docUser.set(userInfo);
@@ -24,19 +24,19 @@ class UserService {
 
   static Future<void> addPhoto({required User user, required File file}) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
-    Reference referenceDirImages = referenceRoot.child('images');
-    final String imgName = '${user.uid}.jpg';
+    Reference referenceDirImages = referenceRoot.child("images");
+    final String imgName = "${user.uid}.jpg";
     Reference referenceImageToUpload = referenceDirImages.child(imgName);
-    String imgUrl = '';
+    String imgUrl = "";
     try {
       await referenceImageToUpload.putFile(file);
       imgUrl = await referenceImageToUpload.getDownloadURL();
     } catch (error) {}
     if (imgUrl.isNotEmpty) {
       FirebaseFirestore.instance
-          .collection('users')
+          .collection("users")
           .doc(user.uid)
-          .update({'ImageUrl': imgUrl})
+          .update({"ImageUrl": imgUrl})
           .then((value) => print("User Updated and photo added"))
           .catchError((error) => print("Failed to add the photo: $error"));
 
@@ -75,16 +75,16 @@ class UserService {
         userMusic.isNotEmpty ||
         userHobbies.isNotEmpty || newData!.isNotEmpty) {
       FirebaseFirestore.instance
-          .collection('users')
+          .collection("users")
           .doc(uuid)
           .update({
-            'activities': userActivities,
-            'music': userMusic,
-            'hobbies': userHobbies,
-            'Country of Origin' : newData!.containsKey("originCountry") ? newData["originCountry"] : "",
-            'Date of Birth' : newData.containsKey("birthDate") ? newData["birthDate"] : "",
-            'About' : newData.containsKey("about") ? newData["about"] : "",
-            'Name' : newData.containsKey("name") ? newData["name"] : "",
+            "activities": userActivities,
+            "music": userMusic,
+            "hobbies": userHobbies,
+            "Country of Origin" : newData!.containsKey("originCountry") ? newData["originCountry"] : "",
+            "Date of Birth" : newData.containsKey("birthDate") ? newData["birthDate"] : "",
+            "About" : newData.containsKey("about") ? newData["about"] : "",
+            "Name" : newData.containsKey("name") ? newData["name"] : "",
           })
           .then((value) => print("User Updated and additionalInfo added"))
           .catchError(
@@ -95,7 +95,7 @@ class UserService {
   static Future<void> getUserImgUrl({required User user}) async {
     final db = FirebaseFirestore.instance;
 
-    final docUser = db.collection('users').doc(user.uid);
+    final docUser = db.collection("users").doc(user.uid);
   }
 
   static Future<Image> convertFileToImage(File picture) async {
@@ -113,7 +113,7 @@ class UserService {
     try {
       List<String> eventsLists = List.empty(growable: true);
       final db = FirebaseFirestore.instance;
-      final docUser = await db.collection('users').doc(userUID).get();
+      final docUser = await db.collection("users").doc(userUID).get();
       final userData = docUser.data();
       userInfo["name"] = userData!.containsKey("Name") ? userData["Name"]: "" ;
       userInfo["email"] = userData.containsKey("Email Address") ? userData["Email Address"] : "" ;
@@ -123,7 +123,7 @@ class UserService {
       userInfo["country"] = userData.containsKey("Country of Origin") ? userData["Country of Origin"] : "";
       userInfo["birthDate"] = userData.containsKey("Date of Birth") ? userData["Date of Birth"] : "";
 
-      final docsListedEvents = await db.collection('users').doc(userUID).collection('listedEvents').get();
+      final docsListedEvents = await db.collection("users").doc(userUID).collection("listedEvents").get();
       await Future.forEach(docsListedEvents.docs, (snapShot) async {
         eventsLists.add(snapShot.reference.id);
       });

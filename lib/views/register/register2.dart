@@ -1,9 +1,9 @@
-import 'package:babylon_app/services/user/userService.dart';
-import 'package:babylon_app/views/home.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
+import "package:babylon_app/services/user/userService.dart";
+import "package:babylon_app/views/home.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
+import "dart:io";
+import "package:image_picker/image_picker.dart";
 
 class RegisterPage2 extends StatefulWidget {
   @override
@@ -29,7 +29,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Photo Profile'),
+        title: const Text("Photo Profile"),
       ),
       body: Container(
         margin: EdgeInsets.symmetric(
@@ -42,13 +42,13 @@ class _RegisterPage2State extends State<RegisterPage2> {
               margin:
                   EdgeInsets.only(bottom: 25), // Adjust space below the logo
               child: Image.asset(
-                'assets/images/logoRectangle.png',
+                "assets/images/logoRectangle.png",
                 height: 90,
                 width: 365,
               ),
             ),
             const Text(
-              'Before we finish, let\'s set up your profile',
+              "Before we finish, let\"s set up your profile",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
@@ -59,13 +59,13 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 backgroundColor: Color(0xFF006400),
                 backgroundImage:
                     _fileImage != null ? FileImage(_fileImage!) : null,
-                child: _fileImage == null ? Text('Photo') : null,
+                child: _fileImage == null ? Text("Photo") : null,
               ),
             ),
             const SizedBox(height: 20),
             TextButton(
               onPressed: getImage,
-              child: const Text('Select file'),
+              child: const Text("Select file"),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -85,12 +85,12 @@ class _RegisterPage2State extends State<RegisterPage2> {
                         user: currentUser, file: _fileImage!);
                   } /*else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Please upload an image')));
+                        SnackBar(content: Text("Please upload an image")));
                   }*/
                 }
                 if (!mounted) return;
 
-                // disable register's second view
+                // disable register"s second view
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(builder: (context) => RegisterPage3()),
@@ -103,11 +103,11 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 );
               },
               child: const Text(
-                'Finish',
+                "Finish",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
-                  fontFamily: 'Lato',
+                  fontFamily: "Lato",
                 ),
               ),
             ),
@@ -129,10 +129,10 @@ class _RegisterPage2State extends State<RegisterPage2> {
                     (route) => false,
                   );
                 },
-                child: const Text('Skip'),
+                child: const Text("Skip"),
                 style: OutlinedButton.styleFrom(
                   minimumSize: Size(365, 60), // Set the button size
-                  textStyle: const TextStyle(fontSize: 24, fontFamily: 'Lato'),
+                  textStyle: const TextStyle(fontSize: 24, fontFamily: "Lato"),
                   side: const BorderSide(width: 2.0, color: Colors.grey),
                 ),
               ),

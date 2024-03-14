@@ -1,7 +1,7 @@
-import 'package:babylon_app/views/home.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:babylon_app/services/user/userService.dart';
+import "package:babylon_app/views/home.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
+import "package:babylon_app/services/user/userService.dart";
 
 class RegisterPage3 extends StatefulWidget {
   @override
@@ -59,7 +59,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
     "Vietnamese"
   ];
 
-  // Maps to manage the interests' selections.
+  // Maps to manage the interests" selections.
   late Map<String, bool> interest1;
   late Map<String, bool> interest2;
   late Map<String, bool> interest3;
@@ -100,37 +100,37 @@ class _RegisterPage3State extends State<RegisterPage3> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Final Register'),
+        title: const Text("Final Register"),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Image.asset('assets/images/logoRectangle.png',
+            Image.asset("assets/images/logoRectangle.png",
                 height: 90, width: 365),
             const SizedBox(height: 20),
             const Text(
-              'Almost there, just a few more steps',
+              "Almost there, just a few more steps",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             // Tappable ListTile that opens the multi-select dialog.
             ListTile(
-              title: Text('Select the languages that you speak'),
+              title: Text("Select the languages that you speak"),
               subtitle: Text(
                 selectedLanguages.isNotEmpty
-                    ? selectedLanguages.join(', ')
-                    : 'None selected',
+                    ? selectedLanguages.join(", ")
+                    : "None selected",
                 style: TextStyle(color: Theme.of(context).primaryColor),
               ),
               onTap: () => _showMultiSelectLanguages(context),
             ),
             // Building sections for interests
-            _buildCheckboxGridSection('Activities', interest1),
-            _buildCheckboxGridSection('Music', interest2),
-            _buildCheckboxGridSection('Hobbies', interest3),
+            _buildCheckboxGridSection("Activities", interest1),
+            _buildCheckboxGridSection("Music", interest2),
+            _buildCheckboxGridSection("Hobbies", interest3),
             const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -160,11 +160,11 @@ class _RegisterPage3State extends State<RegisterPage3> {
                 );
               },
               child: const Text(
-                'Finish',
+                "Finish",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
-                  fontFamily: 'Lato',
+                  fontFamily: "Lato",
                 ),
               ),
             )
@@ -181,7 +181,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
       builder: (ctx) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Select Languages'),
+          title: Text("Select Languages"),
           content: Container(
             width: double.minPositive,
             child: ListView.builder(
@@ -208,9 +208,9 @@ class _RegisterPage3State extends State<RegisterPage3> {
             ),
           ),
           actions: [
-            // Closes the dialog when the 'Done' button is pressed.
+            // Closes the dialog when the "Done" button is pressed.
             TextButton(
-              child: Text('Done'),
+              child: Text("Done"),
               onPressed: () => Navigator.of(ctx).pop(),
             ),
           ],

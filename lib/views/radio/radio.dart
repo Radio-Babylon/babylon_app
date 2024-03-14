@@ -1,10 +1,10 @@
-import 'package:babylon_app/views/navigation_menu.dart';
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import "package:babylon_app/views/navigation_menu.dart";
+import "package:flutter/material.dart";
+import "package:url_launcher/url_launcher.dart";
 
 class RadioScreen extends StatelessWidget {
   // The URL you want to open
-  final Uri _url = Uri.parse('https://www.mixcloud.com/live/BabylonRadio/');
+  final Uri _url = Uri.parse("https://www.mixcloud.com/live/BabylonRadio/");
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +14,11 @@ class RadioScreen extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            const Text('Radio'),
+            const Text("Radio"),
             SizedBox(
               height: 55,
               width: 55,
-              child: Image.asset('assets/images/logowhite.png'),
+              child: Image.asset("assets/images/logowhite.png"),
             ),
           ],
         ),
@@ -37,7 +37,7 @@ class RadioScreen extends StatelessWidget {
             child: InkWell(
               onTap: _launchURL, // Calls the _launchURL method when the image is tapped
               child: Image.asset(
-                'assets/images/photoradio.png',
+                "assets/images/photoradio.png",
                 fit: BoxFit.cover, // Cover the container without distorting the aspect ratio
               ),
             ),
@@ -56,7 +56,7 @@ class RadioScreen extends StatelessWidget {
   // Method to launch the URL
   void _launchURL() async {
     if (!await launchUrl(_url)) { // Checks if the URL can be launched
-      throw 'Could not launch $_url';
+      throw "Could not launch $_url";
     }
   }
 }
