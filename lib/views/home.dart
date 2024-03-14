@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:babylon_app/models/babylonUser.dart';
 import 'package:babylon_app/services/user/userService.dart';
 import 'package:babylon_app/views/connection/connections.dart';
@@ -18,7 +20,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late User? currentUser = FirebaseAuth.instance.currentUser;
-  BabylonUser oui = BabylonUser.currentBabylonUser;
   int _selectedIndex = 0; // Index for BottomNavigationBar
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Global key for the Scaffold
 
@@ -57,6 +58,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       key: _scaffoldKey, // Use the global key here
       appBar: _selectedIndex == 0 ? AppBar(
+        automaticallyImplyLeading: false,
         title: Text('Home'),
         backgroundColor: Colors.green,
         iconTheme: IconThemeData(color: Colors.green),
@@ -96,54 +98,78 @@ class _HomePageState extends State<HomePage> {
 // Define other screens like HomeScreen, NewsScreen, etc., similar to the HomeScreen class
 // Each screen will have its own layout and widgets
 
-// Example HomeScreen class
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context){
-    final BabylonUser user = BabylonUser.currentBabylonUser; 
-    return ListView(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(top: 20, bottom: 20),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.green, Colors.white],
-            ),
-          ),
-          child: Column(
-            children: [
-              CircleAvatar(
-                backgroundImage: user.imagePath.startsWith('http') ? NetworkImage(user.imagePath) : AssetImage(user.imagePath) as ImageProvider, // Maneja tanto las URL de la red como los assets locales.
-                radius: 50.0,
-                backgroundColor: Colors.transparent,
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Welcome, ${user.fullName}',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-        ),
-        _buildUpcomingEventsSection(context),
-        _buildForumsParticipationSection(context),
-        _buildChatsSection(context),
-        // Agrega más secciones o widgets aquí si es necesario
-      ],
-    );
-  }
+class HomeScreen extends StatefulWidget{
+  const HomeScreen({Key? key}) : super(key: key);
 
-// Tus otros métodos para construir secciones...
+  @override
+  HomeScreenState createState() => HomeScreenState();
 }
 
+// Example HomeScreen class
+class HomeScreenState extends State<HomeScreen> {
+  BabylonUser user = BabylonUser.currentBabylonUser;
 
-  Widget _buildUpcomingEventsSection(BuildContext context) {
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context){
+    timer = Timer.periodic(Duration(seconds: 3), (Timer t) => 
+      setState(() {
+        user = BabylonUser.currentBabylonUser;
+      })
+    );      
+      return ListView(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(top: 20, bottom: 20),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.green, Colors.white],
+              ),
+            ),
+            child: Column(
+              children: [
+                CircleAvatar(
+                  backgroundImage: user.imagePath.startsWith('http') ? NetworkImage(user.imagePath) : AssetImage(user.imagePath) as ImageProvider, // Maneja tanto las URL de la red como los assets locales.
+                  radius: 50.0,
+                  backgroundColor: Colors.transparent,
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Welcome, ${user.fullName}',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          _buildUpcomingEventsSection(context),
+          _buildForumsParticipationSection(context),
+          _buildChatsSection(context),
+          // Agrega más secciones o widgets aquí si es necesario
+        ],
+      );
+      
+    }
+  }
+
+    Widget _buildUpcomingEventsSection(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -371,7 +397,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
 
 /*  THE FIRST REMOVED SECTION
 
