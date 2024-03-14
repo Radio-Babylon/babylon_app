@@ -49,115 +49,129 @@ class _MyProfileState extends State<MyProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // Replaced the menu icon with an arrow back icon
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            // Navigate back to HomeScreen when the arrow is pressed
-            formState == "unsaved" ?
-             _showBackPopup() : 
-              Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomePage())
-              );;
-          },
-        ),
-      ),
-      body: ListView(
-        physics: BouncingScrollPhysics(),
-        children: [
-          buildProfile(context),
-          const SizedBox(height: 24),
-          buildName(user),
-          const SizedBox(height: 24),
-          Center(
-            child: buildUpgradeButton(),
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            // Replaced the menu icon with an arrow back icon
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                // Navigate back to HomeScreen when the arrow is pressed
+                formState == "unsaved" ?
+                _showBackPopup() : 
+                  Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => HomePage())
+                  );;
+              },
+            ),
           ),
-          //const SizedBox(height: 24),
-          /*Center(
-              child: const Text(
-            'Infromation about events',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          )),
-          const SizedBox(height: 10),*/
-          //NumbersWidget(),
-          const SizedBox(height: 30),
-          //infoField(),_
-          infoField(
-              icon: Icons.person,
-              hintText: 'example name',
-              labelText: 'Full name',
-              controller: _fullname,
-              onClicked: () {}),
-          infoField(
-              icon: Icons.cake,
-              hintText: 'Birth Date',
-              labelText: 'Birth Date',
-              controller: _dateOfBirth,
-              onClicked: () {},
-              hasDatePicker: true),
-          //const SizedBox(height: 30),
-          infoField(
-              icon: Icons.public,
-              hintText: 'Origin country',
-              labelText: 'Origin country',
-              controller: _country,
-              onClicked: () {}),
-          infoField(
-              icon: Icons.chat,
-              hintText: 'About',
-              labelText: 'About',
-              controller: _about,
-              onClicked: () {}),
-          Center(
-            child: buildSaveButton(),
-          ),
-           if(formState == "saving")
-            Container(
-              margin: EdgeInsets.all(16),
-              child: Center(
-              child: SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: CircularProgressIndicator(
-                      color: Color(0xFF006400)),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                buildProfile(context),
+                const SizedBox(height: 12),
+                buildName(user),
+                const SizedBox(height: 12),
+                Center(
+                  child: buildUpgradeButton(),
                 ),
-              ),
-            )
-        ],
-      ),
-    );
+                //const SizedBox(height: 24),
+                /*Center(
+                    child: const Text(
+                  'Infromation about events',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                )),
+                const SizedBox(height: 10),*/
+                //NumbersWidget(),
+                const SizedBox(height: 20),
+                //infoField(),_
+                infoField(
+                    icon: Icons.person,
+                    hintText: 'example name',
+                    labelText: 'Full name',
+                    controller: _fullname,
+                    onClicked: () {}),
+                infoField(
+                    icon: Icons.cake,
+                    hintText: 'Birth Date',
+                    labelText: 'Birth Date',
+                    controller: _dateOfBirth,
+                    onClicked: () {},
+                    hasDatePicker: true),
+                //const SizedBox(height: 30),
+                infoField(
+                    icon: Icons.public,
+                    hintText: 'Origin country',
+                    labelText: 'Origin country',
+                    controller: _country,
+                    onClicked: () {}),
+                infoField(
+                    icon: Icons.chat,
+                    hintText: 'About',
+                    labelText: 'About',
+                    controller: _about,
+                    onClicked: () {}),
+                Center(
+                  child: buildSaveButton(),
+                ),
+              ],
+            ),
+          ) 
+        ),
+        if (formState == "saving")
+          const Opacity(
+            opacity: 0.8,
+            child: ModalBarrier(dismissible: false, color: Colors.black),
+          ),
+        if (formState == "saving")
+          const Center(
+            child: CircularProgressIndicator(),
+          ),
+      ],
+    ); 
   }
 
-  Widget buildSaveButton() => ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      shape: StadiumBorder(),
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      foregroundColor: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-    ),
-
-    child: Text("Save changes"),
-    onPressed: formState == "unsaved" ? () async {
-      setState(() {
-        formState = "saving";
-      });
-      await UserService.updateUserInfo(uuid: user.UserUID, newData: {
-        "name": _fullname.text,
-        "originCountry": _country.text,
-        "birthDate": _dateOfBirth.text,
-        "about": _about.text 
-      });
-      await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.UserUID);
-      if (_fileImage != null) UserService.addPhoto(user: FirebaseAuth.instance.currentUser!, file: _fileImage!);
-      await Future.delayed(Duration(seconds: 1));
-      setState(() {
-        formState = "saved";
-        user = BabylonUser.currentBabylonUser;
-      });
-    } : null
-  );
+  Widget buildSaveButton()  {
+    String saveBtnText;
+    switch (formState) {
+      case "saving":
+        saveBtnText = "Saving";
+        break;
+      case "saved":
+        saveBtnText = "Saved";
+      default:
+        saveBtnText = "Save changes";
+    }
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        shape: StadiumBorder(),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+      ),
+      child: Text(saveBtnText),
+      onPressed: formState == "unsaved" ? () async {
+        setState(() {
+          formState = "saving";
+        });
+        await UserService.updateUserInfo(uuid: user.UserUID, newData: {
+          "name": _fullname.text,
+          "originCountry": _country.text,
+          "birthDate": _dateOfBirth.text,
+          "about": _about.text 
+        });
+        await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.UserUID);
+        if (_fileImage != null) UserService.addPhoto(user: FirebaseAuth.instance.currentUser!, file: _fileImage!);
+        await Future.delayed(Duration(seconds: 1));
+        setState(() {
+          formState = "saved";
+          user = BabylonUser.currentBabylonUser;
+        });
+      } : null
+    );
+  }
 
   Widget buildProfile(BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
@@ -301,7 +315,7 @@ class _MyProfileState extends State<MyProfile> {
       required Function onClicked,
       bool hasDatePicker = false}) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
       child: Center(
         child: Stack(children: [
           //Positioned(top: -5, right: 50, child: buildEditIcon(Colors.black)),
