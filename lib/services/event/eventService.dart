@@ -22,7 +22,7 @@ class EventService {
 
         final event = snapShot.data();
         final imageUrl = event.containsKey("picture") ? await FirebaseStorage.instance.ref().child(event["picture"]).getDownloadURL() : "";
-        result.add(await Event.create(event["creator"], (event["date"] as Timestamp).toDate(), event["fullDescription"], imageUrl, event["place"], event["shortDescription"], event["title"], snapShot.reference.id, attendeesID));
+        result.add(await Event.create(snapShot.reference.id, event["title"], event["creator"], event["place"], (event["date"] as Timestamp).toDate(), event["fullDescription"], event["shortDescription"], imageUrl, attendeesID));
       });
     } catch (error) {
       print(error);
@@ -46,7 +46,7 @@ class EventService {
           });
 
           final imageUrl = await FirebaseStorage.instance.ref().child(event["picture"]).getDownloadURL();
-          result.add(await Event.create(event["creator"], (event["date"] as Timestamp).toDate(), event["fullDescription"], imageUrl, event["place"], event["shortDescription"], event["title"], snapShot.reference.id, attendeesID));
+          result.add(await Event.create(snapShot.reference.id, event["title"], event["creator"], event["place"], (event["date"] as Timestamp).toDate(), event["fullDescription"], event["shortDescription"], imageUrl, attendeesID));
         }
       });
     } catch (error) {

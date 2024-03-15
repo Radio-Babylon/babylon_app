@@ -64,17 +64,17 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
                   ...snapshot.data!.map((final aPartner) =>  
                     Card(
                       child: ListTile(
-                        leading: Image.network(aPartner.PictureURL!),
-                        title: Text(aPartner.Name!),
-                        subtitle: Text("What you can get: ${aPartner.Discount}"),
+                        leading: Image.network(aPartner.getPictureURL!),
+                        title: Text(aPartner.getName!),
+                        subtitle: Text("What you can get: ${aPartner.getDiscount}"),
                         trailing: Icon(Icons.view_list),
                         onTap: () => 
                           showDialog(
                             context: context,
                             builder: (final BuildContext context) {
                               return AlertDialog(
-                                title: Text(aPartner.Name!),
-                                content: Text("You can get ${aPartner.Discount} at ${aPartner.Location}"),
+                                title: Text(aPartner.getName!),
+                                content: Text("You can get ${aPartner.getDiscount} at ${aPartner.getLocation}"),
                                 actions: <Widget>[
                                   TextButton(
                                     child: Text("Close"),
@@ -147,8 +147,8 @@ class PartnerTile extends StatelessWidget {
       context: context,
       builder: (final BuildContext context) {
         return AlertDialog(
-          title: Text(partner.Name!),
-          content: Text("You can get ${partner.Discount} at ${partner.Location}"),
+          title: Text(partner.getName!),
+          content: Text("You can get ${partner.getDiscount} at ${partner.getLocation}"),
           actions: <Widget>[
             TextButton(
               child: Text("Close"),
@@ -167,8 +167,8 @@ class PartnerTile extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: FlutterLogo(size: 56.0), // Replace with actual logo
-        title: Text(partner.Name!),
-        subtitle: Text("What you can get: ${partner.Discount}"),
+        title: Text(partner.getName!),
+        subtitle: Text("What you can get: ${partner.getDiscount}"),
         trailing: Icon(Icons.view_list),
         onTap: () => _showDetails(context),
       ),

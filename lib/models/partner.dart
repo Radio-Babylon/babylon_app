@@ -1,39 +1,54 @@
-class Partner{
-
+class Partner {
   // Attributes
 
-  String? _name;
-  String? _pictureURL;
-  String? _shortDescription;
-  String? _fullDescription;
-  String? _discount;
-  String? _location;
   String? _documentID;
+  String? _name;
+  String? _location;
+  String? _discount;
+  String? _pictureURL;
+  String? _fullDescription;
+  String? _shortDescription;
 
   // Getters and setters
 
-  get name => _name;
-  set name(final value) => _name = value;
+  String? get getDocumentID => _documentID;
+  set setDocumentID(final String? documentID) => _documentID = documentID;
 
-  get pictureURL => this._pictureURL;
-  set pictureURL( value) => this._pictureURL = value;
+  String? get getName => _name;
+  set setName(final String? name) => _name = name;
 
-  get shortDescription => this._shortDescription;
-  set shortDescription( value) => this._shortDescription = value;
+  String? get getLocation => _location;
+  set setLocation(final String? location) => _location = location;
 
-  get fullDescription => this._fullDescription;
-  set fullDescription( value) => this._fullDescription = value;
+  String? get getDiscount => _discount;
+  set setDiscount(final String? discount) => _discount = discount;
 
-  get discount => this._discount;
-  set discount( value) => this._discount = value;
+  String? get getPictureURL => _pictureURL;
+  set setPictureURL(final String? pictureURL) => _pictureURL = pictureURL;
 
-  get location => this._location;
-  set location( value) => this._location = value;
+  String? get getFullDescription => _fullDescription;
+  set setFullDescription(final String? fullDescription) =>
+      _fullDescription = fullDescription;
 
-  get documentID => this._documentID;
-  set documentID( value) => this._documentID = value;
+  String? get getShortDescription => _shortDescription;
+  set setShortDescription(final String? shortDescription) =>
+      _shortDescription = shortDescription;
 
   // Constructors
 
-  Partner(final name, final pictureURL, final shortDescription, final fullDescription, final discount, final location, final documentID) : _name = name, _pictureURL = pictureURL, _shortDescription = shortDescription, _fullDescription = fullDescription, _discount = discount, _location = location, _documentID = documentID;
+  Partner(
+      final String? documentID,
+      final String? name,
+      final String? location,
+      final String? discount,
+      final String? pictureURL,
+      final String? fullDescription,
+      final String? shortDescription)
+      : _documentID = documentID,
+        _name = name,
+        _location = location,
+        _discount = discount,
+        _pictureURL = pictureURL,
+        _fullDescription = fullDescription,
+        _shortDescription = shortDescription;
 }
