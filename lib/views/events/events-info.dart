@@ -24,7 +24,7 @@ class EventInfoState extends State<EventInfoScreen> {
     super.initState();
     // Update the BabylonUser data with the current user
 
-    _isAttending = event.getAttendees.any((final anAttendee) => anAttendee!.getUserUID == FirebaseAuth.instance.currentUser!.uid);
+    _isAttending = event.attendees.any((final anAttendee) => anAttendee!.userUID == FirebaseAuth.instance.currentUser!.uid);
   }
   
   // Event object passed through the constructor containing all event details.
@@ -48,7 +48,7 @@ class EventInfoState extends State<EventInfoScreen> {
           },
         ),
         title: Text(
-          event.getTitle!,
+          event.title!,
           style: TextStyle(
               fontSize: 24), // Increase font size for AppBar title for better visibility.
         ),
@@ -61,7 +61,7 @@ class EventInfoState extends State<EventInfoScreen> {
             Container(
               width: screenWidth,
               child: Image.network(
-                event.getPictureURL!,
+                event.pictureURL!,
                 height: 250, // Increase height for a more prominent image.
                 fit: BoxFit.cover,
               ) : Image.asset('assets/images/logoSquare.png', height: 250),
@@ -75,13 +75,13 @@ class EventInfoState extends State<EventInfoScreen> {
                 children: <Widget>[
                   // Event title with increased font size.
                   Text(
-                    event.getTitle!,
+                    event.title!,
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   // Event description with appropriate styling.
                   Text(
-                    event.getFullDescription!,
+                    event.fullDescription!,
                     style: TextStyle(fontSize: 18),
                   ),
                   SizedBox(height: 16),
@@ -92,7 +92,7 @@ class EventInfoState extends State<EventInfoScreen> {
                       SizedBox(width: 8),
                       // Text for the event date and time.
                       Text(
-                        "${DateFormat("dd MMMM yyyy").format(event.getDate!)} at ${DateFormat("hh:mm aaa").format(event.getDate!)}",
+                        "${DateFormat("dd MMMM yyyy").format(event.date!)} at ${DateFormat("hh:mm aaa").format(event.date!)}",
                         style: TextStyle(fontSize: 18),
                       ),
                     ],
@@ -105,7 +105,7 @@ class EventInfoState extends State<EventInfoScreen> {
                       SizedBox(width: 8),
                       // Text for the event location.
                       Text(
-                        event.getPlace!,
+                        event.place!,
                         style: TextStyle(fontSize: 18),
                       ),
                     ],
@@ -122,13 +122,13 @@ class EventInfoState extends State<EventInfoScreen> {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10.0),
                             child: CircleAvatar(
-                              backgroundImage: NetworkImage(event.getCreator!.getImagePath),
+                              backgroundImage: NetworkImage(event.creator!.imagePath),
                               radius: 20,
                             ),
                           ),
                         ),
                         TextSpan(
-                          text: event.getCreator!.getFullName,
+                          text: event.creator!.fullName,
                         ),
                       ],
                     ),
@@ -144,7 +144,7 @@ class EventInfoState extends State<EventInfoScreen> {
                           {
                             setState(() {
                               _isAttending = true; 
-                              event.getAttendees.add(BabylonUser.currentBabylonUser);
+                              event.attendees.add(BabylonUser.currentBabylonUser);
                             });
                           }
                       }
@@ -190,19 +190,19 @@ class EventInfoState extends State<EventInfoScreen> {
               onTap: () => _showAllAttendeesBottomSheet(context),
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: event.getAttendees.length, // The total number of avatars to display.
+                itemCount: event.attendees.length, // The total number of avatars to display.
                 itemBuilder: (final context, final index) {
                   // Wrapping each avatar with a Transform.translate to create an overlap effect.
                   return Transform.translate(
                     offset: Offset(-30.0 * index, 0), // Shifts each avatar to the left; adjust the multiplier as needed.
                     child: Container(
-                      margin: EdgeInsets.only(right: index != event.getAttendees.length - 1 ? 20 : 0), // Adjust the right margin to control the overlap
+                      margin: EdgeInsets.only(right: index != event.attendees.length - 1 ? 20 : 0), // Adjust the right margin to control the overlap
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(color: Colors.white, width: 3), // White border around the avatar
                       ),
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(event.getAttendees[index]!.getImagePath),
+                        backgroundImage: NetworkImage(event.attendees[index]!.imagePath),
                         radius: 30, // The radius of avatars.
                       ),
                     ),
@@ -220,7 +220,7 @@ class EventInfoState extends State<EventInfoScreen> {
               },
               icon: Icon(Icons.person, size: 24), // Icon for the "See all" button.
               label: Text(
-                "See all (${event.getAttendees.length})",
+                "See all (${event.attendees.length})",
                 style: TextStyle(fontSize: 16), // Text style for the "See all" button.
               ),
               style: OutlinedButton.styleFrom(
@@ -271,14 +271,14 @@ class EventInfoState extends State<EventInfoScreen> {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
               ),
               child: ListView.builder(
-                itemCount: event.getAttendees.length,
+                itemCount: event.attendees.length,
                 itemBuilder: (final BuildContext context, final int index) {
                   return ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: NetworkImage(event.getAttendees[index]!.getImagePath),
+                      backgroundImage: NetworkImage(event.attendees[index]!.imagePath),
                       radius: 20,
                     ),
-                    title: Text(event.getAttendees[index]!.getFullName, style: TextStyle(fontSize: 16)),
+                    title: Text(event.attendees[index]!.fullName, style: TextStyle(fontSize: 16)),
                     onTap: () {
                       // TODO(Enzo): Implement navigation to attendee"s profile
                     },

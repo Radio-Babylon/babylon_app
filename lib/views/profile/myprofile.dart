@@ -30,10 +30,10 @@ class _MyProfileState extends State<MyProfile> {
   @override
   void initState() {
     _fullname =
-        TextEditingController(text: BabylonUser.currentBabylonUser.getFullName);
-    _dateOfBirth = TextEditingController(text: BabylonUser.currentBabylonUser.getDateOfBirth);
-    _country = TextEditingController(text: BabylonUser.currentBabylonUser.getOriginCountry);
-    _about = TextEditingController(text: BabylonUser.currentBabylonUser.getAbout);
+        TextEditingController(text: BabylonUser.currentBabylonUser.fullName);
+    _dateOfBirth = TextEditingController(text: BabylonUser.currentBabylonUser.dateOfBirth);
+    _country = TextEditingController(text: BabylonUser.currentBabylonUser.originCountry);
+    _about = TextEditingController(text: BabylonUser.currentBabylonUser.about);
     _error = "";
     super.initState();
   }
@@ -158,13 +158,13 @@ class _MyProfileState extends State<MyProfile> {
         setState(() {
           formState = "saving";
         });
-        await UserService.updateUserInfo(uuid: user.getUserUID, newData: {
+        await UserService.updateUserInfo(uuid: user.userUID, newData: {
           "name": _fullname.text,
           "originCountry": _country.text,
           "birthDate": _dateOfBirth.text,
           "about": _about.text 
         });
-        await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.getUserUID);
+        await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.userUID);
         if (_fileImage != null) UserService.addPhoto(user: FirebaseAuth.instance.currentUser!, file: _fileImage!);
         await Future.delayed(Duration(seconds: 1));
         setState(() {
@@ -240,10 +240,10 @@ class _MyProfileState extends State<MyProfile> {
     if (_fileImage != null ){
       image = FileImage(_fileImage!);
     }
-    else if (user.getImagePath == "") {
+    else if (user.imagePath == "") {
       image = const AssetImage("assets/images/default_user_logo.png");
     } else {
-      image = NetworkImage(user.getImagePath);
+      image = NetworkImage(user.imagePath);
     }
     return ClipOval(
       child: Material(
@@ -262,12 +262,12 @@ class _MyProfileState extends State<MyProfile> {
   Widget buildName(BabylonUser user) => Column(
         children: [
           Text(
-            user.getFullName,
+            user.fullName,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
           const SizedBox(height: 4),
           Text(
-            user.getEmail,
+            user.email,
             style: TextStyle(color: Colors.grey),
           )
         ],
@@ -302,7 +302,7 @@ class _MyProfileState extends State<MyProfile> {
             ),
             const SizedBox(height: 16),
             Text(
-              user.getAbout!,
+              user.about!,
               style: TextStyle(fontSize: 16, height: 1.4),
             ),
           ],

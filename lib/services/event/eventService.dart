@@ -38,7 +38,7 @@ class EventService {
       final snapShot = await db.collection("events").get();
       await Future.forEach(snapShot.docs, (final snapShot) async {
         final event = snapShot.data();
-        if(babylonUser!.getListedEvents.contains(snapShot.reference.id)){
+        if(babylonUser!.listedEvents.contains(snapShot.reference.id)){
           final List<String> attendeesID = List.empty(growable: true);
           final attendeesSnapshot = await db.collection("events").doc(snapShot.id).collection("attendees").get();
           attendeesSnapshot.docs.forEach((final anAttendee) {
@@ -59,8 +59,8 @@ class EventService {
     try {
       final User currUser = FirebaseAuth.instance.currentUser!;
       final db = FirebaseFirestore.instance;
-      await db.collection("users").doc(currUser.uid).collection("listedEvents").doc(event.getEventDocumentID).set({});
-      await db.collection("events").doc(event.getEventDocumentID).collection("attendees").doc(currUser.uid).set({});
+      await db.collection("users").doc(currUser.uid).collection("listedEvents").doc(event.eventDocumentID).set({});
+      await db.collection("events").doc(event.eventDocumentID).collection("attendees").doc(currUser.uid).set({});
       return true;
     } catch (e) {
       print(e);

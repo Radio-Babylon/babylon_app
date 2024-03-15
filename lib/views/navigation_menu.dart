@@ -124,9 +124,9 @@ class _DrawerHeaderWithUserInfoState extends State<DrawerHeaderWithUserInfo> {
 
   @override
   Widget build(BuildContext context) {
-    String fullName = currentUser?.getFullName ?? "Unknown user";
-    String email = currentUser?.getEmail ?? "email";
-    String? imgUrl = currentUser?.getImagePath;
+    String fullName = currentUser?.fullName ?? "Unknown user";
+    String email = currentUser?.email ?? "email";
+    String? imgUrl = currentUser?.imagePath;
     final ImageProvider currentImg;
 
     if (imgUrl != null) {

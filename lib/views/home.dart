@@ -1,5 +1,5 @@
 import "dart:async";
-import "package:babylon_app/models/babylonUser.dart";
+import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/views/connection/connections.dart";
 import "package:babylon_app/views/events/events.dart";
 import "package:babylon_app/views/forum/forum.dart";

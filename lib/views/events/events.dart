@@ -212,15 +212,15 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
     return Card(
       margin: const EdgeInsets.all(10),
       child: ListTile(
-        leading: event.getPictureURL != "" ? Image.network(event.getPictureURL!) : Image.asset("assets/images/logoSquare.png"),
-        title: Text(event.getTitle!),
+        leading: event.pictureURL != "" ? Image.network(event.pictureURL!) : Image.asset("assets/images/logoSquare.png"),
+        title: Text(event.title!),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("${DateFormat("dd MMMM yyyy").format(event.getDate!)} at ${DateFormat("hh:mm aaa").format(event.getDate!)}"),
-            Text(event.getShortDescription!, maxLines: 3, overflow: TextOverflow.ellipsis),
-            Text("Host: ${event.getCreator!.getFullName}"), // Display the host of the event.
-            Text("Location: ${event.getPlace}"), // Display the location of the event.
+            Text("${DateFormat("dd MMMM yyyy").format(event.date!)} at ${DateFormat("hh:mm aaa").format(event.date!)}"),
+            Text(event.shortDescription!, maxLines: 3, overflow: TextOverflow.ellipsis),
+            Text("Host: ${event.creator!.fullName}"), // Display the host of the event.
+            Text("Location: ${event.place}"), // Display the location of the event.
           ],
         ),
         trailing: IconButton(
