@@ -1,4 +1,4 @@
-import "package:babylon_app/services/auth/auth_exceptions.dart";
+import "package:babylon_app/services/auth/auth_validator.dart";
 import "package:babylon_app/services/auth/auth_service.dart";
 import "package:babylon_app/services/user/user_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -163,9 +163,9 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                   ),
                 ),
                 onPressed: () async {
-                  final fullName = "${_name.text}";
+                  final fullName = _name.text;
                   try {
-                    AuthException.validateRegisterForm(_name.text, _email.text, _password.text, _rePassword.text, _dateOfBirth.text);
+                    AuthValidator.validateRegisterForm(_name.text, _email.text, _password.text, _rePassword.text, _dateOfBirth.text);
                     User? currentUser =
                       await AuthService.registerUsingEmailPassword(
                           name: fullName,
@@ -179,14 +179,16 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                       );
                     }
                   } catch (e) {
-                    if(e is FirebaseAuthException)
-                      setState(() {
-                        _error = (e as FirebaseAuthException).message; 
-                      });
-                    else
-                      setState(() {
-                        _error = e.toString(); 
-                      });
+                    switch(e.runtimeType) {
+                      case FirebaseAuthException _:
+                        setState(() {
+                          _error = (e as FirebaseAuthException).message; 
+                        });
+                      default:
+                        setState(() {
+                          _error = e.toString(); 
+                        });
+                    }
                   }
                   if (!mounted) return;
                   //Navigator.of(context).pop();
