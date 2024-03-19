@@ -155,7 +155,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                   border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
-                child: _image == null && _eventImgURL == null
+                child: _image == null && _eventImgURL == ""
                     ? Icon(Icons.camera_alt, color: Colors.grey)
                     : _image == null
                         ? Image.network(_eventImgURL!, fit: BoxFit.cover)
