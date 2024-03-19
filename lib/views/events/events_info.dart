@@ -1,7 +1,7 @@
-import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/models/connected_babylon_user.dart";
 import "package:babylon_app/models/event.dart";
 import "package:babylon_app/services/event/event_service.dart";
+import "package:babylon_app/views/events/update_events_info.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
@@ -61,11 +61,11 @@ class EventInfoState extends State<EventInfoScreen> {
             // Container for the event image, taking full width of the screen.
             Container(
               width: screenWidth,
-              child: Image.network(
+              child: event.pictureURL == "" ? Image.network(
                 event.pictureURL!,
                 height: 250, // Increase height for a more prominent image.
                 fit: BoxFit.cover,
-              ) : Image.asset('assets/images/logoSquare.png', height: 250),
+              ) : Image.asset("assets/images/logoSquare.png", height: 250),
             ),
             // Padding for the content below the image.
             Padding(
@@ -159,7 +159,7 @@ class EventInfoState extends State<EventInfoScreen> {
                   ),
                   // Section for people attending the event.
                   _buildPeopleAttendingSection(context),
-                  if(event.Creator!.UserUID == BabylonUser.currentBabylonUser.UserUID) _buildEditButton(context),
+                  if(event.creator!.userUID == ConnectedBabylonUser().userUID) _buildEditButton(context),
                 ],
               ),
             ),

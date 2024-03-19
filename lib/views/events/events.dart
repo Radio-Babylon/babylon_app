@@ -3,7 +3,7 @@ import "package:babylon_app/services/event/event_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
-import "events-info.dart";
+import "events_info.dart";
 import "create_event.dart";
 import "package:babylon_app/views/navigation_menu.dart";
 

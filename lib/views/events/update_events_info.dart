@@ -1,12 +1,12 @@
-import 'dart:io';
-import 'package:babylon_app/models/event.dart';
-import 'package:babylon_app/services/event/eventExceptions.dart';
-import 'package:babylon_app/services/event/eventService.dart';
-import 'package:babylon_app/views/events/events.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import "dart:io";
+import "package:babylon_app/models/event.dart";
+import "package:babylon_app/services/event/eventExceptions.dart";
+import "package:babylon_app/services/event/event_service.dart";
+import "package:babylon_app/views/events/events.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
+import "package:image_picker/image_picker.dart";
 
 // This screen allows users to create a new event, complete with an image, name, date, time, short description, and detailed description.
 class UpdateEventScreen extends StatefulWidget {
@@ -43,14 +43,14 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
     @override
   void initState(){
     super.initState();
-    this._descriptionController.text = event.FullDescription!;
-    this._descriptionShortController.text = event.ShortDescription!;
-    this._nameController.text = event.Title!;
-    this._placeController.text = event.Place!;
+    this._descriptionController.text = event.fullDescription!;
+    this._descriptionShortController.text = event.shortDescription!;
+    this._nameController.text = event.title!;
+    this._placeController.text = event.place!;
     this._image = null;
-    this._eventImgURL = event.PictureURL!;
-    this._selectedTime = TimeOfDay(hour: event.Date!.hour, minute: event.Date!.minute)!;
-    this._selectedDate = event.Date!;
+    this._eventImgURL = event.pictureURL!;
+    this._selectedTime = TimeOfDay(hour: event.date!.hour, minute: event.date!.minute)!;
+    this._selectedDate = event.date!;
 
   }
 
@@ -113,15 +113,15 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
 
   // Helper method to format date and time into a user-friendly string
   String _formatDateTime(DateTime? date, TimeOfDay? time) {
-    if (date == null || time == null) return 'Tap to select date & time';
-    return '${MaterialLocalizations.of(context).formatFullDate(date)} at ${time.format(context)}';
+    if (date == null || time == null) return "Tap to select date & time";
+    return "${MaterialLocalizations.of(context).formatFullDate(date)} at ${time.format(context)}";
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Update Event'),
+        title: Text("Update Event"),
         backgroundColor: Colors.green,
       ),
       body: SingleChildScrollView(
@@ -130,12 +130,12 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
           children: [
             _buildTextField(
               controller: _nameController,
-              labelText: '* Event Name',
+              labelText: "* Event Name",
             ),
 
             _buildTextField(
               controller: TextEditingController(text: _formatDateTime(_selectedDate, _selectedTime)),
-              labelText: '* Date & Time',
+              labelText: "* Date & Time",
               readOnly: true,
               onTap: () => _pickDateTime(context),
             ),
@@ -160,15 +160,15 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
             SizedBox(height: 8.0), // Add spacing between the elements
             _buildTextField(
               controller: _placeController,
-              labelText: '* Location',
+              labelText: "* Location",
             ),
             _buildTextField(
               controller: _descriptionShortController,
-              labelText: 'Short Description',
+              labelText: "Short Description",
             ),
             _buildTextField(
               controller: _descriptionController,
-              labelText: 'Event Description',
+              labelText: "Event Description",
             ),
 
 
@@ -185,7 +185,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                         selectedTimeOfDay: _selectedTime,
                         place: _placeController.text);
                       await EventService.updateEvent(
-                        eventUID: event.EventDocumentID,
+                        eventUID: event.eventDocumentID,
                         eventName: _nameController.text,
                         image: _image == null ? null : File(_image!.path),
                         eventTimeStamp: Timestamp.fromDate(DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour, _selectedTime!.minute)),
@@ -207,12 +207,12 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                       });
                     }
                   },
-                  child: Text('UPDATE'),
+                  child: Text("UPDATE"),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 ),
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('CANCEL'),
+                  child: Text("CANCEL"),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 ),
               ],
