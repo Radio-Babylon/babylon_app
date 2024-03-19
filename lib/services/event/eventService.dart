@@ -94,4 +94,35 @@ class EventService {
       throw(e);
     }
   } 
+
+  static Future<void> updateEvent(String eventUID, String eventName, File? image, Timestamp eventTimeStamp, String shortDescription, String description, String place) async{
+    try {
+      User currUser = FirebaseAuth.instance.currentUser!;
+      final db = FirebaseFirestore.instance;
+      Reference referenceRoot = FirebaseStorage.instance.ref();
+      Reference referenceDirImages = referenceRoot.child('images');
+
+      final newEventData = <String, dynamic>{
+        "title": eventName,
+        "creator": currUser.uid,
+        "shortDescription": shortDescription,
+        "fullDescription": description,
+        "date": eventTimeStamp,
+        "place": place,
+      };
+
+      if(image != null)
+      {
+        final String imgName = '${DateTime.now().millisecondsSinceEpoch.toString()}.jpg';
+        Reference referenceImageToUpload = referenceDirImages.child(imgName);
+        await referenceImageToUpload.putFile(image!);
+        newEventData["picture"] = "/images/"+imgName;
+      }
+      
+      db.collection("events").doc(eventUID).update(newEventData);
+    } catch (e) {
+      print(e);
+      throw(e);
+    }
+  } 
 }

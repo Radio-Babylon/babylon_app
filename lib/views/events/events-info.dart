@@ -3,6 +3,7 @@ import 'package:babylon_app/models/event.dart';
 import 'package:babylon_app/services/event/eventService.dart';
 import 'package:babylon_app/services/user/userService.dart';
 import 'package:babylon_app/views/events/events.dart';
+import 'package:babylon_app/views/events/update_events_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,8 +11,8 @@ import 'package:intl/intl.dart';
 // EventInfoScreen displays detailed information about an event including the host and location.
 
 class EventInfoScreen extends StatefulWidget {
-  @override
   final Event event;
+  @override
   const EventInfoScreen({Key? key, required this.event}) : super(key: key);
   EventInfoState createState() => EventInfoState(event);
 }
@@ -161,6 +162,7 @@ class EventInfoState extends State<EventInfoScreen> {
                   ),
                   // Section for people attending the event.
                   _buildPeopleAttendingSection(context),
+                  if(event.Creator!.UserUID == BabylonUser.currentBabylonUser.UserUID) _buildEditButton(context),
                 ],
               ),
             ),
@@ -305,4 +307,19 @@ class EventInfoState extends State<EventInfoScreen> {
     );
   }
 
+  Widget _buildEditButton(BuildContext context){
+    return ElevatedButton(
+      child: Text( "Edit my event", style: TextStyle(fontSize: 18)),
+      onPressed: () async{
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => UpdateEventScreen(event: event,))
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.green,
+        padding: EdgeInsets.symmetric(
+          horizontal: 32, vertical: 12),
+      ),
+    );
+  }
 }
