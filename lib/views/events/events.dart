@@ -214,7 +214,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
     return Card(
       margin: const EdgeInsets.all(10),
       child: ListTile(
-        leading: Image.network(event.PictureURL!),
+        leading: event.PictureURL != "" ? Image.network(event.PictureURL!) : Image.asset('assets/images/logoSquare.png'),
         title: Text(event.Title!),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

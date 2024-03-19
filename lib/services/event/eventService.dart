@@ -21,7 +21,7 @@ class EventService {
         });
 
         final event = snapShot.data();
-        final imageUrl = await FirebaseStorage.instance.ref().child(event["picture"]).getDownloadURL();
+        final imageUrl = event.containsKey("picture") ? await FirebaseStorage.instance.ref().child(event["picture"]).getDownloadURL() : "";
         result.add(await Event.create(event["creator"], (event["date"] as Timestamp).toDate(), event["fullDescription"], imageUrl, event["place"], event["shortDescription"], event["title"], snapShot.reference.id, attendeesID));
       });
     } catch (error) {
@@ -68,17 +68,13 @@ class EventService {
     }
   }
 
-  static Future<void> createEvent(String eventName, File image, Timestamp eventTimeStamp, String shortDescription, String description, String place) async{
+  static Future<void> createEvent({required String eventName, File? image, required Timestamp eventTimeStamp, String? shortDescription, String? description, required String place}) async{
     try {
       User currUser = FirebaseAuth.instance.currentUser!;
       final db = FirebaseFirestore.instance;
       Reference referenceRoot = FirebaseStorage.instance.ref();
       Reference referenceDirImages = referenceRoot.child('images');
 
-      final String imgName = '${DateTime.now().millisecondsSinceEpoch.toString()}.jpg';
-      Reference referenceImageToUpload = referenceDirImages.child(imgName);
-      await referenceImageToUpload.putFile(image);
-      
       final newEvent = <String, dynamic>{
         "title": eventName,
         "creator": currUser.uid,
@@ -86,8 +82,16 @@ class EventService {
         "fullDescription": description,
         "date": eventTimeStamp,
         "place": place,
-        "picture": "/images/"+imgName
       };
+
+      if(image != null)
+      {
+        final String imgName = '${DateTime.now().millisecondsSinceEpoch.toString()}.jpg';
+        Reference referenceImageToUpload = referenceDirImages.child(imgName);
+        await referenceImageToUpload.putFile(image);
+        newEvent["picture"] = "/images/"+imgName;
+      }
+      
       db.collection("events").doc().set(newEvent);
     } catch (e) {
       print(e);
@@ -95,7 +99,7 @@ class EventService {
     }
   } 
 
-  static Future<void> updateEvent(String eventUID, String eventName, File? image, Timestamp eventTimeStamp, String shortDescription, String description, String place) async{
+  static Future<void> updateEvent({required String eventUID, required String eventName, File? image, required Timestamp eventTimeStamp, String? shortDescription, String? description, required String place}) async{
     try {
       User currUser = FirebaseAuth.instance.currentUser!;
       final db = FirebaseFirestore.instance;
@@ -115,7 +119,7 @@ class EventService {
       {
         final String imgName = '${DateTime.now().millisecondsSinceEpoch.toString()}.jpg';
         Reference referenceImageToUpload = referenceDirImages.child(imgName);
-        await referenceImageToUpload.putFile(image!);
+        await referenceImageToUpload.putFile(image);
         newEventData["picture"] = "/images/"+imgName;
       }
       

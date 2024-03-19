@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:babylon_app/models/event.dart';
+import 'package:babylon_app/services/event/eventExceptions.dart';
 import 'package:babylon_app/services/event/eventService.dart';
 import 'package:babylon_app/views/events/events.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -27,6 +29,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
   XFile? _image;
   String? _eventImgURL;
   final ImagePicker _picker = ImagePicker();
+  String? _error = "";
 
   // Dispose controllers when the screen is removed
   @override
@@ -127,12 +130,12 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
           children: [
             _buildTextField(
               controller: _nameController,
-              labelText: 'Event Name',
+              labelText: '* Event Name',
             ),
 
             _buildTextField(
               controller: TextEditingController(text: _formatDateTime(_selectedDate, _selectedTime)),
-              labelText: 'Date & Time',
+              labelText: '* Date & Time',
               readOnly: true,
               onTap: () => _pickDateTime(context),
             ),
@@ -157,7 +160,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
             SizedBox(height: 8.0), // Add spacing between the elements
             _buildTextField(
               controller: _placeController,
-              labelText: 'Location',
+              labelText: '* Location',
             ),
             _buildTextField(
               controller: _descriptionShortController,
@@ -175,21 +178,34 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    await EventService.updateEvent(event.EventDocumentID,
-                      _nameController.text,
-                      _image == null ? null : File(_image!.path),
-                      Timestamp.fromDate(DateTime(_selectedDate!.year,
-                      _selectedDate!.month,
-                      _selectedDate!.day,
-                      _selectedTime!.hour,
-                       _selectedTime!.minute)),
-                      _descriptionShortController.text,
-                      _descriptionController.text,
-                      _placeController.text);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const EventsScreen()),
-                    );
+                    try {
+                      EventException.validateUpdateOrCreateForm(
+                        eventName: _nameController.text,
+                        selectedDateTime: _selectedDate,
+                        selectedTimeOfDay: _selectedTime,
+                        place: _placeController.text);
+                      await EventService.updateEvent(
+                        eventUID: event.EventDocumentID,
+                        eventName: _nameController.text,
+                        image: _image == null ? null : File(_image!.path),
+                        eventTimeStamp: Timestamp.fromDate(DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour, _selectedTime!.minute)),
+                        description: _descriptionShortController.text,
+                        shortDescription: _descriptionController.text,
+                        place: _placeController.text);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const EventsScreen()),
+                      );
+                    } catch (e) {
+                      if(e is FirebaseAuthException)
+                      setState(() {
+                        _error = e.message; 
+                      });
+                    else
+                      setState(() {
+                        _error = e.toString(); 
+                      });
+                    }
                   },
                   child: Text('UPDATE'),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
@@ -200,6 +216,13 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 ),
               ],
+            ),
+            Padding(padding: EdgeInsets.symmetric(vertical: 8),
+              child:
+                Text(
+                  _error!,
+                  style: TextStyle(color: Colors.red),
+              )
             ),
           ],
         ),

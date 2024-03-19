@@ -1,8 +1,6 @@
 import 'package:babylon_app/models/babylonUser.dart';
 import 'package:babylon_app/models/event.dart';
 import 'package:babylon_app/services/event/eventService.dart';
-import 'package:babylon_app/services/user/userService.dart';
-import 'package:babylon_app/views/events/events.dart';
 import 'package:babylon_app/views/events/update_events_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -64,11 +62,11 @@ class EventInfoState extends State<EventInfoScreen> {
             // Container for the event image, taking full width of the screen.
             Container(
               width: screenWidth,
-              child: Image.network(
+              child: event.PictureURL != "" ? Image.network(
                 event.PictureURL!,
                 height: 250, // Increase height for a more prominent image.
                 fit: BoxFit.cover,
-              ),
+              ) : Image.asset('assets/images/logoSquare.png', height: 250),
             ),
             // Padding for the content below the image.
             Padding(
