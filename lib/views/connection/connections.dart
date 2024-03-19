@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:babylon_app/views/navigation_menu.dart";
-import "package:babylon_app/views/profile/otherprofile.dart";
+import "package:babylon_app/views/profile/other_profile.dart";
 
 // Define the Person class to hold necessary information about a person.
 class Person {

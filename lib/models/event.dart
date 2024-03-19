@@ -1,5 +1,5 @@
 import "package:babylon_app/models/babylon_user.dart";
-import "package:babylon_app/services/user/userService.dart";
+import "package:babylon_app/services/user/user_service.dart";
 
 class Event {
   // Attributes

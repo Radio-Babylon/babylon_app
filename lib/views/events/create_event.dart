@@ -1,6 +1,6 @@
 import "dart:io";
 import "package:babylon_app/services/event/eventExceptions.dart";
-import "package:babylon_app/services/event/eventService.dart";
+import "package:babylon_app/services/event/event_service.dart";
 import "package:babylon_app/views/events/events.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";

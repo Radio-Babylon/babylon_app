@@ -1,7 +1,7 @@
 import "package:babylon_app/models/post.dart";
-import "package:babylon_app/services/wpGraphQL/wpGraphQLService.dart";
-import "package:babylon_app/utils/htmlStrip.dart";
-import "package:babylon_app/utils/launchUrl.dart";
+import "package:babylon_app/services/wpGraphQL/wp_graphql_service.dart";
+import "package:babylon_app/utils/html_strip.dart";
+import "package:babylon_app/utils/launch_url.dart";
 import "package:babylon_app/views/navigation_menu.dart";
 import "package:flutter/material.dart";
 

@@ -1,4 +1,4 @@
-import "package:babylon_app/services/user/userService.dart";
+import "package:babylon_app/services/user/user_service.dart";
 import "package:babylon_app/views/home.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";

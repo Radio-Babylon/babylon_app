@@ -1,4 +1,4 @@
-import "package:babylon_app/services/user/userService.dart";
+import "package:babylon_app/services/user/user_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
 
 class BabylonUser {
@@ -29,16 +29,6 @@ class BabylonUser {
     imagePath = currentUser?.photoURL ?? "";
     email = currentUser?.email ?? "";
     fullName = currentUser?.displayName ?? "";
-    /*
-    String? photoURL = currentUser.photoURL;
-    if (photoURL != null) {
-      imagePath = photoURL;
-    }
-    String? currentUSerFullName = currentUser.displayName;
-    if (currentUSerFullName != null) {
-      fullName = currentUSerFullName;
-    }
-  */
   }
 
   // Static methods

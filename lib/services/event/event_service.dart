@@ -2,7 +2,7 @@ import "dart:io";
 
 import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/models/event.dart";
-import "package:babylon_app/services/user/userService.dart";
+import "package:babylon_app/services/user/user_service.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:firebase_storage/firebase_storage.dart";

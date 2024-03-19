@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:babylon_app/views/profile/FullScreenImage.dart";
+import "package:babylon_app/views/profile/full_screen_image.dart";
 // Importa aquí el archivo FullScreenImage si se encuentra en otro archivo
 // import "path/to/full_screen_image.dart";
 

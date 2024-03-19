@@ -1,6 +1,6 @@
 
 import "package:babylon_app/models/babylon_user.dart";
-import "package:babylon_app/services/auth/authService.dart";
+import "package:babylon_app/services/auth/auth_service.dart";
 import "package:babylon_app/services/firebase_options.dart";
 import "package:babylon_app/views/home.dart";
 import "package:babylon_app/views/register/register1.dart";

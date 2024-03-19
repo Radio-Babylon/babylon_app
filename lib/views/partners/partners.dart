@@ -1,5 +1,5 @@
 import "package:babylon_app/models/partner.dart";
-import "package:babylon_app/services/partner/partnerService.dart";
+import "package:babylon_app/services/partner/partner_service.dart";
 import "package:babylon_app/views/navigation_menu.dart";
 import "package:flutter/material.dart";
 

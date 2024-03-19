@@ -5,7 +5,7 @@ import "package:babylon_app/views/forum/forum.dart";
 import "package:babylon_app/views/home.dart";
 import "package:babylon_app/views/news/news.dart";
 import "package:babylon_app/views/partners/partners.dart";
-import "package:babylon_app/views/profile/myprofile.dart";
+import "package:babylon_app/views/profile/my_profile.dart";
 import "package:babylon_app/views/radio/radio.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
