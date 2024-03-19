@@ -1,5 +1,7 @@
 import "dart:async";
 import "package:babylon_app/models/babylon_user.dart";
+import "package:babylon_app/models/connected_babylon_user.dart";
+import "package:babylon_app/services/user/user_service.dart";
 import "package:babylon_app/views/connection/connections.dart";
 import "package:babylon_app/views/events/events.dart";
 import "package:babylon_app/views/forum/forum.dart";
@@ -36,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState(){
     super.initState();
-    BabylonUser.updateCurrentBabylonUserData(currentUserUID: currentUser!.uid);
+    UserService.setUpConnectedBabylonUser(currentUser!.uid); //BabylonUser.updateCurrentBabylonUserData(currentUserUID: currentUser!.uid);
     // Update the BabylonUser data with the current user
   }
 
@@ -105,7 +107,7 @@ class HomeScreen extends StatefulWidget{
 
 // Example HomeScreen class
 class HomeScreenState extends State<HomeScreen> {
-  BabylonUser user = BabylonUser.currentBabylonUser;
+  BabylonUser user = ConnectedBabylonUser();
 
   Timer? timer;
 
@@ -124,7 +126,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context){
     timer = Timer.periodic(Duration(seconds: 3), (Timer t) => 
       setState(() {
-        user = BabylonUser.currentBabylonUser;
+        user = ConnectedBabylonUser();
       })
     );      
       return ListView(

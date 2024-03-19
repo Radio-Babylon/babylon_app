@@ -1,4 +1,5 @@
 import "package:babylon_app/models/babylon_user.dart";
+import "package:babylon_app/models/connected_babylon_user.dart";
 import "package:babylon_app/views/connection/connections.dart";
 import "package:babylon_app/views/events/events.dart";
 import "package:babylon_app/views/forum/forum.dart";
@@ -109,7 +110,7 @@ class DrawerHeaderWithUserInfo extends StatefulWidget {
 }
 
 class _DrawerHeaderWithUserInfoState extends State<DrawerHeaderWithUserInfo> {
-  late final BabylonUser? currentUser = BabylonUser.currentBabylonUser;
+  late final BabylonUser? currentUser = ConnectedBabylonUser();
   @override
   void initState() {
     super.initState();

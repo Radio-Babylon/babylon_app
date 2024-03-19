@@ -8,10 +8,10 @@ class Post {
 
   // Constructors
 
-  Post(final String? title, final String? excerpt,
-      final String? featuredImageURL, final String? url)
-      : title = title,
-        excerpt = excerpt,
-        url = url,
-        featuredImageURL = featuredImageURL;
+  Post(final String? newTitle, final String? newExcerpt,
+      final String? newFeaturedImageURL, final String? newUrl)
+      : title = newTitle,
+        excerpt = newExcerpt,
+        url = newUrl,
+        featuredImageURL = newFeaturedImageURL;
 }

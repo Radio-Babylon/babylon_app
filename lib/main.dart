@@ -2,6 +2,7 @@
 import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/services/auth/auth_service.dart";
 import "package:babylon_app/services/firebase_options.dart";
+import "package:babylon_app/services/user/user_service.dart";
 import "package:babylon_app/views/home.dart";
 import "package:babylon_app/views/register/register1.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -141,7 +142,7 @@ class LogoScreen extends StatelessWidget {
                       try {
                         UserCredential? loginUser = await AuthService.signInWithGoogle();
                         if(loginUser is UserCredential){
-                          await BabylonUser.updateCurrentBabylonUserData(currentUserUID: loginUser.user!.uid);
+                          UserService.setUpConnectedBabylonUser(loginUser.user!.uid); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: loginUser.user!.uid);
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(builder: (context) => HomePage()),

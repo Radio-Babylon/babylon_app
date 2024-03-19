@@ -1,6 +1,7 @@
 import "dart:convert";
 import "dart:typed_data";
 import "package:babylon_app/models/babylon_user.dart";
+import "package:babylon_app/models/connected_babylon_user.dart";
 import "package:firebase_auth/firebase_auth.dart";
 //import "package:firebase_core/firebase_core.dart";
 import "package:flutter/material.dart";
@@ -144,5 +145,10 @@ class UserService {
       print(e);
     }
     return result;
+  }
+
+  static void setUpConnectedBabylonUser(final String userUID) async {
+    final BabylonUser? babylonUser = await getBabylonUser(userUID);
+    await ConnectedBabylonUser.setConnectedBabylonUser(babylonUser);
   }
 }

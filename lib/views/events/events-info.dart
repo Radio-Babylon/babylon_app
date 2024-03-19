@@ -1,4 +1,5 @@
 import "package:babylon_app/models/babylon_user.dart";
+import "package:babylon_app/models/connected_babylon_user.dart";
 import "package:babylon_app/models/event.dart";
 import "package:babylon_app/services/event/event_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -144,7 +145,7 @@ class EventInfoState extends State<EventInfoScreen> {
                           {
                             setState(() {
                               _isAttending = true; 
-                              event.attendees.add(BabylonUser.currentBabylonUser);
+                              event.attendees.add(ConnectedBabylonUser());
                             });
                           }
                       }

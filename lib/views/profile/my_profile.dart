@@ -1,6 +1,7 @@
 import "dart:io";
 
 import "package:babylon_app/models/babylon_user.dart";
+import "package:babylon_app/models/connected_babylon_user.dart";
 import "package:babylon_app/services/user/user_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
@@ -16,7 +17,7 @@ class MyProfile extends StatefulWidget {
 
 class _MyProfileState extends State<MyProfile> {
   bool firstToggle = false;
-  BabylonUser user = BabylonUser.currentBabylonUser;
+  BabylonUser user = ConnectedBabylonUser();
   String formState = "unchanged";
   late final TextEditingController _fullname;
   late final TextEditingController _dateOfBirth;
@@ -29,10 +30,10 @@ class _MyProfileState extends State<MyProfile> {
   @override
   void initState() {
     _fullname =
-        TextEditingController(text: BabylonUser.currentBabylonUser.fullName);
-    _dateOfBirth = TextEditingController(text: BabylonUser.currentBabylonUser.dateOfBirth);
-    _country = TextEditingController(text: BabylonUser.currentBabylonUser.originCountry);
-    _about = TextEditingController(text: BabylonUser.currentBabylonUser.about);
+        TextEditingController(text: ConnectedBabylonUser().fullName);
+    _dateOfBirth = TextEditingController(text: ConnectedBabylonUser().dateOfBirth);
+    _country = TextEditingController(text: ConnectedBabylonUser().originCountry);
+    _about = TextEditingController(text: ConnectedBabylonUser().about);
     _error = "";
     super.initState();
   }
@@ -162,12 +163,12 @@ class _MyProfileState extends State<MyProfile> {
           "birthDate": _dateOfBirth.text,
           "about": _about.text 
         });
-        await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.userUID);
+        UserService.setUpConnectedBabylonUser(user.userUID); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.userUID);
         if (_fileImage != null) UserService.addPhoto(user: FirebaseAuth.instance.currentUser!, file: _fileImage!);
         await Future.delayed(Duration(seconds: 1));
         setState(() {
           formState = "saved";
-          user = BabylonUser.currentBabylonUser;
+          user = ConnectedBabylonUser();
         });
       } : null
     );
