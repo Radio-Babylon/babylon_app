@@ -188,27 +188,30 @@ class EventInfoState extends State<EventInfoScreen> {
           // Horizontally scrollable list of avatars with an overlap effect.
           Container(
             height: 70, // Adjusted height to accommodate the border.
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: event.Attendees.length, // The total number of avatars to display.
-              itemBuilder: (context, index) {
-                // Wrapping each avatar with a Transform.translate to create an overlap effect.
-                return Transform.translate(
-                  offset: Offset(-30.0 * index, 0), // Shifts each avatar to the left; adjust the multiplier as needed.
-                  child: Container(
-                    margin: EdgeInsets.only(right: index != event.Attendees.length - 1 ? 20 : 0), // Adjust the right margin to control the overlap
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 3), // White border around the avatar
+            child: InkWell(
+              onTap: () => _showAllAttendeesBottomSheet(context),
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: event.Attendees.length, // The total number of avatars to display.
+                itemBuilder: (context, index) {
+                  // Wrapping each avatar with a Transform.translate to create an overlap effect.
+                  return Transform.translate(
+                    offset: Offset(-30.0 * index, 0), // Shifts each avatar to the left; adjust the multiplier as needed.
+                    child: Container(
+                      margin: EdgeInsets.only(right: index != event.Attendees.length - 1 ? 20 : 0), // Adjust the right margin to control the overlap
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 3), // White border around the avatar
+                      ),
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(event.Attendees[index]!.imagePath),
+                        radius: 30, // The radius of avatars.
+                      ),
                     ),
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(event.Attendees[index]!.imagePath),
-                      radius: 30, // The radius of avatars.
-                    ),
-                  ),
-                );
-              },
-            ),
+                  );
+                },
+              ),
+            )
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
