@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:babylon_app/models/babylonUser.dart';
 import 'package:babylon_app/services/user/userService.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -106,7 +107,8 @@ class _MyProfileState extends State<MyProfile> {
                     hintText: 'Origin country',
                     labelText: 'Origin country',
                     controller: _country,
-                    onClicked: () {}),
+                    onClicked: () {},
+                    isCountryPicker: true),
                 infoField(
                     icon: Icons.chat,
                     hintText: 'About',
@@ -313,7 +315,8 @@ class _MyProfileState extends State<MyProfile> {
       required String labelText,
       required TextEditingController controller,
       required Function onClicked,
-      bool hasDatePicker = false}) {
+      bool hasDatePicker = false,
+      bool isCountryPicker = false}) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
       child: Center(
@@ -329,7 +332,7 @@ class _MyProfileState extends State<MyProfile> {
                   Expanded( 
                     child: TextField(
                       controller: controller,
-                      readOnly: hasDatePicker,
+                      readOnly: hasDatePicker  || isCountryPicker,
                       onTap: () async {
                         activateButton();
                         if(hasDatePicker){
@@ -344,6 +347,14 @@ class _MyProfileState extends State<MyProfile> {
                                 _dateOfBirth.text = "${pickedDate.year}-${pickedDate.month < 10 ? "0${pickedDate.month}" : pickedDate.month}-${pickedDate.day}";
                             });
                           }
+                        }else if(isCountryPicker){
+                          showCountryPicker(
+                            context: context,
+                            showPhoneCode: false, // optional. Shows phone code before the country name.
+                            onSelect: (Country country) {
+                              _country.text = country.name;
+                            },
+                          );
                         }
                       },
                       decoration: InputDecoration(
