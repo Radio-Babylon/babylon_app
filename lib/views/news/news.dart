@@ -61,7 +61,9 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
                             fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
                   ...snapshot.data!.map(
-                    (aPost) => Card(
+                  (aPost) => GestureDetector(
+                  onTap: () => goToUrl("https://babylonradio.com/" + aPost.url!), // Acción al tocar la tarjeta completa.
+                  child: Card(
                       margin: EdgeInsets.all(16),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,6 +115,7 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
                       ),
                     ),
                   )
+                  ),
                 ];
               } else if (snapshot.hasError) {
                 children = <Widget>[
