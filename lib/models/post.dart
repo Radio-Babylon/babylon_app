@@ -8,10 +8,5 @@ class Post {
 
   // Constructors
 
-  Post(final String? newTitle, final String? newExcerpt,
-      final String? newFeaturedImageURL, final String? newUrl)
-      : title = newTitle,
-        excerpt = newExcerpt,
-        url = newUrl,
-        featuredImageURL = newFeaturedImageURL;
+  Post({this.title, this.excerpt, this.featuredImageURL, this.url});
 }
