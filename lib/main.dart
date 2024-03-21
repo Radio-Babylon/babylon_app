@@ -1,5 +1,3 @@
-
-import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/services/auth/auth_service.dart";
 import "package:babylon_app/services/firebase_options.dart";
 import "package:babylon_app/services/user/user_service.dart";
@@ -8,7 +6,7 @@ import "package:babylon_app/views/register/register1.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:firebase_core/firebase_core.dart";
 import "package:flutter/material.dart";
-import "views/login/login.dart";
+import "package:babylon_app/views/login/login.dart";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +18,8 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    User? currentUser = FirebaseAuth.instance.currentUser;
+  Widget build(final BuildContext context) {
+    final User? currentUser = FirebaseAuth.instance.currentUser;
     print(currentUser);
 
     return MaterialApp(
@@ -38,8 +36,8 @@ class MyApp extends StatelessWidget {
       ),
       home: currentUser != null ? HomePage() : LogoScreen(),
       routes: {
-        "/logo/": (context) => const LogoScreen(),
-        "/register/": (context) => CreateAccountPage()
+        "/logo/": (final context) => const LogoScreen(),
+        "/register/": (final context) => CreateAccountPage()
       },
     );
   }
@@ -49,7 +47,7 @@ class LogoScreen extends StatelessWidget {
   const LogoScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -86,7 +84,7 @@ class LogoScreen extends StatelessWidget {
               onPressed: () async {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(builder: (final context) => LoginPage()),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -111,16 +109,16 @@ class LogoScreen extends StatelessWidget {
                 // Usa Navigator.push to navigate into RegisterScreen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CreateAccountPage()),
+                  MaterialPageRoute(builder: (final context) => CreateAccountPage()),
                 );
               },
-              child: const Text("Register"),
               style: OutlinedButton.styleFrom(
                 minimumSize: const Size(350, 80), // Set the button size
                 textStyle: const TextStyle(fontSize: 24, fontFamily: "Lato"),
                 side: const BorderSide(
                     width: 2.0, color: Colors.grey), // Border width and color
               ),
+              child: const Text("Register"),
             ),
           ),
           Container(
@@ -140,18 +138,16 @@ class LogoScreen extends StatelessWidget {
                     "assets/images/google.png", // Replace with your asset
                     () async {
                       try {
-                        UserCredential? loginUser = await AuthService.signInWithGoogle();
-                        if(loginUser is UserCredential){
-                          UserService.setUpConnectedBabylonUser(loginUser.user!.uid); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: loginUser.user!.uid);
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomePage()),
-                            (route) => false,
-                          );
-                        }
-                      } catch (e) {
+                        final UserCredential loginUser = await AuthService.signInWithGoogle();
+                        UserService.setUpConnectedBabylonUser(loginUser.user!.uid); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: loginUser.user!.uid);
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (final context) => HomePage()),
+                          (final route) => false,
+                        );
+                                            } catch (e) {
                           print(e.toString()); 
-                        }; 
+                        }
                       }, 55)
                 ),
                 Flexible(
@@ -164,7 +160,7 @@ class LogoScreen extends StatelessWidget {
                           
                         } catch (e) {
                           print(e.toString()); 
-                        }; 
+                        } 
                       }, 55)
                 )
               ] 
@@ -176,14 +172,14 @@ class LogoScreen extends StatelessWidget {
   }
 
   Widget _buildSocialButton(
-    String iconPath, VoidCallback onPressed, double height) {
+    final String iconPath, final VoidCallback onPressed, final double height) {
     return Container(
       height: height,
       child: FloatingActionButton(
-        onPressed: onPressed,
-        child: Image.asset(iconPath), // The social icon
+        onPressed: onPressed, // The social icon
         backgroundColor: Colors.white,
-        elevation: 0, // Remove shadow
+        elevation: 0,
+        child: Image.asset(iconPath), // Remove shadow
       ),
     );
   }

@@ -1,12 +1,10 @@
-import "dart:convert";
-
 import "package:babylon_app/models/post.dart";
 import "package:graphql_flutter/graphql_flutter.dart";
 
 class WpGraphQLService {
 
   static Future<List<Post>> getNewPosts() async {
-    List<Post> result = List.empty(growable: true);
+    final List<Post> result = List.empty(growable: true);
 
     final HttpLink httpLink = HttpLink("https://babylonradio.com/graphql");
     final GraphQLClient client = GraphQLClient(
@@ -14,7 +12,7 @@ class WpGraphQLService {
       cache: GraphQLCache(),
     );
 
-    const String getFirstPosts = r'''
+    const String getFirstPosts = r"""
       query getFirstPosts {
       posts(first: 10) {
         nodes {
@@ -28,17 +26,17 @@ class WpGraphQLService {
           uri
         }
       }
-    }''';
+    }""";
 
     final QueryOptions options = QueryOptions(
       document: gql(getFirstPosts),
     );
 
-    var response = await client.query(options);
-    var responsePosts = response.data?["posts"]?["nodes"];
+    final QueryResult response = await client.query(options);
+    final dynamic responsePosts = response.data?["posts"]?["nodes"];
 
-    responsePosts.forEach((aPost) {
-      result.add(Post(aPost["title"],aPost["excerpt"],aPost["featuredImage"]["node"]["sourceUrl"],aPost["uri"]));
+    responsePosts.forEach((final aPost) {
+      result.add(Post(aPost["title"], aPost["excerpt"], aPost["featuredImage"]["node"]["sourceUrl"], aPost["uri"]));
     });
     return result;
   }

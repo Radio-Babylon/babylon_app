@@ -5,10 +5,10 @@ class FullScreenImage extends StatelessWidget {
   final String name; // Name of the person to be displayed in the AppBar.
 
   // Constructor requiring the image path and the person"s name.
-  FullScreenImage({required this.imagePath, required this.name});
+  const FullScreenImage({super.key, required this.imagePath, required this.name});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       // AppBar configuration
       appBar: AppBar(

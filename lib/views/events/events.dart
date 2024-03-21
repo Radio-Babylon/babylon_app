@@ -3,14 +3,13 @@ import "package:babylon_app/services/event/event_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
-import "events_info.dart";
-import "create_event.dart";
-import "package:babylon_app/views/navigation_menu.dart";
+import "package:babylon_app/views/events/events_info.dart";
+import "package:babylon_app/views/events/create_event.dart";
 
 
 // Define the EventsScreen as a StatefulWidget to handle dynamic content like user events.
 class EventsScreen extends StatefulWidget {
-  const EventsScreen({final Key? key}) : super(key: key);
+  const EventsScreen({super.key});
 
   @override
   State<EventsScreen> createState() => _EventsScreenState();

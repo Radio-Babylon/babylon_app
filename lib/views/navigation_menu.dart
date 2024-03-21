@@ -1,13 +1,7 @@
 import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/models/connected_babylon_user.dart";
-import "package:babylon_app/views/connection/connections.dart";
-import "package:babylon_app/views/events/events.dart";
-import "package:babylon_app/views/forum/forum.dart";
 import "package:babylon_app/views/home.dart";
-import "package:babylon_app/views/news/news.dart";
-import "package:babylon_app/views/partners/partners.dart";
 import "package:babylon_app/views/profile/my_profile.dart";
-import "package:babylon_app/views/radio/radio.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 
@@ -15,7 +9,7 @@ import "package:firebase_auth/firebase_auth.dart";
 class PublicDrawer extends StatefulWidget {
   final Function(int) onItemSelected;
 
-  const PublicDrawer({Key? key, required this.onItemSelected}) : super(key: key);
+  const PublicDrawer({super.key, required this.onItemSelected});
 
   @override
   _PublicDrawerState createState() => _PublicDrawerState();
@@ -28,7 +22,7 @@ class _PublicDrawerState extends State<PublicDrawer> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Drawer(
       // Drawer for side navigation
       child: ListView(
@@ -39,7 +33,7 @@ class _PublicDrawerState extends State<PublicDrawer> {
             leading: const Icon(Icons.home),
             title: const Text("Home"),
             onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => HomePage())),
+                MaterialPageRoute(builder: (final context) => HomePage())),
           ),
           ListTile(
             leading: const Icon(Icons.group),
@@ -73,7 +67,7 @@ class _PublicDrawerState extends State<PublicDrawer> {
               //Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyProfile()),
+                MaterialPageRoute(builder: (final context) => MyProfile()),
               );
             },
           ),
@@ -88,7 +82,7 @@ class _PublicDrawerState extends State<PublicDrawer> {
                 if (context.mounted) {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                     "/logo/",
-                    (_) => false,
+                    (final _) => false,
                   );
                 }
               }
@@ -124,10 +118,10 @@ class _DrawerHeaderWithUserInfoState extends State<DrawerHeaderWithUserInfo> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    String fullName = currentUser?.fullName ?? "Unknown user";
-    String email = currentUser?.email ?? "email";
-    String? imgUrl = currentUser?.imagePath;
+  Widget build(final BuildContext context) {
+    final String fullName = currentUser?.fullName ?? "Unknown user";
+    final String email = currentUser?.email ?? "email";
+    final String? imgUrl = currentUser?.imagePath;
     final ImageProvider currentImg;
 
     if (imgUrl != null) {
@@ -162,7 +156,7 @@ class _DrawerHeaderWithUserInfoState extends State<DrawerHeaderWithUserInfo> {
                 onTap: () {
                   // Navigate to the MyProfile screen when the profile picture is tapped
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => MyProfile()));
+                      MaterialPageRoute(builder: (final context) => MyProfile()));
                 },
               ),
               const SizedBox(
@@ -181,10 +175,10 @@ class _DrawerHeaderWithUserInfoState extends State<DrawerHeaderWithUserInfo> {
   }
 }
 
-Future<bool> showLogOutDialog(BuildContext context) {
+Future<bool> showLogOutDialog(final BuildContext context) {
   return showDialog<bool>(
     context: context,
-    builder: (context) {
+    builder: (final context) {
       return AlertDialog(
         title: const Text("Log out"),
         content: const Text("Are you sure you want to log out?"),
@@ -204,7 +198,7 @@ Future<bool> showLogOutDialog(BuildContext context) {
         ],
       );
     },
-  ).then((value) => value ?? false);
+  ).then((final value) => value ?? false);
 }
 /*      decoration: BoxDecoration(
         color: Colors.blue,

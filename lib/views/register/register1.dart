@@ -3,11 +3,13 @@ import "package:babylon_app/services/auth/auth_service.dart";
 import "package:babylon_app/services/user/user_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
-import "register2.dart";
+import "package:babylon_app/views/register/register2.dart";
 
 class CreateAccountPage extends StatelessWidget {
+  const CreateAccountPage({super.key});
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Create a New Account"), // Title of the AppBar.
@@ -22,6 +24,8 @@ class CreateAccountPage extends StatelessWidget {
 }
 
 class CreateAccountForm extends StatefulWidget {
+  const CreateAccountForm({super.key});
+
   @override
   CreateAccountFormState createState() => CreateAccountFormState();
 }
@@ -78,7 +82,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
     super.dispose();
   }
 
-  Widget _buildTextField({required String labelText, bool isPassword = false, bool hasDatePicker = false}) {
+  Widget _buildTextField({required final String labelText, final bool isPassword = false, final bool hasDatePicker = false}) {
     // Helper method to build text fields with common styling.
     return Padding(
       padding: const EdgeInsets.only(
@@ -95,7 +99,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
           fillColor: Colors.white, // Background color of the text field.
         ),
         obscureText: isPassword, // Hides text input if it"s a password field.
-        validator: (value) {
+        validator: (final value) {
           if (value == null || value.isEmpty) {
             return "Please enter your $labelText"; // Validation message.
           }
@@ -104,7 +108,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
         readOnly: hasDatePicker,
         onTap: () async {
           if(hasDatePicker){
-            DateTime? pickedDate = await showDatePicker(
+            final DateTime? pickedDate = await showDatePicker(
               context: context, initialDate: DateTime.now(),
               firstDate: DateTime(1901),
               lastDate: DateTime(2101)
@@ -123,7 +127,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return SingleChildScrollView(
       child: Form(
         key: _formKey, // Associates the form with the form key.
@@ -166,7 +170,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                   final fullName = _name.text;
                   try {
                     AuthValidator.validateRegisterForm(_name.text, _email.text, _password.text, _rePassword.text, _dateOfBirth.text);
-                    User? currentUser =
+                    final User? currentUser =
                       await AuthService.registerUsingEmailPassword(
                           name: fullName,
                           email: _email.text,
@@ -175,7 +179,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                       await UserService.fillUser(user: currentUser, userInfo: userInfo);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => RegisterPage2()),
+                        MaterialPageRoute(builder: (final context) => RegisterPage2()),
                       );
                     }
                   } catch (e) {

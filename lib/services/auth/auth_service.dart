@@ -1,6 +1,3 @@
-import "dart:ffi";
-
-import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/services/user/user_service.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -8,14 +5,14 @@ import "package:google_sign_in/google_sign_in.dart";
 
 class AuthService {
   static Future<User?> registerUsingEmailPassword({
-    required String name,
-    required String email,
-    required String password,
+    required final String name,
+    required final String email,
+    required final String password,
   }) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
+    final FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      final UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -26,19 +23,19 @@ class AuthService {
       UserService.setUpConnectedBabylonUser(user!.uid); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user!.uid);
     } catch (e) {
       print(e);
-      throw (e);
+      rethrow;
     }
     return user;
   }
 
   static Future<User?> signInUsingEmailPassword({
-    required String email,
-    required String password,
+    required final String email,
+    required final String password,
   }) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
+    final FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
     try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      final UserCredential userCredential = await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -46,7 +43,7 @@ class AuthService {
       UserService.setUpConnectedBabylonUser(user!.uid); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user!.uid);
     } catch (e) {
       print(e);
-      throw (e);
+      rethrow;
     }
     return user;
   }
@@ -65,7 +62,7 @@ class AuthService {
       idToken: googleAuth?.idToken,
     );
 
-    var signedIdUser = await FirebaseAuth.instance.signInWithCredential(credential);
+    final UserCredential signedIdUser = await FirebaseAuth.instance.signInWithCredential(credential);
 
     await hasCurrentUserData();
     UserService.setUpConnectedBabylonUser(signedIdUser.user!.uid); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: signedIdUser.user!.uid);
@@ -75,7 +72,7 @@ class AuthService {
 
   static Future<void> hasCurrentUserData() async{
     try {
-      User currUser = FirebaseAuth.instance.currentUser!;
+      final User currUser = FirebaseAuth.instance.currentUser!;
       final db = FirebaseFirestore.instance;
       final docUser = await db.collection("users").doc(currUser.uid).get();
       final userData = docUser.data();
@@ -91,7 +88,7 @@ class AuthService {
         await db.collection("users").doc(currUser.uid).set(userNewData);
       }
     } catch (e) {
-      throw(e);
+      rethrow;
     }
   } 
 }

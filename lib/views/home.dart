@@ -14,6 +14,8 @@ import "package:flutter/material.dart";
 
 // HomePage with a custom user profile section above the AppBar, a Drawer, and PageView for content navigation
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -42,7 +44,7 @@ class _HomePageState extends State<HomePage> {
     // Update the BabylonUser data with the current user
   }
 
-  void _onItemTapped(int index) {
+  void _onItemTapped(final int index) {
     if (index == 4) {
       // If it"s the last index, open the Drawer
       _scaffoldKey.currentState?.openEndDrawer();
@@ -54,7 +56,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       key: _scaffoldKey, // Use the global key here
       appBar: _selectedIndex == 0 ? AppBar(
@@ -67,7 +69,7 @@ class _HomePageState extends State<HomePage> {
       ) : null, // Only show AppBar when HomeScreen is displayed
       body: _screens[_selectedIndex], // Display the selected screen
       endDrawer: PublicDrawer(
-        onItemSelected: (index) {
+        onItemSelected: (final index) {
           setState(() {
             _selectedIndex = index; // Actualiza el índice seleccionado
           });
@@ -99,7 +101,7 @@ class _HomePageState extends State<HomePage> {
 // Each screen will have its own layout and widgets
 
 class HomeScreen extends StatefulWidget{
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   HomeScreenState createState() => HomeScreenState();
@@ -123,8 +125,8 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context){
-    timer = Timer.periodic(Duration(seconds: 3), (Timer t) => 
+  Widget build(final BuildContext context){
+    timer = Timer.periodic(Duration(seconds: 3), (final Timer t) => 
       setState(() {
         user = ConnectedBabylonUser();
       })
@@ -137,7 +139,7 @@ class HomeScreenState extends State<HomeScreen> {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.green, Colors.white],
+                colors: const [Colors.green, Colors.white],
               ),
             ),
             child: Column(
@@ -169,7 +171,7 @@ class HomeScreenState extends State<HomeScreen> {
     }
   }
 
-    Widget _buildUpcomingEventsSection(BuildContext context) {
+    Widget _buildUpcomingEventsSection(final BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -207,7 +209,7 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildForumsParticipationSection(BuildContext context) {
+  Widget _buildForumsParticipationSection(final BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Column(
@@ -242,7 +244,7 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildForumCard(String title, String subtitle, bool isOpen) {
+  Widget _buildForumCard(final String title, final String subtitle, final bool isOpen) {
     return Expanded(
       // Using Expanded to fill the available space in the Row
       child: Card(
@@ -261,11 +263,11 @@ class HomeScreenState extends State<HomeScreen> {
                   onPressed: () {
                     // Your button tap action here
                   },
-                  child: const Text("Open"),
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white, // Text Color
                     backgroundColor: Color(0xFF006400),
                   ),
+                  child: const Text("Open"),
                 ),
             ],
           ),
@@ -274,7 +276,7 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildChatsSection(BuildContext context) {
+  Widget _buildChatsSection(final BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Column(
@@ -295,11 +297,11 @@ class HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 // Open chat action
               },
-              child: const Text("Open"),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white, // Text Color
                 backgroundColor: Color(0xFF006400), // Button Background Color
               ),
+              child: const Text("Open"),
             ),
           ),
           ListTile(
@@ -313,11 +315,11 @@ class HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 // Open chat action
               },
-              child: const Text("Open"),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white, // Text Color
                 backgroundColor: Color(0xFF006400), // Button Background Color
               ),
+              child: const Text("Open"),
             ),
           ),
           ListTile(
@@ -331,11 +333,11 @@ class HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 // Open chat action
               },
-              child: const Text("Open"),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white, // Text Color
                 backgroundColor: Color(0xFF006400), // Button Background Color
               ),
+              child: const Text("Open"),
             ),
           ),
           ListTile(
@@ -349,11 +351,11 @@ class HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 // Open chat action
               },
-              child: const Text("Open"),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white, // Text Color
                 backgroundColor: Color(0xFF006400), // Button Background Color
               ),
+              child: const Text("Open"),
             ),
           ),
           ListTile(
@@ -367,11 +369,11 @@ class HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 // Open chat action
               },
-              child: const Text("Open"),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white, // Text Color
                 backgroundColor: Color(0xFF006400), // Button Background Color
               ),
+              child: const Text("Open"),
             ),
           ),
           ListTile(
@@ -385,11 +387,11 @@ class HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 // Open chat action
               },
-              child: const Text("Open"),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white, // Text Color
                 backgroundColor: Color(0xFF006400), // Button Background Color
               ),
+              child: const Text("Open"),
             ),
           ),
           // You can repeat the ListTile for more chats or create a method to generate them based on data

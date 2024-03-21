@@ -1,11 +1,13 @@
 import "package:babylon_app/services/auth/auth_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
-import "../home.dart"; // Asegúrate de que home.dart esté en el directorio correcto y tenga una clase HomePage
+import "package:babylon_app/views/home.dart"; // Asegúrate de que home.dart esté en el directorio correcto y tenga una clase HomePage
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Login Page"), // Title of the AppBar.
@@ -19,12 +21,13 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
+
   @override
   LoginFormState createState() => LoginFormState();
 }
 
 class LoginFormState extends State<LoginForm> {
-  final _formKey = GlobalKey<FormState>(); // Key for identifying the form.
 
   late final TextEditingController _email;
   late final TextEditingController _password;
@@ -57,7 +60,7 @@ class LoginFormState extends State<LoginForm> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -113,14 +116,15 @@ class LoginFormState extends State<LoginForm> {
           ),
           onPressed: () async {
             try {
-              User? loginUser = await AuthService.signInUsingEmailPassword(
+              final User? loginUser = await AuthService.signInUsingEmailPassword(
                   email: _email.text, password: _password.text);
-              if (loginUser is User)
+              if (loginUser is User) {
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                  (route) => false,
+                  MaterialPageRoute(builder: (final context) => HomePage()),
+                  (final route) => false,
                 );
+              }
             } catch (e) {
               setState(() {
                 _error = (e as FirebaseAuthException).message;

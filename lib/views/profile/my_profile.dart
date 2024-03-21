@@ -6,7 +6,7 @@ import "package:babylon_app/services/user/user_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:image_picker/image_picker.dart";
-import "../home.dart"; // Make sure this import is correct for your HomeScreen widget
+import "package:babylon_app/views/home.dart"; // Make sure this import is correct for your HomeScreen widget
 
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
@@ -25,8 +25,6 @@ class _MyProfileState extends State<MyProfile> {
   late final TextEditingController _about;
   File? _fileImage;
 
-  String? _error;
-
   @override
   void initState() {
     _fullname =
@@ -34,7 +32,6 @@ class _MyProfileState extends State<MyProfile> {
     _dateOfBirth = TextEditingController(text: ConnectedBabylonUser().dateOfBirth);
     _country = TextEditingController(text: ConnectedBabylonUser().originCountry);
     _about = TextEditingController(text: ConnectedBabylonUser().about);
-    _error = "";
     super.initState();
   }
 
@@ -44,12 +41,11 @@ class _MyProfileState extends State<MyProfile> {
     _dateOfBirth.dispose();
     _country.dispose();
     _about.dispose();
-    _error = "";
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Stack(
       children: [
         Scaffold(
@@ -62,8 +58,8 @@ class _MyProfileState extends State<MyProfile> {
                 formState == "unsaved" ?
                 _showBackPopup() : 
                   Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => HomePage())
-                  );;
+                    context, MaterialPageRoute(builder: (final context) => HomePage())
+                  );
               },
             ),
           ),
@@ -152,7 +148,6 @@ class _MyProfileState extends State<MyProfile> {
         foregroundColor: Colors.white,
         padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
       ),
-      child: Text(saveBtnText),
       onPressed: formState == "unsaved" ? () async {
         setState(() {
           formState = "saving";
@@ -170,11 +165,12 @@ class _MyProfileState extends State<MyProfile> {
           formState = "saved";
           user = ConnectedBabylonUser();
         });
-      } : null
+      } : null,
+      child: Text(saveBtnText)
     );
   }
 
-  Widget buildProfile(BuildContext context) {
+  Widget buildProfile(final BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
     return Center(
       child: Stack(
@@ -190,7 +186,7 @@ class _MyProfileState extends State<MyProfile> {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
+      builder: (final BuildContext context) {
         return AlertDialog(
           title: const Text("AlertDialog Title"),
           content: const SingleChildScrollView(
@@ -206,7 +202,7 @@ class _MyProfileState extends State<MyProfile> {
               child: const Text("Leave"),
               onPressed: () {
                 Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => HomePage())
+                  context, MaterialPageRoute(builder: (final context) => HomePage())
                 );
               },
             ),
@@ -258,7 +254,7 @@ class _MyProfileState extends State<MyProfile> {
     );
   }
 
-  Widget buildName(BabylonUser user) => Column(
+  Widget buildName(final BabylonUser user) => Column(
         children: [
           Text(
             user.fullName,
@@ -290,7 +286,7 @@ class _MyProfileState extends State<MyProfile> {
     onPressed: () => activateButton()
   );
 
-  Widget buildAbout(BabylonUser user) => Container(
+  Widget buildAbout(final BabylonUser user) => Container(
         padding: EdgeInsets.symmetric(horizontal: 48),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -309,12 +305,12 @@ class _MyProfileState extends State<MyProfile> {
       );
 
   Widget infoField(
-      {required IconData icon,
-      required String hintText,
-      required String labelText,
-      required TextEditingController controller,
-      required Function onClicked,
-      bool hasDatePicker = false}) {
+      {required final IconData icon,
+      required final String hintText,
+      required final String labelText,
+      required final TextEditingController controller,
+      required final Function onClicked,
+      final bool hasDatePicker = false}) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
       child: Center(
@@ -334,7 +330,7 @@ class _MyProfileState extends State<MyProfile> {
                       onTap: () async {
                         activateButton();
                         if(hasDatePicker){
-                          DateTime? pickedDate = await showDatePicker(
+                          final DateTime? pickedDate = await showDatePicker(
                             context: context, initialDate: DateTime.now(),
                             firstDate: DateTime(1901),
                             lastDate: DateTime(2101)
@@ -395,7 +391,7 @@ class _MyProfileState extends State<MyProfile> {
     );
   }
 
-  Widget buildEditIcon1(Color color) => buildCircle(
+  Widget buildEditIcon1(final Color color) => buildCircle(
         color: Colors.white,
         all: 3,
         child: buildCircle(
@@ -404,7 +400,7 @@ class _MyProfileState extends State<MyProfile> {
           child: Icon(Icons.edit, color: Colors.white, size: 12),
         ),
       );
-  Widget buildEditIcon(Color color, {required onClicked}) => ClipOval(
+  Widget buildEditIcon(final Color color, {required final onClicked}) => ClipOval(
         child: Material(
           color: Colors.white,
           child: Ink.image(
@@ -418,9 +414,9 @@ class _MyProfileState extends State<MyProfile> {
       );
 
   Widget buildCircle({
-    required Widget child,
-    required double all,
-    required Color color,
+    required final Widget child,
+    required final double all,
+    required final Color color,
   }) =>
       ClipOval(
         child: Container(
@@ -437,8 +433,10 @@ class _MyProfileState extends State<MyProfile> {
 }
 
 class NumbersWidget extends StatelessWidget {
+  const NumbersWidget({super.key});
+
   @override
-  Widget build(BuildContext context) => Row(
+  Widget build(final BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           buildButton(context, "admin"),
@@ -456,7 +454,7 @@ class NumbersWidget extends StatelessWidget {
             ),
       );
 
-  Widget buildButton(BuildContext context, String text) => SizedBox(
+  Widget buildButton(final BuildContext context, final String text) => SizedBox(
         width: 120,
         child: MaterialButton(
           shape: StadiumBorder(),

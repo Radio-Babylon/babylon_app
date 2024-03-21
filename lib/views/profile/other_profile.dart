@@ -26,8 +26,10 @@ class OtherProfile extends StatelessWidget {
     about: "Passionate traveler and photography enthusiast. Love to explore new cultures and meet new people.",
   );
 
+  OtherProfile({super.key});
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("User Profile"),
@@ -41,7 +43,7 @@ class OtherProfile extends StatelessWidget {
               // Tapping on the profile picture opens the FullScreenImage view.
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => FullScreenImage(imagePath: user.profilePic, name: user.name)),
+                MaterialPageRoute(builder: (final _) => FullScreenImage(imagePath: user.profilePic, name: user.name)),
 
               ),
               child: CircleAvatar(
@@ -64,7 +66,7 @@ class OtherProfile extends StatelessWidget {
                   icon: Icon(Icons.person_add),
                   label: Text("Add Friend"),
                   onPressed: () {
-                    // TODO: Implement functionality to send friend request.
+                    // TODO(EnzoL): Implement functionality to send friend request.
                   },
                   style: ElevatedButton.styleFrom( foregroundColor:Colors.white, backgroundColor: Colors.blue),
                 ),
@@ -73,7 +75,7 @@ class OtherProfile extends StatelessWidget {
                   icon: Icon(Icons.chat),
                   label: Text("Chat"),
                   onPressed: () {
-                    // TODO: Implement functionality to start chatting.
+                    // TODO(EnzoL): Implement functionality to start chatting.
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white, backgroundColor: Colors.green,),

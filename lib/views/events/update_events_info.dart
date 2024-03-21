@@ -1,6 +1,6 @@
 import "dart:io";
 import "package:babylon_app/models/event.dart";
-import "package:babylon_app/services/event/eventExceptions.dart";
+import "package:babylon_app/services/event/event_exceptions.dart";
 import "package:babylon_app/services/event/event_service.dart";
 import "package:babylon_app/views/events/events.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -12,7 +12,8 @@ import "package:image_picker/image_picker.dart";
 class UpdateEventScreen extends StatefulWidget {
   final Event event;
   @override
-  const UpdateEventScreen({Key? key, required this.event}) : super(key: key);
+  const UpdateEventScreen({super.key, required this.event});
+  @override
   _UpdateEventScreenState createState() => _UpdateEventScreenState(event);
 }
 
@@ -43,14 +44,14 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
     @override
   void initState(){
     super.initState();
-    this._descriptionController.text = event.fullDescription!;
-    this._descriptionShortController.text = event.shortDescription!;
-    this._nameController.text = event.title!;
-    this._placeController.text = event.place!;
-    this._image = null;
-    this._eventImgURL = event.pictureURL!;
-    this._selectedTime = TimeOfDay(hour: event.date!.hour, minute: event.date!.minute)!;
-    this._selectedDate = event.date!;
+    _descriptionController.text = event.fullDescription!;
+    _descriptionShortController.text = event.shortDescription!;
+    _nameController.text = event.title!;
+    _placeController.text = event.place!;
+    _image = null;
+    _eventImgURL = event.pictureURL!;
+    _selectedTime = TimeOfDay(hour: event.date!.hour, minute: event.date!.minute);
+    _selectedDate = event.date!;
 
   }
 
@@ -65,7 +66,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
   }
 
   // Function to pick date and time
-  Future<void> _pickDateTime(BuildContext context) async {
+  Future<void> _pickDateTime(final BuildContext context) async {
     final DateTime? date = await showDatePicker(
       context: context,
       initialDate: _selectedDate ?? DateTime.now(),
@@ -88,10 +89,10 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
 
   // Helper method to build text fields with consistent styling
   Widget _buildTextField({
-    required TextEditingController controller,
-    required String labelText,
-    bool readOnly = false,
-    GestureTapCallback? onTap,
+    required final TextEditingController controller,
+    required final String labelText,
+    final bool readOnly = false,
+    final GestureTapCallback? onTap,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -112,13 +113,13 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
   }
 
   // Helper method to format date and time into a user-friendly string
-  String _formatDateTime(DateTime? date, TimeOfDay? time) {
+  String _formatDateTime(final DateTime? date, final TimeOfDay? time) {
     if (date == null || time == null) return "Tap to select date & time";
     return "${MaterialLocalizations.of(context).formatFullDate(date)} at ${time.format(context)}";
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Update Event"),
@@ -194,26 +195,27 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                         place: _placeController.text);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const EventsScreen()),
+                        MaterialPageRoute(builder: (final context) => const EventsScreen()),
                       );
                     } catch (e) {
-                      if(e is FirebaseAuthException)
-                      setState(() {
+                      if(e is FirebaseAuthException) {
+                        setState(() {
                         _error = e.message; 
                       });
-                    else
-                      setState(() {
+                      } else {
+                        setState(() {
                         _error = e.toString(); 
                       });
+                      }
                     }
                   },
-                  child: Text("UPDATE"),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  child: Text("UPDATE"),
                 ),
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text("CANCEL"),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  child: Text("CANCEL"),
                 ),
               ],
             ),

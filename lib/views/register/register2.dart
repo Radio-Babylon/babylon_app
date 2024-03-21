@@ -6,6 +6,8 @@ import "dart:io";
 import "package:image_picker/image_picker.dart";
 
 class RegisterPage2 extends StatefulWidget {
+  const RegisterPage2({super.key});
+
   @override
   _RegisterPage2State createState() => _RegisterPage2State();
 }
@@ -26,7 +28,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Photo Profile"),
@@ -98,8 +100,8 @@ class _RegisterPage2State extends State<RegisterPage2> {
 
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                  (route) => false,
+                  MaterialPageRoute(builder: (final context) => HomePage()),
+                  (final route) => false,
                 );
               },
               child: const Text(
@@ -125,16 +127,16 @@ class _RegisterPage2State extends State<RegisterPage2> {
 
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                    (route) => false,
+                    MaterialPageRoute(builder: (final context) => HomePage()),
+                    (final route) => false,
                   );
                 },
-                child: const Text("Skip"),
                 style: OutlinedButton.styleFrom(
                   minimumSize: Size(365, 60), // Set the button size
                   textStyle: const TextStyle(fontSize: 24, fontFamily: "Lato"),
                   side: const BorderSide(width: 2.0, color: Colors.grey),
                 ),
+                child: const Text("Skip"),
               ),
             ),
           ],

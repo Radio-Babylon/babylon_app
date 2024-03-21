@@ -1,5 +1,5 @@
 import "dart:io";
-import "package:babylon_app/services/event/eventExceptions.dart";
+import "package:babylon_app/services/event/event_exceptions.dart";
 import "package:babylon_app/services/event/event_service.dart";
 import "package:babylon_app/views/events/events.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -9,6 +9,8 @@ import "package:image_picker/image_picker.dart";
 
 // This screen allows users to create a new event, complete with an image, name, date, time, short description, and detailed description.
 class CreateEventScreen extends StatefulWidget {
+  const CreateEventScreen({super.key});
+
   @override
   _CreateEventScreenState createState() => _CreateEventScreenState();
 }
@@ -44,7 +46,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   }
 
   // Function to pick date and time
-  Future<void> _pickDateTime(BuildContext context) async {
+  Future<void> _pickDateTime(final BuildContext context) async {
     final DateTime? date = await showDatePicker(
       context: context,
       initialDate: _selectedDate ?? DateTime.now(),
@@ -67,10 +69,10 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
 
   // Helper method to build text fields with consistent styling
   Widget _buildTextField({
-    required TextEditingController controller,
-    required String labelText,
-    bool readOnly = false,
-    GestureTapCallback? onTap,
+    required final TextEditingController controller,
+    required final String labelText,
+    final bool readOnly = false,
+    final GestureTapCallback? onTap,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -91,13 +93,13 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   }
 
   // Helper method to format date and time into a user-friendly string
-  String _formatDateTime(DateTime? date, TimeOfDay? time) {
+  String _formatDateTime(final DateTime? date, final TimeOfDay? time) {
     if (date == null || time == null) return "Tap to select date & time";
     return "${MaterialLocalizations.of(context).formatFullDate(date)} at ${time.format(context)}";
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Create Event"),
@@ -109,12 +111,12 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
           children: [
             _buildTextField(
               controller: _nameController,
-              labelText: '* Event Name',
+              labelText: "* Event Name",
             ),
 
             _buildTextField(
               controller: TextEditingController(text: _formatDateTime(_selectedDate, _selectedTime)),
-              labelText: '* Date & Time',
+              labelText: "* Date & Time",
               readOnly: true,
               onTap: () => _pickDateTime(context),
             ),
@@ -137,7 +139,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
             SizedBox(height: 8.0), // Add spacing between the elements
             _buildTextField(
               controller: _placeController,
-              labelText: '* Location',
+              labelText: "* Location",
             ),
             _buildTextField(
               controller: _descriptionShortController,
@@ -170,26 +172,27 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                         place: _placeController.text);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const EventsScreen()),
+                        MaterialPageRoute(builder: (final context) => const EventsScreen()),
                       );
                     } catch (e) {
-                      if(e is FirebaseAuthException)
-                      setState(() {
+                      if(e is FirebaseAuthException) {
+                        setState(() {
                         _error = e.message; 
                       });
-                    else
-                      setState(() {
+                      } else {
+                        setState(() {
                         _error = e.toString(); 
                       });
+                      }
                     }
                   },
-                  child: Text("CREATE"),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  child: Text("CREATE"),
                 ),
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text("CANCEL"),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  child: Text("CANCEL"),
                 ),
               ],
             ),

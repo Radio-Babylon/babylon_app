@@ -2,14 +2,13 @@ import "package:babylon_app/models/post.dart";
 import "package:babylon_app/services/wpGraphQL/wp_graphql_service.dart";
 import "package:babylon_app/utils/html_strip.dart";
 import "package:babylon_app/utils/launch_url.dart";
-import "package:babylon_app/views/navigation_menu.dart";
 import "package:flutter/material.dart";
 
 class NewsScreen extends StatelessWidget {
   const NewsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return const MaterialApp(
       home: FutureBuilderNews(),
     );
@@ -27,7 +26,7 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
   final Future<List<Post>> _posts = WpGraphQLService.getNewPosts();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Row(
@@ -49,7 +48,7 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
           child: FutureBuilder<List<Post>>(
             future: _posts, // a previously-obtained Future<String> or null
             builder:
-                (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
+                (final BuildContext context, final AsyncSnapshot<List<Post>> snapshot) {
               List<Widget> children;
               if (snapshot.hasData) {
                 children = <Widget>[
@@ -75,7 +74,7 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
                               child: SizedBox.fromSize(
                                 size: Size.fromRadius(50), // Image radius
                                 child: Image.network(aPost.featuredImageURL!,
-                                    fit: BoxFit.cover, errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                    fit: BoxFit.cover, errorBuilder: (final BuildContext context, final Object exception, final StackTrace? stackTrace) {
                                       // Here you can return the default image widget
                                       return Image.asset("assets/images/newsphoto.png", fit: BoxFit.cover);
                                     }),
@@ -100,13 +99,13 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
                                 heightFactor: 1.4,
                                 child: TextButton(
                                   onPressed: () => goToUrl(
-                                      "https://babylonradio.com/" + aPost.url!),
-                                  child:
-                                      Text("READ", textAlign: TextAlign.right),
+                                      "https://babylonradio.com/${aPost.url!}"),
                                   style: TextButton.styleFrom(
                                       foregroundColor: Colors.white,
                                       elevation: 2,
                                       backgroundColor: Color(0xFF006400)),
+                                  child:
+                                      Text("READ", textAlign: TextAlign.right),
                                 ),
                               )
                             ]),

@@ -1,13 +1,13 @@
-import "package:babylon_app/views/navigation_menu.dart";
 import "package:flutter/material.dart";
 import "package:url_launcher/url_launcher.dart";
 
 class RadioScreen extends StatelessWidget {
+  const RadioScreen({super.key});
   // The URL you want to open
-  final Uri _url = Uri.parse("https://www.mixcloud.com/live/BabylonRadio/");
+  static final Uri _url = Uri.parse("https://www.mixcloud.com/live/BabylonRadio/");
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
 
       appBar: AppBar(

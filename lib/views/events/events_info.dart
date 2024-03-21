@@ -10,7 +10,8 @@ import "package:intl/intl.dart";
 
 class EventInfoScreen extends StatefulWidget {
   final Event event;
-  const EventInfoScreen({final Key? key, required this.event}) : super(key: key);
+  const EventInfoScreen({super.key, required this.event});
+  @override
   EventInfoState createState() => EventInfoState(event);
 }
 
@@ -181,7 +182,7 @@ class EventInfoState extends State<EventInfoScreen> {
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
               "People Attending",
-              style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 18), // Larger text for the section title.
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 18), // Larger text for the section title.
             ),
           ),
           // Horizontally scrollable list of avatars with an overlap effect.
@@ -304,12 +305,11 @@ class EventInfoState extends State<EventInfoScreen> {
     );
   }
 
-  Widget _buildEditButton(BuildContext context){
+  Widget _buildEditButton(final BuildContext context){
     return ElevatedButton(
-      child: Text( "Edit my event", style: TextStyle(fontSize: 18)),
       onPressed: () async{
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => UpdateEventScreen(event: event,))
+          MaterialPageRoute(builder: (final context) => UpdateEventScreen(event: event,))
         );
       },
       style: ElevatedButton.styleFrom(
@@ -317,6 +317,7 @@ class EventInfoState extends State<EventInfoScreen> {
         padding: EdgeInsets.symmetric(
           horizontal: 32, vertical: 12),
       ),
+      child: Text( "Edit my event", style: TextStyle(fontSize: 18)),
     );
   }
 }

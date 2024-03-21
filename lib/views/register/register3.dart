@@ -4,6 +4,8 @@ import "package:flutter/material.dart";
 import "package:babylon_app/services/user/user_service.dart";
 
 class RegisterPage3 extends StatefulWidget {
+  const RegisterPage3({super.key});
+
   @override
   _RegisterPage3State createState() => _RegisterPage3State();
 }
@@ -97,7 +99,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Final Register"),
@@ -156,7 +158,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
 
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
+                  MaterialPageRoute(builder: (final context) => HomePage()),
                 );
               },
               child: const Text(
@@ -175,10 +177,10 @@ class _RegisterPage3State extends State<RegisterPage3> {
   }
 
   // This function creates the multi-selection dialog for languages.
-  void _showMultiSelectLanguages(BuildContext context) {
+  void _showMultiSelectLanguages(final BuildContext context) {
     showDialog(
       context: context,
-      builder: (ctx) {
+      builder: (final ctx) {
         return AlertDialog(
           backgroundColor: Colors.white,
           title: Text("Select Languages"),
@@ -187,11 +189,11 @@ class _RegisterPage3State extends State<RegisterPage3> {
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: languages.length,
-              itemBuilder: (ctx, index) {
+              itemBuilder: (final ctx, final index) {
                 return CheckboxListTile(
                   title: Text(languages[index]),
                   value: selectedLanguages.contains(languages[index]),
-                  onChanged: (bool? value) {
+                  onChanged: (final bool? value) {
                     setState(() {
                       if (value == true) {
                         selectedLanguages.add(languages[index]);
@@ -219,8 +221,8 @@ class _RegisterPage3State extends State<RegisterPage3> {
     );
   }
 
-  Widget _buildCheckboxGridSection(String title, Map<String, bool> options) {
-    int crossAxisCount = 2; // Number of columns in the grid
+  Widget _buildCheckboxGridSection(final String title, final Map<String, bool> options) {
+    const int crossAxisCount = 2; // Number of columns in the grid
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,12 +253,12 @@ class _RegisterPage3State extends State<RegisterPage3> {
               childAspectRatio: 4 / 1, // Adjust as needed for your design
             ),
             itemCount: options.length,
-            itemBuilder: (context, index) {
-              String key = options.keys.elementAt(index);
+            itemBuilder: (final context, final index) {
+              final String key = options.keys.elementAt(index);
               return CheckboxListTile(
                 title: Text(key),
                 value: options[key],
-                onChanged: (bool? value) {
+                onChanged: (final bool? value) {
                   setState(() {
                     options[key] = value!;
                   });

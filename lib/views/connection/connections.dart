@@ -1,22 +1,21 @@
 import "package:flutter/material.dart";
-import "package:babylon_app/views/navigation_menu.dart";
 import "package:babylon_app/views/profile/other_profile.dart";
 import 'package:babylon_app/views/chat/chat.dart';
 import 'package:babylon_app/views/chat/groupchat.dart';
 
-// Define the Person class to hold necessary information about a person.
-class Person {
+// Define the _Person class to hold necessary information about a person.
+class _Person {
   final String name;
   final String bio;
   final String interests;
   final String languages;
 
-  Person(this.name, this.bio, this.interests, this.languages);
+  _Person(this.name, this.bio, this.interests, this.languages);
 }
 
 // Define ConnectionsScreen as a StatefulWidget to manage dynamic content.
 class ConnectionsScreen extends StatefulWidget {
-  const ConnectionsScreen({Key? key}) : super(key: key);
+  const ConnectionsScreen({super.key});
 
   @override
   State<ConnectionsScreen> createState() => _ConnectionsScreenState();
@@ -26,7 +25,7 @@ class ConnectionsScreen extends StatefulWidget {
 class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   TextEditingController searchController = TextEditingController(); // For search functionality.
-  List<Person> searchResults = []; // Holds the search results.
+  List<_Person> searchResults = []; // Holds the search results.
 
   @override
   void initState() {
@@ -42,17 +41,17 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
   }
 
   // Placeholder for search logic, currently updates searchResults based on query.
-  void _search(String query) {
+  void _search(final String query) {
     setState(() {
-      searchResults = List.generate(15, (index) => Person("User $index", "Bio $index", "Interests $index", "Languages $index"))
-          .where((person) => person.name.toLowerCase().contains(query.toLowerCase()))
+      searchResults = List.generate(15, (final index) => _Person("User $index", "Bio $index", "Interests $index", "Languages $index"))
+          .where((final person) => person.name.toLowerCase().contains(query.toLowerCase()))
           .toList();
 
     });
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(final BuildContext context){
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -125,14 +124,14 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
         children: [
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text("Friend Requests", style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold) ),
+            child: Text("Friend Requests", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold) ),
           ),
           Container(
             height: 200, // Fixed height for the horizontal list of friend request cards.
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 5, // Example: Five friend requests.
-              itemBuilder: (context, index) {
+              itemBuilder: (final context, final index) {
                 // Each item is a profile card with image, name, and action buttons for friend requests.
                 return Container(
                   width: 240, // Adjusted width for each friend request card to accommodate horizontal buttons.
@@ -151,7 +150,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text("Person $index", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+                          child: Text("_Person $index", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
                         ),
                         // Horizontal buttons for "View Profile", "Accept", and "Decline" actions.
                         Row(
@@ -161,7 +160,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                               icon: Icon(Icons.remove_red_eye_outlined, color: Colors.blue),
                               onPressed: () {   Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => OtherProfile()),
+                                MaterialPageRoute(builder: (final context) => OtherProfile()),
                               );
                               },
                             ),
@@ -201,7 +200,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
 
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text("New Users!", style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold)),
+            child: Text("New Users!", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
           ),
           Container(
             height: 200, // Fixed height for the horizontal list of profile cards.
@@ -209,7 +208,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
 
               scrollDirection: Axis.horizontal,
               itemCount: 5, // Example: Five new user profiles.
-              itemBuilder: (context, index) {
+              itemBuilder: (final context, final index) {
                 // Each item is a profile card with image, name, and action buttons for new users.
                 return Container(
                   width: 160, // Fixed width for each profile card.
@@ -235,7 +234,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                                     icon: Icon(Icons.remove_red_eye_outlined, color: Colors.blue),
                                     onPressed: () {   Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => OtherProfile()),
+                                      MaterialPageRoute(builder: (final context) => OtherProfile()),
                                     );
                                     },
                                   ),
@@ -278,13 +277,13 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
         children: [
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text("Chats", style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold)),
+            child: Text("Chats", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
           ),
           ListView.builder(
             physics: NeverScrollableScrollPhysics(), // Disables scrolling within ListView.
             shrinkWrap: true, // Allows ListView to occupy space only for its children.
             itemCount: 5, // Example: Five group chats.
-            itemBuilder: (context, index) {
+            itemBuilder: (final context, final index) {
               // Each item represents a group chat with title, the last message preview, and a button to open the chat.
               return ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
@@ -320,13 +319,13 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
         children: [
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text("Group Chats", style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold)),
+            child: Text("Group Chats", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
           ),
           ListView.builder(
             physics: NeverScrollableScrollPhysics(), // Disables scrolling within ListView.
             shrinkWrap: true, // Allows ListView to occupy space only for its children.
             itemCount: 5, // Example: Five group chats.
-            itemBuilder: (context, index) {
+            itemBuilder: (final context, final index) {
               // Each item represents a group chat with title, member details, and a button to open the chat.
               return ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
@@ -369,7 +368,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
   }
 
   // Helper method to construct a profile card with image, name, and action buttons.
-  Widget _buildProfileCard(String imagePath, String name, List<String> buttonLabels) {
+  Widget buildProfileCard(final String imagePath, final String name, final List<String> buttonLabels) {
     return Card(
       child: Column(
         children: [
@@ -377,7 +376,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
           Text(name), // User name.
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: buttonLabels.map((label) {
+            children: buttonLabels.map((final label) {
               // Check if the label is "View Profile" to add navigation functionality.
               if (label == "View Profile") {
                 return TextButton(
@@ -385,7 +384,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                     // Navigating to OtherProfile when "View Profile" is tapped.
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => OtherProfile()),
+                      MaterialPageRoute(builder: (final context) => OtherProfile()),
                     );
                   },
                   child: Text(label),
@@ -415,10 +414,10 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
         Expanded(
           child: ListView.builder(
             itemCount: searchResults.isEmpty ? 15 : searchResults.length,
-            itemBuilder: (context, index) {
+            itemBuilder: (final context, final index) {
               // Use "searchResults" if not empty; otherwise, generate default list items.
               final person = searchResults.isEmpty
-                  ? Person("User $index", "Bio $index", "Interests $index", "Languages $index")
+                  ? _Person("User $index", "Bio $index", "Interests $index", "Languages $index")
                   : searchResults[index];
 
               // Card widget for each profile with a photo, name, bio, and action buttons.
@@ -475,7 +474,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
     );
   }
 
-  Widget _buttonOption(String title, IconData icon, BuildContext context, Person person) {
+  Widget _buttonOption(final String title, final IconData icon, final BuildContext context, final _Person person) {
     // Function to create a small, styled button for each action.
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.0),

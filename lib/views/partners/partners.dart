@@ -1,6 +1,5 @@
 import "package:babylon_app/models/partner.dart";
 import "package:babylon_app/services/partner/partner_service.dart";
-import "package:babylon_app/views/navigation_menu.dart";
 import "package:flutter/material.dart";
 
 class PartnersScreen extends StatelessWidget {
@@ -139,7 +138,7 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
 
 class PartnerTile extends StatelessWidget {
   final Partner partner;
-  PartnerTile({required this.partner});
+  const PartnerTile({super.key, required this.partner});
 
   // Function to show details in a pop-up
   void _showDetails(final BuildContext context) {

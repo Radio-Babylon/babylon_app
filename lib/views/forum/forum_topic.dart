@@ -1,8 +1,10 @@
 import "package:flutter/material.dart";
 
-class topicForum extends StatelessWidget {
+class TopicForum extends StatelessWidget {
+  const TopicForum({super.key});
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Topic Subject"),

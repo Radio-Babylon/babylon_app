@@ -12,7 +12,7 @@ class Discussion {
 
 // Define the ForumScreen as a StatefulWidget to handle dynamic content.
 class ForumScreen extends StatefulWidget {
-  const ForumScreen({Key? key}) : super(key: key);
+  const ForumScreen({super.key});
 
   @override
   State<ForumScreen> createState() => _ForumScreenState();
@@ -32,8 +32,8 @@ class _ForumScreenState extends State<ForumScreen> {
   TextEditingController searchController = TextEditingController();
 
   // This method is called when the search text changes.
-  void _searchDiscussions(String query) {
-    // TODO: Implement search functionality to filter the discussions list.
+  void _searchDiscussions(final String query) {
+    // TODO(EnzoL): Implement search functionality to filter the discussions list.
   }
 
   @override
@@ -50,7 +50,7 @@ class _ForumScreenState extends State<ForumScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Forum"),
@@ -58,7 +58,7 @@ class _ForumScreenState extends State<ForumScreen> {
           IconButton(
             icon: Icon(Icons.create),
             onPressed: () {
-              // TODO: Implement navigation to the "Create Discussion" screen.
+              // TODO(EnzoL): Implement navigation to the "Create Discussion" screen.
             },
           ),
         ],
@@ -80,7 +80,7 @@ class _ForumScreenState extends State<ForumScreen> {
           Expanded(
             child: ListView.builder(
               itemCount: discussions.length,
-              itemBuilder: (context, index) {
+              itemBuilder: (final context, final index) {
                 return _buildDiscussionCard(discussions[index]);
               },
             ),
@@ -90,14 +90,14 @@ class _ForumScreenState extends State<ForumScreen> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          // TODO: Implement the "Create New Discussion" action.
+          // TODO(EnzoL): Implement the "Create New Discussion" action.
         },
       ),
     );
   }
 
   // Build a card for each discussion.
-  Widget _buildDiscussionCard(Discussion discussion) {
+  Widget _buildDiscussionCard(final Discussion discussion) {
     return Card(
       margin: EdgeInsets.all(8.0),
       child: ListTile(
@@ -109,7 +109,7 @@ class _ForumScreenState extends State<ForumScreen> {
         ),
         trailing: Text("${discussion.timestamp.hour}:${discussion.timestamp.minute}"),
         onTap: () {
-          // TODO: Implement navigation to the "Discussion Details" screen.
+          // TODO(EnzoL): Implement navigation to the "Discussion Details" screen.
         },
       ),
     );
