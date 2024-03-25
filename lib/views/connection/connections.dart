@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
 import "package:babylon_app/views/navigation_menu.dart";
 import "package:babylon_app/views/profile/other_profile.dart";
+import 'package:babylon_app/views/chat/chat.dart';
+import 'package:babylon_app/views/chat/groupchat.dart';
 
 // Define the Person class to hold necessary information about a person.
 class Person {
@@ -70,7 +72,10 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
           tabs: const [
             Tab(text: "MY CONNECTIONS"),
             Tab(text: "EXPLORE THE WORLD"),
-          ],
+          ],        
+          indicatorColor: Colors.white,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.black,
         ),
       ),
       body: TabBarView(
@@ -237,6 +242,10 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                                   IconButton(
                                     icon: Icon(Icons.chat_bubble_outline, color: Colors.blue),
                                     onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => ChatView()),
+                                      );
                                       // Placeholder for "Chat" action.
                                     },
                                   ),
@@ -330,7 +339,11 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                 trailing: IconButton(
                   icon: Icon(Icons.chat_bubble_outline, color: Colors.blue),
                   onPressed: () {
-                    // Placeholder function for opening the group chat.
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (final context) => GroupChatView()),
+                      // Placeholder for 'Chat' action.
+                    );
                   },
                 ),
               );

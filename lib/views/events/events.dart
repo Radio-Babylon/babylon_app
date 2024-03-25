@@ -68,6 +68,9 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
             Tab(text: "UPCOMING EVENTS"),
             Tab(text: "MY EVENTS"),
           ],
+          indicatorColor: Colors.white, // Color of the indicator of selected tab
+          labelColor: Colors.white, // Color of the text
+          unselectedLabelColor: Colors.black, // Color of the text of selected tabs
         ),
       ),
       body: TabBarView(
@@ -211,32 +214,43 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
   Widget _buildEventCard(final Event event) {
     return Card(
       margin: const EdgeInsets.all(10),
-      child: ListTile(
-        leading: event.pictureURL != "" ? Image.network(event.pictureURL!) : Image.asset("assets/images/logoSquare.png"),
-        title: Text(event.title!),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("${DateFormat("dd MMMM yyyy").format(event.date!)} at ${DateFormat("hh:mm aaa").format(event.date!)}"),
-            Text(event.shortDescription!, maxLines: 3, overflow: TextOverflow.ellipsis),
-            Text("Host: ${event.creator!.fullName}"), // Display the host of the event.
-            Text("Location: ${event.place}"), // Display the location of the event.
-          ],
+      child: InkWell(
+        onTap: () async {
+        // La acción se traslada aquí para permitir tocar en cualquier lugar de la tarjeta.
+        await Navigator.push(
+        context,
+        MaterialPageRoute(
+        builder: (context) => EventInfoScreen(event: event),
         ),
-        trailing: IconButton(
-          icon: const Icon(Icons.info_outline),
-          onPressed: () async{
-            // When the info button is pressed, navigate to the EvonPentInfoScreen.
-            await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (final context) => EventInfoScreen(event: event),
-              ),
-            );
-            setState(() {});
-          },
+        );
+        },
+        child: ListTile(
+          leading: event.pictureURL != "" ? Image.network(event.pictureURL!) : Image.asset("assets/images/logoSquare.png"),
+          title: Text(event.title!),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("${DateFormat("dd MMMM yyyy").format(event.date!)} at ${DateFormat("hh:mm aaa").format(event.date!)}"),
+              Text(event.shortDescription!, maxLines: 3, overflow: TextOverflow.ellipsis),
+              Text("Host: ${event.creator!.fullName}"), // Display the host of the event.
+              Text("Location: ${event.place}"), // Display the location of the event.
+            ],
+          ),
+          trailing: IconButton(
+            icon: const Icon(Icons.info_outline),
+            onPressed: () async{
+              // When the info button is pressed, navigate to the EvonPentInfoScreen.
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (final context) => EventInfoScreen(event: event),
+                ),
+              );
+              setState(() {});
+            },
+          ),
         ),
-      ),
+    ),
     );
   }
 }
