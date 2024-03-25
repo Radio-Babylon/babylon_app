@@ -219,7 +219,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
         await Navigator.push(
         context,
         MaterialPageRoute(
-        builder: (context) => EventInfoScreen(event: event),
+        builder: (final context) => EventInfoScreen(event: event),
         ),
         );
         },

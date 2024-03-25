@@ -177,6 +177,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                           password: _password.text);
                     if (currentUser is User) {
                       await UserService.fillUser(user: currentUser, userInfo: userInfo);
+                      if(!context.mounted) return;
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (final context) => RegisterPage2()),

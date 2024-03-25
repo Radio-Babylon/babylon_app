@@ -138,14 +138,15 @@ class LogoScreen extends StatelessWidget {
                     "assets/images/google.png", // Replace with your asset
                     () async {
                       try {
-                        final UserCredential loginUser = await AuthService.signInWithGoogle();
-                        UserService.setUpConnectedBabylonUser(loginUser.user!.uid); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: loginUser.user!.uid);
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (final context) => HomePage()),
-                          (final route) => false,
-                        );
-                                            } catch (e) {
+                          final UserCredential loginUser = await AuthService.signInWithGoogle();
+                          UserService.setUpConnectedBabylonUser(loginUser.user!.uid);
+                          if(!context.mounted) return;
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (final context) => HomePage()),
+                            (final route) => false,
+                          );
+                        } catch (e) {
                           print(e.toString()); 
                         }
                       }, 55)

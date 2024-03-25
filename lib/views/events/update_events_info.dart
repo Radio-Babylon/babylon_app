@@ -75,6 +75,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
     );
     if (date == null) return;
 
+    if(!context.mounted) return;
     final TimeOfDay? time = await showTimePicker(
       context: context,
       initialTime: _selectedTime ?? TimeOfDay.now(),
@@ -193,6 +194,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                         description: _descriptionShortController.text,
                         shortDescription: _descriptionController.text,
                         place: _placeController.text);
+                      if(!context.mounted) return;
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (final context) => const EventsScreen()),

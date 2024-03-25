@@ -119,6 +119,7 @@ class LoginFormState extends State<LoginForm> {
               final User? loginUser = await AuthService.signInUsingEmailPassword(
                   email: _email.text, password: _password.text);
               if (loginUser is User) {
+                if(!context.mounted) return;
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (final context) => HomePage()),

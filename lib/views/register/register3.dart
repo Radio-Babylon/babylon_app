@@ -154,7 +154,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
                       hobbies: interest3);
                 }
 
-                if (!mounted) return;
+                if (!context.mounted) return;
 
                 Navigator.push(
                   context,

@@ -60,8 +60,8 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
                             fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
                   ...snapshot.data!.map(
-                  (aPost) => GestureDetector(
-                  onTap: () => goToUrl("https://babylonradio.com/" + aPost.url!), // Acción al tocar la tarjeta completa.
+                  (final aPost) => GestureDetector(
+                  onTap: () => goToUrl("https://babylonradio.com/${aPost.url!}"), // Acción al tocar la tarjeta completa.
                   child: Card(
                       margin: EdgeInsets.all(16),
                       child: Row(

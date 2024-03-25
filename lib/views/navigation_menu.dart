@@ -139,36 +139,34 @@ class _DrawerHeaderWithUserInfoState extends State<DrawerHeaderWithUserInfo> {
           color: Colors.green,
         ),
         padding: const EdgeInsets.all(0),
-        child: Container(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 10,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              child: CircleAvatar(
+                radius: 52,
+                backgroundImage: currentImg,
+                backgroundColor: Colors
+                    .green, //AssetImage("${currentUser?.photoURL}") //currentUser?.photoURL
               ),
-              GestureDetector(
-                child: CircleAvatar(
-                  radius: 52,
-                  backgroundImage: currentImg,
-                  backgroundColor: Colors
-                      .green, //AssetImage("${currentUser?.photoURL}") //currentUser?.photoURL
-                ),
-                // Wrap the profile section with GestureDetector
-                onTap: () {
-                  // Navigate to the MyProfile screen when the profile picture is tapped
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (final context) => MyProfile()));
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(fullName, style: const TextStyle(fontSize: 18)),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(email, style: const TextStyle(fontSize: 10)),
-            ],
-          ),
+              // Wrap the profile section with GestureDetector
+              onTap: () {
+                // Navigate to the MyProfile screen when the profile picture is tapped
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (final context) => MyProfile()));
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(fullName, style: const TextStyle(fontSize: 18)),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(email, style: const TextStyle(fontSize: 10)),
+          ],
         ),
       ),
     );

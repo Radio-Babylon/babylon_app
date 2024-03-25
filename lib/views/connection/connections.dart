@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:babylon_app/views/profile/other_profile.dart";
-import 'package:babylon_app/views/chat/chat.dart';
-import 'package:babylon_app/views/chat/groupchat.dart';
+import "package:babylon_app/views/chat/chat.dart";
+import "package:babylon_app/views/chat/groupchat.dart";
 
 // Define the _Person class to hold necessary information about a person.
 class _Person {
@@ -243,7 +243,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                                     onPressed: () {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => ChatView()),
+                                        MaterialPageRoute(builder: (final context) => ChatView()),
                                       );
                                       // Placeholder for "Chat" action.
                                     },
