@@ -292,8 +292,7 @@ class _MyProfileState extends State<MyProfile> {
 
     child: Text("Upgrade To PRO"),
     onPressed: () async => {
-      activateButton(),
-      await ChatService.getChatMessages(chatUID: "neEHRgTfZdYEWkPH26Hm")
+      activateButton()
     }
       
   );
