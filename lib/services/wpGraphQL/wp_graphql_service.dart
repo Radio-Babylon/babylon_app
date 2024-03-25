@@ -35,8 +35,8 @@ class WpGraphQLService {
     final dynamic responsePosts = response.data?["posts"]?["nodes"];
 
     responsePosts.forEach((final aPost) {
-      result.add(Post(aPost["title"], aPost["excerpt"],
-          aPost["featuredImage"]["node"]["sourceUrl"], aPost["uri"]));
+      result.add(Post(title: aPost["title"], excerpt: aPost["excerpt"],
+        featuredImageURL: aPost["featuredImage"]["node"]["sourceUrl"], url: aPost["uri"]));
     });
     return result;
   }

@@ -5,24 +5,6 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 
-// Represents a user in the chat
-class User {
-  final String id;
-  final String name;
-  final String profilePic;
-
-  User(this.id, this.name, this.profilePic);
-}
-
-// Represents a message in the group chat
-class GroupMessage {
-  final User user;
-  final String text;
-  final DateTime date;
-
-  GroupMessage(this.user, this.text, this.date);
-}
-
 // Main widget for the group chat, enhanced for better UI and UX
 class GroupChatView extends StatefulWidget {
   const GroupChatView({super.key});
@@ -37,8 +19,8 @@ class _GroupChatViewState extends State<GroupChatView> {
 
   // Handles sending a message
   void _sendMessage() {
-    final User currentUser =
-        User("5", "Me", "assets/images/default_user_logo.png");
+    // final User currentUser =
+    //     User("5", "Me", "assets/images/default_user_logo.png");
     final String messageText = _messageController.text.trim();
 
     if (messageText.isNotEmpty) {
@@ -110,36 +92,38 @@ class _GroupChatViewState extends State<GroupChatView> {
                     message.sender!.fullName,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-
-    Container(
-    margin: EdgeInsets.only(top: 5),
-    padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-    decoration: BoxDecoration(
-    color: isCurrentUser ? Colors.green[50] : Colors.grey[200],
-    borderRadius: BorderRadius.circular(20),
-    ),
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    mainAxisSize: MainAxisSize.min,
-    children: [
-    Text(
-    message.message!,
-    style: TextStyle(fontSize: 16),
-    ),
-    Padding(
-    padding: const EdgeInsets.only(top: 5),
-    child: Text( message.time.toString(),
-    style: TextStyle(color: Colors.grey, fontSize: 12),
-    ),
+                Container(
+                  margin: EdgeInsets.only(top: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: isCurrentUser ? Colors.green[50] : Colors.grey[200],
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        message.message!,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: 
+                        
+                          Text("${DateFormat("dd MMMM yyyy").format(message.time!.toDate())} at ${DateFormat("hh:mm aaa").format(message.time! .toDate())}",
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-        ],
+        ], 
       ),
-    ),], ),);
-
-
+    );
   }
 
   // Builds the message input field with enhanced UX
