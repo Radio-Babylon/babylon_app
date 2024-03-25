@@ -3,7 +3,6 @@ import "package:babylon_app/views/profile/full_screen_image.dart";
 // Importa aquí el archivo FullScreenImage si se encuentra en otro archivo
 // import "path/to/full_screen_image.dart";
 
-
 // Define the UserProfile class to hold user information.
 class UserProfile {
   final String profilePic;
@@ -12,18 +11,25 @@ class UserProfile {
   final String country;
   final String about;
 
-  UserProfile({required this.profilePic, required this.name, required this.age, required this.country, required this.about});
+  UserProfile(
+      {required this.profilePic,
+      required this.name,
+      required this.age,
+      required this.country,
+      required this.about});
 }
 
 // Main widget for displaying user"s profile details.
 class OtherProfile extends StatelessWidget {
   // Example user data.
   final UserProfile user = UserProfile(
-    profilePic: "assets/images/profilephoto2.jpg", // Placeholder for profile picture asset.
+    profilePic:
+        "assets/images/profilephoto2.jpg", // Placeholder for profile picture asset.
     name: "Jane Doe",
     age: 28,
     country: "Canada",
-    about: "Passionate traveler and photography enthusiast. Love to explore new cultures and meet new people.",
+    about:
+        "Passionate traveler and photography enthusiast. Love to explore new cultures and meet new people.",
   );
 
   OtherProfile({super.key});
@@ -43,20 +49,32 @@ class OtherProfile extends StatelessWidget {
               // Tapping on the profile picture opens the FullScreenImage view.
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (final _) => FullScreenImage(imagePath: user.profilePic, name: user.name)),
-
+                MaterialPageRoute(
+                    builder: (final _) => FullScreenImage(
+                        imagePath: user.profilePic, name: user.name)),
               ),
               child: CircleAvatar(
                 radius: 60,
-                backgroundImage: AssetImage(user.profilePic), // Display user"s profile picture.
+                backgroundImage: AssetImage(
+                    user.profilePic), // Display user"s profile picture.
               ),
             ),
             SizedBox(height: 10),
-            Text(user.name, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)), // Display user"s name.
-            Text("${user.age} years old, from ${user.country}", style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic)), // Display user"s age and country.
+            Text(user.name,
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold)), // Display user"s name.
+            Text("${user.age} years old, from ${user.country}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontStyle:
+                        FontStyle.italic)), // Display user"s age and country.
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Text(user.about, textAlign: TextAlign.center, style: TextStyle(fontSize: 16)), // Display user"s about section.
+              child: Text(user.about,
+                  textAlign: TextAlign.center,
+                  style:
+                      TextStyle(fontSize: 16)), // Display user"s about section.
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -68,7 +86,9 @@ class OtherProfile extends StatelessWidget {
                   onPressed: () {
                     // TODO(EnzoL): Implement functionality to send friend request.
                   },
-                  style: ElevatedButton.styleFrom( foregroundColor:Colors.white, backgroundColor: Colors.blue),
+                  style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.blue),
                 ),
                 // Button to start a chat.
                 ElevatedButton.icon(
@@ -78,7 +98,9 @@ class OtherProfile extends StatelessWidget {
                     // TODO(EnzoL): Implement functionality to start chatting.
                   },
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white, backgroundColor: Colors.green,),
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.green,
+                  ),
                 ),
               ],
             ),

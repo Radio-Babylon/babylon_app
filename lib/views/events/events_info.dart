@@ -26,17 +26,15 @@ class EventInfoState extends State<EventInfoScreen> {
     super.initState();
     // Update the BabylonUser data with the current user
 
-    _isAttending = event.attendees.any((final anAttendee) => anAttendee!.userUID == FirebaseAuth.instance.currentUser!.uid);
+    _isAttending = event.attendees.any((final anAttendee) =>
+        anAttendee!.userUID == FirebaseAuth.instance.currentUser!.uid);
   }
-  
+
   // Event object passed through the constructor containing all event details.
   @override
   Widget build(final BuildContext context) {
     // Use MediaQuery to get device width for responsive design.
-    final double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    final double screenWidth = MediaQuery.of(context).size.width;
 
     // Scaffold provides the AppBar at the top and a body for the content.
     return Scaffold(
@@ -52,7 +50,8 @@ class EventInfoState extends State<EventInfoScreen> {
         title: Text(
           event.title!,
           style: TextStyle(
-              fontSize: 24), // Increase font size for AppBar title for better visibility.
+              fontSize:
+                  24), // Increase font size for AppBar title for better visibility.
         ),
         backgroundColor: Colors.green,
       ),
@@ -62,16 +61,19 @@ class EventInfoState extends State<EventInfoScreen> {
             // Container for the event image, taking full width of the screen.
             Container(
               width: screenWidth,
-              child: event.pictureURL == "" ? Image.network(
-                event.pictureURL!,
-                height: 250, // Increase height for a more prominent image.
-                fit: BoxFit.cover,
-              ) : Image.asset("assets/images/logoSquare.png", height: 250),
+              child: event.pictureURL == ""
+                  ? Image.network(
+                      event.pictureURL!,
+                      height:
+                          250, // Increase height for a more prominent image.
+                      fit: BoxFit.cover,
+                    )
+                  : Image.asset("assets/images/logoSquare.png", height: 250),
             ),
             // Padding for the content below the image.
             Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0, vertical: 24.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -115,16 +117,19 @@ class EventInfoState extends State<EventInfoScreen> {
                   SizedBox(height: 8),
                   Text.rich(
                     TextSpan(
-                      style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                      style:
+                          TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
                       children: [
                         TextSpan(
                           text: "Hosted by: ",
                         ),
                         WidgetSpan(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
                             child: CircleAvatar(
-                              backgroundImage: NetworkImage(event.creator!.imagePath),
+                              backgroundImage:
+                                  NetworkImage(event.creator!.imagePath),
                               radius: 20,
                             ),
                           ),
@@ -139,28 +144,31 @@ class EventInfoState extends State<EventInfoScreen> {
                   SizedBox(height: 24),
                   // Attend button with larger text and padding.
                   ElevatedButton(
-                    onPressed: () async{
-                      if(!_isAttending){
-                        final bool added = await EventService.addUserToEvent(event);
-                        if(added) 
-                          {
+                      onPressed: () async {
+                        if (!_isAttending) {
+                          final bool added =
+                              await EventService.addUserToEvent(event);
+                          if (added) {
                             setState(() {
-                              _isAttending = true; 
+                              _isAttending = true;
                               event.attendees.add(ConnectedBabylonUser());
                             });
                           }
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _isAttending ? Color.fromARGB(255, 53, 136, 55) : Colors.green,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 32, vertical: 12),
-                    ),
-                    child: Text( _isAttending ? "ATTENDING" : "ATTEND", style: TextStyle(fontSize: 18))
-                  ),
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _isAttending
+                            ? Color.fromARGB(255, 53, 136, 55)
+                            : Colors.green,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                      ),
+                      child: Text(_isAttending ? "ATTENDING" : "ATTEND",
+                          style: TextStyle(fontSize: 18))),
                   // Section for people attending the event.
                   _buildPeopleAttendingSection(context),
-                  if(event.creator!.userUID == ConnectedBabylonUser().userUID) _buildEditButton(context),
+                  if (event.creator!.userUID == ConnectedBabylonUser().userUID)
+                    _buildEditButton(context),
                 ],
               ),
             ),
@@ -182,37 +190,47 @@ class EventInfoState extends State<EventInfoScreen> {
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
               "People Attending",
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 18), // Larger text for the section title.
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(fontSize: 18), // Larger text for the section title.
             ),
           ),
           // Horizontally scrollable list of avatars with an overlap effect.
           Container(
-            height: 70, // Adjusted height to accommodate the border.
-            child: InkWell(
-              onTap: () => _showAllAttendeesBottomSheet(context),
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: event.attendees.length, // The total number of avatars to display.
-                itemBuilder: (final context, final index) {
-                  // Wrapping each avatar with a Transform.translate to create an overlap effect.
-                  return Transform.translate(
-                    offset: Offset(-30.0 * index, 0), // Shifts each avatar to the left; adjust the multiplier as needed.
-                    child: Container(
-                      margin: EdgeInsets.only(right: index != event.attendees.length - 1 ? 20 : 0), // Adjust the right margin to control the overlap
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 3), // White border around the avatar
+              height: 70, // Adjusted height to accommodate the border.
+              child: InkWell(
+                onTap: () => _showAllAttendeesBottomSheet(context),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: event.attendees
+                      .length, // The total number of avatars to display.
+                  itemBuilder: (final context, final index) {
+                    // Wrapping each avatar with a Transform.translate to create an overlap effect.
+                    return Transform.translate(
+                      offset: Offset(-30.0 * index,
+                          0), // Shifts each avatar to the left; adjust the multiplier as needed.
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            right: index != event.attendees.length - 1
+                                ? 20
+                                : 0), // Adjust the right margin to control the overlap
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                              color: Colors.white,
+                              width: 3), // White border around the avatar
+                        ),
+                        child: CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(event.attendees[index]!.imagePath),
+                          radius: 30, // The radius of avatars.
+                        ),
                       ),
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(event.attendees[index]!.imagePath),
-                        radius: 30, // The radius of avatars.
-                      ),
-                    ),
-                  );
-                },
-              ),
-            )
-          ),
+                    );
+                  },
+                ),
+              )),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: OutlinedButton.icon(
@@ -220,13 +238,16 @@ class EventInfoState extends State<EventInfoScreen> {
                 // Opens a bottom sheet showing all attendees. The function to show the bottom sheet needs to be defined.
                 _showAllAttendeesBottomSheet(context);
               },
-              icon: Icon(Icons.person, size: 24), // Icon for the "See all" button.
+              icon: Icon(Icons.person,
+                  size: 24), // Icon for the "See all" button.
               label: Text(
                 "See all (${event.attendees.length})",
-                style: TextStyle(fontSize: 16), // Text style for the "See all" button.
+                style: TextStyle(
+                    fontSize: 16), // Text style for the "See all" button.
               ),
               style: OutlinedButton.styleFrom(
-                side: BorderSide(color: Colors.green), // Border color to match the theme.
+                side: BorderSide(
+                    color: Colors.green), // Border color to match the theme.
               ),
             ),
           ),
@@ -239,7 +260,6 @@ class EventInfoState extends State<EventInfoScreen> {
   void _showAllAttendeesBottomSheet(final BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     final double bottomSheetHeight = screenSize.height * 0.75;
-
 
     showModalBottomSheet(
       context: context,
@@ -258,7 +278,8 @@ class EventInfoState extends State<EventInfoScreen> {
               bottom: bottomSheetHeight,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pop(); // Close the modal when the overlay is tapped
+                  Navigator.of(context)
+                      .pop(); // Close the modal when the overlay is tapped
                 },
                 child: Container(
                   color: Colors.black.withOpacity(0.5),
@@ -267,7 +288,8 @@ class EventInfoState extends State<EventInfoScreen> {
             ),
             // Main bottom sheet content
             Container(
-              margin: EdgeInsets.only(top: screenSize.height - bottomSheetHeight),
+              margin:
+                  EdgeInsets.only(top: screenSize.height - bottomSheetHeight),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
@@ -277,10 +299,12 @@ class EventInfoState extends State<EventInfoScreen> {
                 itemBuilder: (final BuildContext context, final int index) {
                   return ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: NetworkImage(event.attendees[index]!.imagePath),
+                      backgroundImage:
+                          NetworkImage(event.attendees[index]!.imagePath),
                       radius: 20,
                     ),
-                    title: Text(event.attendees[index]!.fullName, style: TextStyle(fontSize: 16)),
+                    title: Text(event.attendees[index]!.fullName,
+                        style: TextStyle(fontSize: 16)),
                     onTap: () {
                       // TODO(Enzo): Implement navigation to attendee"s profile
                     },
@@ -305,19 +329,19 @@ class EventInfoState extends State<EventInfoScreen> {
     );
   }
 
-  Widget _buildEditButton(final BuildContext context){
+  Widget _buildEditButton(final BuildContext context) {
     return ElevatedButton(
-      onPressed: () async{
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (final context) => UpdateEventScreen(event: event,))
-        );
+      onPressed: () async {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (final context) => UpdateEventScreen(
+                  event: event,
+                )));
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.green,
-        padding: EdgeInsets.symmetric(
-          horizontal: 32, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
       ),
-      child: Text( "Edit my event", style: TextStyle(fontSize: 18)),
+      child: Text("Edit my event", style: TextStyle(fontSize: 18)),
     );
   }
 }

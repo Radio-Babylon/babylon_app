@@ -2,7 +2,6 @@ import "package:babylon_app/models/post.dart";
 import "package:graphql_flutter/graphql_flutter.dart";
 
 class WpGraphQLService {
-
   static Future<List<Post>> getNewPosts() async {
     final List<Post> result = List.empty(growable: true);
 
@@ -36,9 +35,9 @@ class WpGraphQLService {
     final dynamic responsePosts = response.data?["posts"]?["nodes"];
 
     responsePosts.forEach((final aPost) {
-      result.add(Post(aPost["title"], aPost["excerpt"], aPost["featuredImage"]["node"]["sourceUrl"], aPost["uri"]));
+      result.add(Post(aPost["title"], aPost["excerpt"],
+          aPost["featuredImage"]["node"]["sourceUrl"], aPost["uri"]));
     });
     return result;
   }
-
 }

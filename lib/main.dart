@@ -54,7 +54,8 @@ class LogoScreen extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.only(bottom: 45),
-            child: Image.asset("assets/images/logoSquare.png", width: 185, height: 185),
+            child: Image.asset("assets/images/logoSquare.png",
+                width: 185, height: 185),
           ),
           const Text(
             "Welcome to Babylon Radio!",
@@ -109,7 +110,8 @@ class LogoScreen extends StatelessWidget {
                 // Usa Navigator.push to navigate into RegisterScreen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (final context) => CreateAccountPage()),
+                  MaterialPageRoute(
+                      builder: (final context) => CreateAccountPage()),
                 );
               },
               style: OutlinedButton.styleFrom(
@@ -122,58 +124,54 @@ class LogoScreen extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 42),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Flexible(
-                  flex: 3,
-                  child: Text("Continue with", style: TextStyle(fontSize: 24, fontFamily: "Lato")),
-                ),
-                Flexible(
-                  flex: 1,
-                  child:
-                    _buildSocialButton(
-                    "assets/images/google.png", // Replace with your asset
-                    () async {
-                      try {
-                          final UserCredential loginUser = await AuthService.signInWithGoogle();
-                          UserService.setUpConnectedBabylonUser(loginUser.user!.uid);
-                          if(!context.mounted) return;
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (final context) => HomePage()),
-                            (final route) => false,
-                          );
-                        } catch (e) {
-                          print(e.toString()); 
-                        }
-                      }, 55)
-                ),
-                Flexible(
-                  flex: 1,
-                  child:
-                    _buildSocialButton(
-                      "assets/images/facebook.png", // Replace with your asset
-                      () async {
-                        try {
-                          
-                        } catch (e) {
-                          print(e.toString()); 
-                        } 
-                      }, 55)
-                )
-              ] 
-            )
-          ),
+              padding: const EdgeInsets.symmetric(horizontal: 42),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      flex: 3,
+                      child: Text("Continue with",
+                          style: TextStyle(fontSize: 24, fontFamily: "Lato")),
+                    ),
+                    Flexible(
+                        flex: 1,
+                        child: _buildSocialButton(
+                            "assets/images/google.png", // Replace with your asset
+                            () async {
+                          try {
+                            final UserCredential loginUser =
+                                await AuthService.signInWithGoogle();
+                            UserService.setUpConnectedBabylonUser(
+                                loginUser.user!.uid);
+                            if (!context.mounted) return;
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (final context) => HomePage()),
+                              (final route) => false,
+                            );
+                          } catch (e) {
+                            print(e.toString());
+                          }
+                        }, 55)),
+                    Flexible(
+                        flex: 1,
+                        child: _buildSocialButton(
+                            "assets/images/facebook.png", // Replace with your asset
+                            () async {
+                          try {} catch (e) {
+                            print(e.toString());
+                          }
+                        }, 55))
+                  ])),
         ],
       ),
     );
   }
 
-  Widget _buildSocialButton(
-    final String iconPath, final VoidCallback onPressed, final double height) {
+  Widget _buildSocialButton(final String iconPath, final VoidCallback onPressed,
+      final double height) {
     return Container(
       height: height,
       child: FloatingActionButton(

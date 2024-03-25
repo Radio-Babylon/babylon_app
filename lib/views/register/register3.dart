@@ -221,7 +221,8 @@ class _RegisterPage3State extends State<RegisterPage3> {
     );
   }
 
-  Widget _buildCheckboxGridSection(final String title, final Map<String, bool> options) {
+  Widget _buildCheckboxGridSection(
+      final String title, final Map<String, bool> options) {
     const int crossAxisCount = 2; // Number of columns in the grid
 
     return Column(

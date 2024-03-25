@@ -1,6 +1,6 @@
 class AuthValidator {
-  static void validateRegisterForm(final String name, final String email, final String password,
-      final String rePassword, final String birthDate) {
+  static void validateRegisterForm(final String name, final String email,
+      final String password, final String rePassword, final String birthDate) {
     if (name.isEmpty) throw ("Your name is missing");
     if (email.isEmpty) throw ("Your email is missing");
     if (password.isEmpty) throw ("Your password is missing");

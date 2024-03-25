@@ -12,7 +12,8 @@ class AuthService {
     final FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
     try {
-      final UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      final UserCredential userCredential =
+          await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -20,7 +21,8 @@ class AuthService {
       await user!.updateDisplayName(name);
       await user.reload();
       user = auth.currentUser;
-      UserService.setUpConnectedBabylonUser(user!.uid); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user!.uid);
+      UserService.setUpConnectedBabylonUser(user!
+          .uid); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user!.uid);
     } catch (e) {
       print(e);
       rethrow;
@@ -35,12 +37,14 @@ class AuthService {
     final FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
     try {
-      final UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      final UserCredential userCredential =
+          await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       user = userCredential.user;
-      UserService.setUpConnectedBabylonUser(user!.uid); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user!.uid);
+      UserService.setUpConnectedBabylonUser(user!
+          .uid); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user!.uid);
     } catch (e) {
       print(e);
       rethrow;
@@ -62,27 +66,29 @@ class AuthService {
       idToken: googleAuth?.idToken,
     );
 
-    final UserCredential signedIdUser = await FirebaseAuth.instance.signInWithCredential(credential);
+    final UserCredential signedIdUser =
+        await FirebaseAuth.instance.signInWithCredential(credential);
 
     await hasCurrentUserData();
-    UserService.setUpConnectedBabylonUser(signedIdUser.user!.uid); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: signedIdUser.user!.uid);
+    UserService.setUpConnectedBabylonUser(signedIdUser.user!
+        .uid); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: signedIdUser.user!.uid);
     // Once signed in, return the UserCredential
     return signedIdUser;
   }
 
-  static Future<void> hasCurrentUserData() async{
+  static Future<void> hasCurrentUserData() async {
     try {
       final User currUser = FirebaseAuth.instance.currentUser!;
       final db = FirebaseFirestore.instance;
       final docUser = await db.collection("users").doc(currUser.uid).get();
       final userData = docUser.data();
-      if(userData == null){
+      if (userData == null) {
         final userNewData = <String, String>{
           "Country of Origin": "",
           "Date of Birth": DateTime.now().toLocal().toString(),
           "Email Address": currUser.email!,
-          "Name" : currUser.displayName!,
-          "About" : "",     
+          "Name": currUser.displayName!,
+          "About": "",
         };
         userNewData["ImageUrl"] = currUser.photoURL!;
         await db.collection("users").doc(currUser.uid).set(userNewData);
@@ -90,5 +96,5 @@ class AuthService {
     } catch (e) {
       rethrow;
     }
-  } 
+  }
 }

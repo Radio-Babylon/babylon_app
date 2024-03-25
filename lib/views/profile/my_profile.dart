@@ -27,10 +27,11 @@ class _MyProfileState extends State<MyProfile> {
 
   @override
   void initState() {
-    _fullname =
-        TextEditingController(text: ConnectedBabylonUser().fullName);
-    _dateOfBirth = TextEditingController(text: ConnectedBabylonUser().dateOfBirth);
-    _country = TextEditingController(text: ConnectedBabylonUser().originCountry);
+    _fullname = TextEditingController(text: ConnectedBabylonUser().fullName);
+    _dateOfBirth =
+        TextEditingController(text: ConnectedBabylonUser().dateOfBirth);
+    _country =
+        TextEditingController(text: ConnectedBabylonUser().originCountry);
     _about = TextEditingController(text: ConnectedBabylonUser().about);
     super.initState();
   }
@@ -49,74 +50,74 @@ class _MyProfileState extends State<MyProfile> {
     return Stack(
       children: [
         Scaffold(
-          appBar: AppBar(
-            // Replaced the menu icon with an arrow back icon
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                // Navigate back to HomeScreen when the arrow is pressed
-                formState == "unsaved" ?
-                _showBackPopup() : 
-                  Navigator.push(
-                    context, MaterialPageRoute(builder: (final context) => HomePage())
-                  );
-              },
+            appBar: AppBar(
+              // Replaced the menu icon with an arrow back icon
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  // Navigate back to HomeScreen when the arrow is pressed
+                  formState == "unsaved"
+                      ? _showBackPopup()
+                      : Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (final context) => HomePage()));
+                },
+              ),
             ),
-          ),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildProfile(context),
-                const SizedBox(height: 12),
-                buildName(user),
-                const SizedBox(height: 12),
-                Center(
-                  child: buildUpgradeButton(),
-                ),
-                //const SizedBox(height: 24),
-                /*Center(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildProfile(context),
+                  const SizedBox(height: 12),
+                  buildName(user),
+                  const SizedBox(height: 12),
+                  Center(
+                    child: buildUpgradeButton(),
+                  ),
+                  //const SizedBox(height: 24),
+                  /*Center(
                     child: const Text(
                   'Infromation about events',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 )),
                 const SizedBox(height: 10),*/
-                //NumbersWidget(),
-                const SizedBox(height: 20),
-                //infoField(),_
-                infoField(
-                    icon: Icons.person,
-                    hintText: "example name",
-                    labelText: "Full name",
-                    controller: _fullname,
-                    onClicked: () {}),
-                infoField(
-                    icon: Icons.cake,
-                    hintText: "Birth Date",
-                    labelText: "Birth Date",
-                    controller: _dateOfBirth,
-                    onClicked: () {},
-                    hasDatePicker: true),
-                //const SizedBox(height: 30),
-                infoField(
-                    icon: Icons.public,
-                    hintText: "Origin country",
-                    labelText: "Origin country",
-                    controller: _country,
-                    onClicked: () {}),
-                infoField(
-                    icon: Icons.chat,
-                    hintText: "About",
-                    labelText: "About",
-                    controller: _about,
-                    onClicked: () {}),
-                Center(
-                  child: buildSaveButton(),
-                ),
-              ],
-            ),
-          ) 
-        ),
+                  //NumbersWidget(),
+                  const SizedBox(height: 20),
+                  //infoField(),_
+                  infoField(
+                      icon: Icons.person,
+                      hintText: "example name",
+                      labelText: "Full name",
+                      controller: _fullname,
+                      onClicked: () {}),
+                  infoField(
+                      icon: Icons.cake,
+                      hintText: "Birth Date",
+                      labelText: "Birth Date",
+                      controller: _dateOfBirth,
+                      onClicked: () {},
+                      hasDatePicker: true),
+                  //const SizedBox(height: 30),
+                  infoField(
+                      icon: Icons.public,
+                      hintText: "Origin country",
+                      labelText: "Origin country",
+                      controller: _country,
+                      onClicked: () {}),
+                  infoField(
+                      icon: Icons.chat,
+                      hintText: "About",
+                      labelText: "About",
+                      controller: _about,
+                      onClicked: () {}),
+                  Center(
+                    child: buildSaveButton(),
+                  ),
+                ],
+              ),
+            )),
         if (formState == "saving")
           const Opacity(
             opacity: 0.8,
@@ -127,10 +128,10 @@ class _MyProfileState extends State<MyProfile> {
             child: CircularProgressIndicator(),
           ),
       ],
-    ); 
+    );
   }
 
-  Widget buildSaveButton()  {
+  Widget buildSaveButton() {
     String saveBtnText;
     switch (formState) {
       case "saving":
@@ -142,44 +143,51 @@ class _MyProfileState extends State<MyProfile> {
         saveBtnText = "Save changes";
     }
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        shape: StadiumBorder(),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-      ),
-      onPressed: formState == "unsaved" ? () async {
-        setState(() {
-          formState = "saving";
-        });
-        await UserService.updateUserInfo(uuid: user.userUID, newData: {
-          "name": _fullname.text,
-          "originCountry": _country.text,
-          "birthDate": _dateOfBirth.text,
-          "about": _about.text 
-        });
-        UserService.setUpConnectedBabylonUser(user.userUID); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.userUID);
-        if (_fileImage != null) UserService.addPhoto(user: FirebaseAuth.instance.currentUser!, file: _fileImage!);
-        await Future.delayed(Duration(seconds: 1));
-        setState(() {
-          formState = "saved";
-          user = ConnectedBabylonUser();
-        });
-      } : null,
-      child: Text(saveBtnText)
-    );
+        style: ElevatedButton.styleFrom(
+          shape: StadiumBorder(),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Colors.white,
+          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+        ),
+        onPressed: formState == "unsaved"
+            ? () async {
+                setState(() {
+                  formState = "saving";
+                });
+                await UserService.updateUserInfo(uuid: user.userUID, newData: {
+                  "name": _fullname.text,
+                  "originCountry": _country.text,
+                  "birthDate": _dateOfBirth.text,
+                  "about": _about.text
+                });
+                UserService.setUpConnectedBabylonUser(user
+                    .userUID); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.userUID);
+                if (_fileImage != null)
+                  UserService.addPhoto(
+                      user: FirebaseAuth.instance.currentUser!,
+                      file: _fileImage!);
+                await Future.delayed(Duration(seconds: 1));
+                setState(() {
+                  formState = "saved";
+                  user = ConnectedBabylonUser();
+                });
+              }
+            : null,
+        child: Text(saveBtnText));
   }
 
   Widget buildProfile(final BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
     return Center(
-      child: Stack(
-        children: [
-          buildImage(),
-          Positioned(bottom: 0, right: 4, child: buildEditIcon(color, onClicked: getImage)),
-        ],
-      )
-    );
+        child: Stack(
+      children: [
+        buildImage(),
+        Positioned(
+            bottom: 0,
+            right: 4,
+            child: buildEditIcon(color, onClicked: getImage)),
+      ],
+    ));
   }
 
   Future<void> _showBackPopup() async {
@@ -201,9 +209,8 @@ class _MyProfileState extends State<MyProfile> {
             TextButton(
               child: const Text("Leave"),
               onPressed: () {
-                Navigator.push(
-                  context, MaterialPageRoute(builder: (final context) => HomePage())
-                );
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (final context) => HomePage()));
               },
             ),
             TextButton(
@@ -232,10 +239,9 @@ class _MyProfileState extends State<MyProfile> {
 
   Widget buildImage() {
     ImageProvider image;
-    if (_fileImage != null ){
+    if (_fileImage != null) {
       image = FileImage(_fileImage!);
-    }
-    else if (user.imagePath == "") {
+    } else if (user.imagePath == "") {
       image = const AssetImage("assets/images/default_user_logo.png");
     } else {
       image = NetworkImage(user.imagePath);
@@ -275,16 +281,14 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   Widget buildUpgradeButton() => ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      shape: StadiumBorder(),
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      foregroundColor: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-    ),
-
-    child: Text("Upgrade To PRO"),
-    onPressed: () => activateButton()
-  );
+      style: ElevatedButton.styleFrom(
+        shape: StadiumBorder(),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+      ),
+      child: Text("Upgrade To PRO"),
+      onPressed: () => activateButton());
 
   Widget buildAbout(final BabylonUser user) => Container(
         padding: EdgeInsets.symmetric(horizontal: 48),
@@ -323,22 +327,23 @@ class _MyProfileState extends State<MyProfile> {
                 children: [
                   Icon(icon),
                   const SizedBox(width: 15),
-                  Expanded( 
+                  Expanded(
                     child: TextField(
                       controller: controller,
                       readOnly: hasDatePicker,
                       onTap: () async {
                         activateButton();
-                        if(hasDatePicker){
+                        if (hasDatePicker) {
                           final DateTime? pickedDate = await showDatePicker(
-                            context: context, initialDate: DateTime.now(),
-                            firstDate: DateTime(1901),
-                            lastDate: DateTime(2101)
-                          );
-                                
-                          if(pickedDate != null ){
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1901),
+                              lastDate: DateTime(2101));
+
+                          if (pickedDate != null) {
                             setState(() {
-                                _dateOfBirth.text = "${pickedDate.year}-${pickedDate.month < 10 ? "0${pickedDate.month}" : pickedDate.month}-${pickedDate.day}";
+                              _dateOfBirth.text =
+                                  "${pickedDate.year}-${pickedDate.month < 10 ? "0${pickedDate.month}" : pickedDate.month}-${pickedDate.day}";
                             });
                           }
                         }
@@ -400,7 +405,8 @@ class _MyProfileState extends State<MyProfile> {
           child: Icon(Icons.edit, color: Colors.white, size: 12),
         ),
       );
-  Widget buildEditIcon(final Color color, {required final onClicked}) => ClipOval(
+  Widget buildEditIcon(final Color color, {required final onClicked}) =>
+      ClipOval(
         child: Material(
           color: Colors.white,
           child: Ink.image(
@@ -476,133 +482,3 @@ class NumbersWidget extends StatelessWidget {
         ),
       );
 }
-
-/*
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 20),
-            CircleAvatar(
-              radius: 60,
-              backgroundColor: Colors.grey.shade300,
-              child: Text("profile picture",
-                  style: TextStyle(color: Colors.white)),
-            ),
-            TextButton(
-              onPressed: () {
-                // Handle edit profile picture
-              },
-              child: Text("edit"),
-            ),
-            // Profile information and interests
-            _buildProfileSection(context),
-            // Adding the Logout button at the bottom of the page
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  // Handle logout logic
-                },
-                child: Text("Logout"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white, // Button background color
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-
-
-  Widget _buildProfileSection(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Full Name",
-                        style: Theme.of(context).textTheme.headline6),
-                    Text(
-                      "short bio short bio short bio short bio short bio short bio",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
-                ),
-              ),
-              Text("Age", style: Theme.of(context).textTheme.headline6),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Interests", style: Theme.of(context).textTheme.subtitle1),
-              _buildInterests(),
-              SizedBox(height: 20),
-              Text("Languages", style: Theme.of(context).textTheme.subtitle1),
-              _buildLanguages(),
-            ],
-          ),
-        ),
-        ListTile(
-          title: Text("My Plan"),
-          subtitle: Text("Monthly subscription"),
-          trailing: Wrap(
-            spacing: 12,
-            children: [
-              TextButton(
-                onPressed: () {
-                  // Handle change plan
-                },
-                child: Text("change"),
-              ),
-              TextButton(
-                onPressed: () {
-                  // Handle cancel plan
-                },
-                child: Text("cancel"),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-
-
-
-
-
-  Widget _buildInterests() {
-    return Wrap(
-      spacing: 8.0,
-      runSpacing: 8.0,
-      children: List.generate(
-        6,
-        (index) => Chip(
-          label: Text("interest ${index + 1}"),
-        ),
-      ),
-    );
-  }
-
-
-
-  Widget _buildLanguages() {
-    return Wrap(
-      spacing: 8.0,
-      runSpacing: 8.0,
-      children: ["language 1", "language 2", "language 3"]
-          .map((lang) => Chip(label: Text(lang)))
-          .toList(),
-    );
-  }*/

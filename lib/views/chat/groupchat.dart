@@ -56,7 +56,8 @@ class _GroupChatViewState extends State<GroupChatView> {
 
   // Handles sending a message
   void _sendMessage() {
-    final User currentUser = User("5", "Me", "assets/images/default_user_logo.png");
+    final User currentUser =
+        User("5", "Me", "assets/images/default_user_logo.png");
     final String messageText = _messageController.text.trim();
 
     if (messageText.isNotEmpty) {
@@ -93,7 +94,8 @@ class _GroupChatViewState extends State<GroupChatView> {
 
   // Builds a single message tile with enhanced UI
   Widget _buildMessageTile(final GroupMessage message) {
-    final bool isCurrentUser = message.user.id == "5"; // Check if the message is from the current user
+    final bool isCurrentUser =
+        message.user.id == "5"; // Check if the message is from the current user
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       child: Row(
@@ -107,44 +109,46 @@ class _GroupChatViewState extends State<GroupChatView> {
             SizedBox(width: 10),
           Expanded(
             child: Column(
-              crossAxisAlignment: isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              crossAxisAlignment: isCurrentUser
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
               children: [
                 if (!isCurrentUser) // Only show the user's name for other users
                   Text(
                     message.user.name,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-
-    Container(
-    margin: EdgeInsets.only(top: 5),
-    padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-    decoration: BoxDecoration(
-    color: isCurrentUser ? Colors.green[50] : Colors.grey[200],
-    borderRadius: BorderRadius.circular(20),
-    ),
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    mainAxisSize: MainAxisSize.min,
-    children: [
-    Text(
-    message.text,
-    style: TextStyle(fontSize: 16),
-    ),
-    Padding(
-    padding: const EdgeInsets.only(top: 5),
-    child: Text(
-    DateFormat("hh:mm aaa").format(message.date),
-    style: TextStyle(color: Colors.grey, fontSize: 12),
-    ),
+                Container(
+                  margin: EdgeInsets.only(top: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: isCurrentUser ? Colors.green[50] : Colors.grey[200],
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        message.text,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Text(
+                          DateFormat("hh:mm aaa").format(message.date),
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
         ],
       ),
-    ),], ),);
-
-
+    );
   }
 
   // Builds the message input field with enhanced UX
@@ -162,7 +166,8 @@ class _GroupChatViewState extends State<GroupChatView> {
                 border: InputBorder.none,
                 filled: true,
                 fillColor: Colors.grey[200],
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
               ),
             ),
           ),

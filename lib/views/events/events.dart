@@ -6,7 +6,6 @@ import "package:intl/intl.dart";
 import "package:babylon_app/views/events/events_info.dart";
 import "package:babylon_app/views/events/create_event.dart";
 
-
 // Define the EventsScreen as a StatefulWidget to handle dynamic content like user events.
 class EventsScreen extends StatefulWidget {
   const EventsScreen({super.key});
@@ -16,10 +15,12 @@ class EventsScreen extends StatefulWidget {
 }
 
 // Define the corresponding State class for EventsScreen with TabController for tab navigation.
-class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderStateMixin {
+class _EventsScreenState extends State<EventsScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final Future<List<Event>> _allEvents = EventService.getEvents();
-  final Future<List<Event>> _myEvents = EventService.getListedEventsOfUser(FirebaseAuth.instance.currentUser!.uid);
+  final Future<List<Event>> _myEvents = EventService.getListedEventsOfUser(
+      FirebaseAuth.instance.currentUser!.uid);
 
   @override
   void initState() {
@@ -34,9 +35,9 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
   }
 
   @override
-  Widget build(final BuildContext context){
+  Widget build(final BuildContext context) {
     return Scaffold(
-       // Custom drawer widget for navigation.
+      // Custom drawer widget for navigation.
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           Navigator.push(
@@ -56,7 +57,8 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
             SizedBox(
               height: 55,
               width: 55,
-              child: Image.asset("assets/images/logowhite.png"), // Your logo asset.
+              child: Image.asset(
+                  "assets/images/logowhite.png"), // Your logo asset.
             ),
           ],
         ),
@@ -67,17 +69,16 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
             Tab(text: "UPCOMING EVENTS"),
             Tab(text: "MY EVENTS"),
           ],
-          indicatorColor: Colors.white, // Color of the indicator of selected tab
+          indicatorColor:
+              Colors.white, // Color of the indicator of selected tab
           labelColor: Colors.white, // Color of the text
-          unselectedLabelColor: Colors.black, // Color of the text of selected tabs
+          unselectedLabelColor:
+              Colors.black, // Color of the text of selected tabs
         ),
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [
-          _buildAllEventList(),
-          _buildMyEventList()
-        ],
+        children: [_buildAllEventList(), _buildMyEventList()],
       ),
     );
   }
@@ -85,22 +86,22 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
   // Method to build a list view of event cards.
   Widget _buildAllEventList() {
     return FutureBuilder<List<Event>>(
-      future: _allEvents, // a previously-obtained Future<String> or null
-      builder:
-          (final BuildContext context, final AsyncSnapshot<List<Event>> snapshot) {
-        List<Widget> children;
-        if (snapshot.hasData) {
-          children = <Widget>[
-            Padding(
+        future: _allEvents, // a previously-obtained Future<String> or null
+        builder: (final BuildContext context,
+            final AsyncSnapshot<List<Event>> snapshot) {
+          List<Widget> children;
+          if (snapshot.hasData) {
+            children = <Widget>[
+              Padding(
                 padding: EdgeInsets.only(left: 16, top: 16),
                 child: Text("Upcoming events",
                     textAlign: TextAlign.left,
-                    style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold)),
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ),
-              ...snapshot.data!.map((final anEvent) => _buildEventCard(anEvent) )
-          ];
-        } else if (snapshot.hasError) {
+              ...snapshot.data!.map((final anEvent) => _buildEventCard(anEvent))
+            ];
+          } else if (snapshot.hasError) {
             children = <Widget>[
               const Icon(
                 Icons.error_outline,
@@ -121,8 +122,8 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
                     child: SizedBox(
                       width: 60,
                       height: 60,
-                      child: CircularProgressIndicator(
-                          color: Color(0xFF006400)),
+                      child:
+                          CircularProgressIndicator(color: Color(0xFF006400)),
                     ),
                   ),
                   Padding(
@@ -138,32 +139,30 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
               )
             ];
           }
-        return ListView(
-          children: children,
-        );
-      }
-    );
+          return ListView(
+            children: children,
+          );
+        });
   }
-
 
   Widget _buildMyEventList() {
     return FutureBuilder<List<Event>>(
-      future: _myEvents, // a previously-obtained Future<String> or null
-      builder:
-          (final BuildContext context, final AsyncSnapshot<List<Event>> snapshot) {
-        List<Widget> children;
-        if (snapshot.hasData) {
-          children = <Widget>[
-            Padding(
+        future: _myEvents, // a previously-obtained Future<String> or null
+        builder: (final BuildContext context,
+            final AsyncSnapshot<List<Event>> snapshot) {
+          List<Widget> children;
+          if (snapshot.hasData) {
+            children = <Widget>[
+              Padding(
                 padding: EdgeInsets.only(left: 16, top: 16),
                 child: Text("Upcoming events",
                     textAlign: TextAlign.left,
-                    style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold)),
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ),
-              ...snapshot.data!.map((final anEvent) => _buildEventCard(anEvent) )
-          ];
-        } else if (snapshot.hasError) {
+              ...snapshot.data!.map((final anEvent) => _buildEventCard(anEvent))
+            ];
+          } else if (snapshot.hasError) {
             children = <Widget>[
               const Icon(
                 Icons.error_outline,
@@ -184,8 +183,8 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
                     child: SizedBox(
                       width: 60,
                       height: 60,
-                      child: CircularProgressIndicator(
-                          color: Color(0xFF006400)),
+                      child:
+                          CircularProgressIndicator(color: Color(0xFF006400)),
                     ),
                   ),
                   Padding(
@@ -201,13 +200,11 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
               )
             ];
           }
-        return ListView(
-          children: children,
-        );
-      }
-    );
+          return ListView(
+            children: children,
+          );
+        });
   }
-
 
   // Method to build a single event card widget.
   Widget _buildEventCard(final Event event) {
@@ -215,29 +212,35 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
       margin: const EdgeInsets.all(10),
       child: InkWell(
         onTap: () async {
-        // La acción se traslada aquí para permitir tocar en cualquier lugar de la tarjeta.
-        await Navigator.push(
-        context,
-        MaterialPageRoute(
-        builder: (final context) => EventInfoScreen(event: event),
-        ),
-        );
+          // La acción se traslada aquí para permitir tocar en cualquier lugar de la tarjeta.
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (final context) => EventInfoScreen(event: event),
+            ),
+          );
         },
         child: ListTile(
-          leading: event.pictureURL != "" ? Image.network(event.pictureURL!) : Image.asset("assets/images/logoSquare.png"),
+          leading: event.pictureURL != ""
+              ? Image.network(event.pictureURL!)
+              : Image.asset("assets/images/logoSquare.png"),
           title: Text(event.title!),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("${DateFormat("dd MMMM yyyy").format(event.date!)} at ${DateFormat("hh:mm aaa").format(event.date!)}"),
-              Text(event.shortDescription!, maxLines: 3, overflow: TextOverflow.ellipsis),
-              Text("Host: ${event.creator!.fullName}"), // Display the host of the event.
-              Text("Location: ${event.place}"), // Display the location of the event.
+              Text(
+                  "${DateFormat("dd MMMM yyyy").format(event.date!)} at ${DateFormat("hh:mm aaa").format(event.date!)}"),
+              Text(event.shortDescription!,
+                  maxLines: 3, overflow: TextOverflow.ellipsis),
+              Text(
+                  "Host: ${event.creator!.fullName}"), // Display the host of the event.
+              Text(
+                  "Location: ${event.place}"), // Display the location of the event.
             ],
           ),
           trailing: IconButton(
             icon: const Icon(Icons.info_outline),
-            onPressed: () async{
+            onPressed: () async {
               // When the info button is pressed, navigate to the EvonPentInfoScreen.
               await Navigator.push(
                 context,
@@ -249,7 +252,7 @@ class _EventsScreenState extends State<EventsScreen> with SingleTickerProviderSt
             },
           ),
         ),
-    ),
+      ),
     );
   }
 }

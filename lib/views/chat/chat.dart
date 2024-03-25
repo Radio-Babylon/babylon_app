@@ -20,14 +20,23 @@ class ChatView extends StatefulWidget {
 class _ChatViewState extends State<ChatView> {
   // Example user data
   final UserProfile user = UserProfile(
-    profilePic: "assets/images/profilephoto2.jpg", // Placeholder for profile picture asset
+    profilePic:
+        "assets/images/profilephoto2.jpg", // Placeholder for profile picture asset
     name: "Jane Doe", // Example name
   );
 
   // List to hold messages with a flag to check if the message was sent by the user
   List<Map<String, dynamic>> messages = [
-    {"text": "Hi, how are you?", "isSentByMe": true, "date": DateTime.now().subtract(Duration(minutes: 1))},
-    {"text": "Good, thanks. And you?", "isSentByMe": false, "date": DateTime.now()},
+    {
+      "text": "Hi, how are you?",
+      "isSentByMe": true,
+      "date": DateTime.now().subtract(Duration(minutes: 1))
+    },
+    {
+      "text": "Good, thanks. And you?",
+      "isSentByMe": false,
+      "date": DateTime.now()
+    },
     // Add more example messages here...
   ];
 
@@ -39,11 +48,8 @@ class _ChatViewState extends State<ChatView> {
     final String messageText = _messageController.text.trim();
     if (messageText.isNotEmpty) {
       setState(() {
-        messages.add({
-          "text": messageText,
-          "isSentByMe": true,
-          "date": DateTime.now()
-        });
+        messages.add(
+            {"text": messageText, "isSentByMe": true, "date": DateTime.now()});
         _messageController.clear();
       });
     }
@@ -56,7 +62,8 @@ class _ChatViewState extends State<ChatView> {
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage: AssetImage(user.profilePic), // Display the user's profile picture
+              backgroundImage: AssetImage(
+                  user.profilePic), // Display the user's profile picture
             ),
             SizedBox(width: 10),
             Text(user.name), // Display the user's name
@@ -91,7 +98,8 @@ class _ChatViewState extends State<ChatView> {
               itemCount: messages.length,
               itemBuilder: (final context, final index) {
                 final message = messages[index];
-                return _buildMessage(message["text"], message["isSentByMe"], message["date"]);
+                return _buildMessage(
+                    message["text"], message["isSentByMe"], message["date"]);
               },
             ),
           ),
@@ -103,7 +111,8 @@ class _ChatViewState extends State<ChatView> {
   }
 
   // Widget to build each individual message bubble
-  Widget _buildMessage(final String message, final bool isSentByMe, final DateTime date) {
+  Widget _buildMessage(
+      final String message, final bool isSentByMe, final DateTime date) {
     return Align(
       alignment: isSentByMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
@@ -114,14 +123,16 @@ class _ChatViewState extends State<ChatView> {
           borderRadius: BorderRadius.circular(20.0),
         ),
         child: Column(
-          crossAxisAlignment: isSentByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment:
+              isSentByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             Text(
               message,
               style: TextStyle(color: Colors.black),
             ),
             Text(
-              DateFormat("hh:mm aaa").format(date), // Formatting date to show the message time
+              DateFormat("hh:mm aaa")
+                  .format(date), // Formatting date to show the message time
               style: TextStyle(color: Colors.grey[600], fontSize: 10),
             ),
           ],
@@ -145,7 +156,8 @@ class _ChatViewState extends State<ChatView> {
                 border: InputBorder.none,
                 filled: true,
                 fillColor: Colors.grey[200],
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
               ),
             ),
           ),

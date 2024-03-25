@@ -23,7 +23,8 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _placeController = TextEditingController();
-  final TextEditingController _descriptionShortController = TextEditingController();
+  final TextEditingController _descriptionShortController =
+      TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
@@ -41,8 +42,8 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
     super.dispose();
   }
 
-    @override
-  void initState(){
+  @override
+  void initState() {
     super.initState();
     _descriptionController.text = event.fullDescription!;
     _descriptionShortController.text = event.shortDescription!;
@@ -50,14 +51,15 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
     _placeController.text = event.place!;
     _image = null;
     _eventImgURL = event.pictureURL!;
-    _selectedTime = TimeOfDay(hour: event.date!.hour, minute: event.date!.minute);
+    _selectedTime =
+        TimeOfDay(hour: event.date!.hour, minute: event.date!.minute);
     _selectedDate = event.date!;
-
   }
 
   // Function to pick an image from the gallery
   Future<void> _pickImage() async {
-    final XFile? selectedImage = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? selectedImage =
+        await _picker.pickImage(source: ImageSource.gallery);
     if (selectedImage != null) {
       setState(() {
         _image = selectedImage;
@@ -75,7 +77,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
     );
     if (date == null) return;
 
-    if(!context.mounted) return;
+    if (!context.mounted) return;
     final TimeOfDay? time = await showTimePicker(
       context: context,
       initialTime: _selectedTime ?? TimeOfDay.now(),
@@ -136,7 +138,8 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
             ),
 
             _buildTextField(
-              controller: TextEditingController(text: _formatDateTime(_selectedDate, _selectedTime)),
+              controller: TextEditingController(
+                  text: _formatDateTime(_selectedDate, _selectedTime)),
               labelText: "* Date & Time",
               readOnly: true,
               onTap: () => _pickDateTime(context),
@@ -154,9 +157,9 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                 ),
                 child: _image == null && _eventImgURL == null
                     ? Icon(Icons.camera_alt, color: Colors.grey)
-                    : _image == null 
-                      ? Image.network(_eventImgURL!, fit: BoxFit.cover) 
-                      : Image.file(File(_image!.path), fit: BoxFit.cover),
+                    : _image == null
+                        ? Image.network(_eventImgURL!, fit: BoxFit.cover)
+                        : Image.file(File(_image!.path), fit: BoxFit.cover),
               ),
             ),
             SizedBox(height: 8.0), // Add spacing between the elements
@@ -173,7 +176,6 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
               labelText: "Event Description",
             ),
 
-
             SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -182,36 +184,43 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                   onPressed: () async {
                     try {
                       EventException.validateUpdateOrCreateForm(
-                        eventName: _nameController.text,
-                        selectedDateTime: _selectedDate,
-                        selectedTimeOfDay: _selectedTime,
-                        place: _placeController.text);
+                          eventName: _nameController.text,
+                          selectedDateTime: _selectedDate,
+                          selectedTimeOfDay: _selectedTime,
+                          place: _placeController.text);
                       await EventService.updateEvent(
-                        eventUID: event.eventDocumentID,
-                        eventName: _nameController.text,
-                        image: _image == null ? null : File(_image!.path),
-                        eventTimeStamp: Timestamp.fromDate(DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour, _selectedTime!.minute)),
-                        description: _descriptionShortController.text,
-                        shortDescription: _descriptionController.text,
-                        place: _placeController.text);
-                      if(!context.mounted) return;
+                          eventUID: event.eventDocumentID,
+                          eventName: _nameController.text,
+                          image: _image == null ? null : File(_image!.path),
+                          eventTimeStamp: Timestamp.fromDate(DateTime(
+                              _selectedDate!.year,
+                              _selectedDate!.month,
+                              _selectedDate!.day,
+                              _selectedTime!.hour,
+                              _selectedTime!.minute)),
+                          description: _descriptionShortController.text,
+                          shortDescription: _descriptionController.text,
+                          place: _placeController.text);
+                      if (!context.mounted) return;
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (final context) => const EventsScreen()),
+                        MaterialPageRoute(
+                            builder: (final context) => const EventsScreen()),
                       );
                     } catch (e) {
-                      if(e is FirebaseAuthException) {
+                      if (e is FirebaseAuthException) {
                         setState(() {
-                        _error = e.message; 
-                      });
+                          _error = e.message;
+                        });
                       } else {
                         setState(() {
-                        _error = e.toString(); 
-                      });
+                          _error = e.toString();
+                        });
                       }
                     }
                   },
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.green),
                   child: Text("UPDATE"),
                 ),
                 ElevatedButton(
@@ -221,13 +230,12 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                 ),
               ],
             ),
-            Padding(padding: EdgeInsets.symmetric(vertical: 8),
-              child:
-                Text(
+            Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Text(
                   _error!,
                   style: TextStyle(color: Colors.red),
-              )
-            ),
+                )),
           ],
         ),
       ),

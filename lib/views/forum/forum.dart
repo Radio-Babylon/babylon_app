@@ -23,8 +23,16 @@ class _ForumScreenState extends State<ForumScreen> {
   // A list of discussions for the forum. In a real app, this would be fetched from a backend.
   List<Discussion> discussions = [
     // Sample discussions. Replace with real data.
-    Discussion("How to implement a ListView in Flutter", "Alice", "I am trying to create a list view in Flutter...", DateTime.now().subtract(Duration(minutes: 10))),
-    Discussion("State Management Solutions", "Bob", "What are the best state management solutions for large apps in Flutter?", DateTime.now().subtract(Duration(hours: 1))),
+    Discussion(
+        "How to implement a ListView in Flutter",
+        "Alice",
+        "I am trying to create a list view in Flutter...",
+        DateTime.now().subtract(Duration(minutes: 10))),
+    Discussion(
+        "State Management Solutions",
+        "Bob",
+        "What are the best state management solutions for large apps in Flutter?",
+        DateTime.now().subtract(Duration(hours: 1))),
     // Add more discussions here...
   ];
 
@@ -107,7 +115,8 @@ class _ForumScreenState extends State<ForumScreen> {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
-        trailing: Text("${discussion.timestamp.hour}:${discussion.timestamp.minute}"),
+        trailing:
+            Text("${discussion.timestamp.hour}:${discussion.timestamp.minute}"),
         onTap: () {
           // TODO(EnzoL): Implement navigation to the "Discussion Details" screen.
         },

@@ -47,8 +47,8 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
           textAlign: TextAlign.center,
           child: FutureBuilder<List<Post>>(
             future: _posts, // a previously-obtained Future<String> or null
-            builder:
-                (final BuildContext context, final AsyncSnapshot<List<Post>> snapshot) {
+            builder: (final BuildContext context,
+                final AsyncSnapshot<List<Post>> snapshot) {
               List<Widget> children;
               if (snapshot.hasData) {
                 children = <Widget>[
@@ -59,62 +59,69 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
-                  ...snapshot.data!.map(
-                  (final aPost) => GestureDetector(
-                  onTap: () => goToUrl("https://babylonradio.com/${aPost.url!}"), // Acción al tocar la tarjeta completa.
-                  child: Card(
-                      margin: EdgeInsets.all(16),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 8, top: 16),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20), // Image border
-                              child: SizedBox.fromSize(
-                                size: Size.fromRadius(50), // Image radius
-                                child: Image.network(aPost.featuredImageURL!,
-                                    fit: BoxFit.cover, errorBuilder: (final BuildContext context, final Object exception, final StackTrace? stackTrace) {
+                  ...snapshot.data!.map((final aPost) => GestureDetector(
+                        onTap: () => goToUrl(
+                            "https://babylonradio.com/${aPost.url!}"), // Acción al tocar la tarjeta completa.
+                        child: Card(
+                          margin: EdgeInsets.all(16),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 8, top: 16),
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(20), // Image border
+                                  child: SizedBox.fromSize(
+                                    size: Size.fromRadius(50), // Image radius
+                                    child: Image.network(
+                                        aPost.featuredImageURL!,
+                                        fit: BoxFit.cover, errorBuilder:
+                                            (final BuildContext context,
+                                                final Object exception,
+                                                final StackTrace? stackTrace) {
                                       // Here you can return the default image widget
-                                      return Image.asset("assets/images/newsphoto.png", fit: BoxFit.cover);
+                                      return Image.asset(
+                                          "assets/images/newsphoto.png",
+                                          fit: BoxFit.cover);
                                     }),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                              child: Padding(
-                            padding: EdgeInsets.all(16),
-                            child: Column(children: [
-                              Text(
-                                aPost.title!,
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              Text(stripHtml(aPost.excerpt!),
-                                  style: TextStyle(fontSize: 12),
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                heightFactor: 1.4,
-                                child: TextButton(
-                                  onPressed: () => goToUrl(
-                                      "https://babylonradio.com/${aPost.url!}"),
-                                  style: TextButton.styleFrom(
-                                      foregroundColor: Colors.white,
-                                      elevation: 2,
-                                      backgroundColor: Color(0xFF006400)),
-                                  child:
-                                      Text("READ", textAlign: TextAlign.right),
+                                  ),
                                 ),
-                              )
-                            ]),
-                          ))
-                        ],
-                      ),
-                    ),
-                  )
-                  ),
+                              ),
+                              Expanded(
+                                  child: Padding(
+                                padding: EdgeInsets.all(16),
+                                child: Column(children: [
+                                  Text(
+                                    aPost.title!,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(stripHtml(aPost.excerpt!),
+                                      style: TextStyle(fontSize: 12),
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    heightFactor: 1.4,
+                                    child: TextButton(
+                                      onPressed: () => goToUrl(
+                                          "https://babylonradio.com/${aPost.url!}"),
+                                      style: TextButton.styleFrom(
+                                          foregroundColor: Colors.white,
+                                          elevation: 2,
+                                          backgroundColor: Color(0xFF006400)),
+                                      child: Text("READ",
+                                          textAlign: TextAlign.right),
+                                    ),
+                                  )
+                                ]),
+                              ))
+                            ],
+                          ),
+                        ),
+                      )),
                 ];
               } else if (snapshot.hasError) {
                 children = <Widget>[

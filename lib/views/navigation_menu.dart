@@ -5,7 +5,6 @@ import "package:babylon_app/views/profile/my_profile.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 
-
 class PublicDrawer extends StatefulWidget {
   final Function(int) onItemSelected;
 
@@ -198,55 +197,3 @@ Future<bool> showLogOutDialog(final BuildContext context) {
     },
   ).then((final value) => value ?? false);
 }
-/*      decoration: BoxDecoration(
-        color: Colors.blue,
-      ),
-      child: Text(
-        "Drawer Header",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 24,
-        ),
-      ), */
-
-
-      /*        CircleAvatar(
-          radius: 52,
-          backgroundImage: AssetImage("assets/images/logoSquare.png"),
-        ) */
-
-
-
-
-        /*else {
-      return SizedBox(
-        height: 220,
-        child: DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.blue,
-          ),
-          padding: const EdgeInsets.all(0),
-          child: Container(
-            child: const Column(
-              children: [
-                SizedBox(
-                  height: 10,
-                ),
-                CircleAvatar(
-                  radius: 52,
-                  backgroundImage: AssetImage("assets/images/logoSquare.png"),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("User name and surname", style: TextStyle(fontSize: 15)),
-                SizedBox(
-                  height: 5,
-                ),
-                Text("User email", style: TextStyle(fontSize: 10)),
-              ],
-            ),
-          ),
-        ),
-      );
-    } */

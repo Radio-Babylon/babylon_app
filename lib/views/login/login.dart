@@ -28,7 +28,6 @@ class LoginForm extends StatefulWidget {
 }
 
 class LoginFormState extends State<LoginForm> {
-
   late final TextEditingController _email;
   late final TextEditingController _password;
   String? _error;
@@ -116,10 +115,11 @@ class LoginFormState extends State<LoginForm> {
           ),
           onPressed: () async {
             try {
-              final User? loginUser = await AuthService.signInUsingEmailPassword(
-                  email: _email.text, password: _password.text);
+              final User? loginUser =
+                  await AuthService.signInUsingEmailPassword(
+                      email: _email.text, password: _password.text);
               if (loginUser is User) {
-                if(!context.mounted) return;
+                if (!context.mounted) return;
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (final context) => HomePage()),

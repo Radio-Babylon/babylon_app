@@ -22,9 +22,11 @@ class ConnectionsScreen extends StatefulWidget {
 }
 
 // Define the corresponding State class for ConnectionsScreen with a TabController for navigation.
-class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTickerProviderStateMixin {
+class _ConnectionsScreenState extends State<ConnectionsScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  TextEditingController searchController = TextEditingController(); // For search functionality.
+  TextEditingController searchController =
+      TextEditingController(); // For search functionality.
   List<_Person> searchResults = []; // Holds the search results.
 
   @override
@@ -43,15 +45,18 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
   // Placeholder for search logic, currently updates searchResults based on query.
   void _search(final String query) {
     setState(() {
-      searchResults = List.generate(15, (final index) => _Person("User $index", "Bio $index", "Interests $index", "Languages $index"))
-          .where((final person) => person.name.toLowerCase().contains(query.toLowerCase()))
+      searchResults = List.generate(
+              15,
+              (final index) => _Person("User $index", "Bio $index",
+                  "Interests $index", "Languages $index"))
+          .where((final person) =>
+              person.name.toLowerCase().contains(query.toLowerCase()))
           .toList();
-
     });
   }
 
   @override
-  Widget build(final BuildContext context){
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -71,7 +76,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
           tabs: const [
             Tab(text: "MY CONNECTIONS"),
             Tab(text: "EXPLORE THE WORLD"),
-          ],        
+          ],
           indicatorColor: Colors.white,
           labelColor: Colors.white,
           unselectedLabelColor: Colors.black,
@@ -81,7 +86,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
         controller: _tabController,
         children: [
           _buildMyConnectionsTab(), // "My Connections" tab with search and sections.
-          _buildExploreWorldTab(),  // "Explore The World" tab with search functionality.
+          _buildExploreWorldTab(), // "Explore The World" tab with search functionality.
         ],
       ),
     );
@@ -93,9 +98,9 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
       child: Column(
         children: [
           _buildFriendRequestsWidget(), // Friend Requests section.
-          _buildNewUsersWidget(),      // New Users section.
-          _buildChatsWidget(),         // Chats section.
-          _buildGroupChatsWidget(),    // Group Chats section.
+          _buildNewUsersWidget(), // New Users section.
+          _buildChatsWidget(), // Chats section.
+          _buildGroupChatsWidget(), // Group Chats section.
         ],
       ),
     );
@@ -111,160 +116,191 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
           labelText: "Search Connections",
           suffixIcon: Icon(Icons.search),
         ),
-        onChanged: _search, // Invokes the search function with the current query.
+        onChanged:
+            _search, // Invokes the search function with the current query.
       ),
     );
   }
 
   // Constructs the "Friend Requests" widget with a horizontal list of profiles.
   Widget _buildFriendRequestsWidget() {
-
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text("Friend Requests", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold) ),
-          ),
-          Container(
-            height: 200, // Fixed height for the horizontal list of friend request cards.
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 5, // Example: Five friend requests.
-              itemBuilder: (final context, final index) {
-                // Each item is a profile card with image, name, and action buttons for friend requests.
-                return Container(
-                  width: 240, // Adjusted width for each friend request card to accommodate horizontal buttons.
-                  margin: EdgeInsets.only(left: 16.0, right: index == 4 ? 16.0 : 0), // Add right margin to the last card.
-                  child: Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround, // Space elements evenly within the card.
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: 8.0),
-                          child: CircleAvatar(
-                            radius: 40,
-                            backgroundImage: AssetImage("assets/images/default_user_logo.png"),
-                          ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text("Friend Requests",
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(fontWeight: FontWeight.bold)),
+        ),
+        Container(
+          height:
+              200, // Fixed height for the horizontal list of friend request cards.
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 5, // Example: Five friend requests.
+            itemBuilder: (final context, final index) {
+              // Each item is a profile card with image, name, and action buttons for friend requests.
+              return Container(
+                width:
+                    240, // Adjusted width for each friend request card to accommodate horizontal buttons.
+                margin: EdgeInsets.only(
+                    left: 16.0,
+                    right: index == 4
+                        ? 16.0
+                        : 0), // Add right margin to the last card.
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment
+                        .spaceAround, // Space elements evenly within the card.
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 8.0),
+                        child: CircleAvatar(
+                          radius: 40,
+                          backgroundImage:
+                              AssetImage("assets/images/default_user_logo.png"),
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text("_Person $index", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
-                        ),
-                        // Horizontal buttons for "View Profile", "Accept", and "Decline" actions.
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Space buttons evenly.
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.remove_red_eye_outlined, color: Colors.blue),
-                              onPressed: () {   Navigator.push(
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text("_Person $index",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center),
+                      ),
+                      // Horizontal buttons for "View Profile", "Accept", and "Decline" actions.
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment
+                            .spaceEvenly, // Space buttons evenly.
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.remove_red_eye_outlined,
+                                color: Colors.blue),
+                            onPressed: () {
+                              Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (final context) => OtherProfile()),
+                                MaterialPageRoute(
+                                    builder: (final context) => OtherProfile()),
                               );
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.check, color: Colors.green),
-                              onPressed: () {
-                                // Placeholder for "Accept" action.
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.close, color: Colors.red),
-                              onPressed: () {
-                                // Placeholder for "Decline" action.
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.check, color: Colors.green),
+                            onPressed: () {
+                              // Placeholder for "Accept" action.
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.close, color: Colors.red),
+                            onPressed: () {
+                              // Placeholder for "Decline" action.
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
-        ],
-
+        ),
+      ],
     );
   }
-
-
 
   // Constructs the "New Users" widget with a horizontal list of new user profiles.
   Widget _buildNewUsersWidget() {
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text("New Users!", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
-          ),
-          Container(
-            height: 200, // Fixed height for the horizontal list of profile cards.
-            child: ListView.builder(
-
-              scrollDirection: Axis.horizontal,
-              itemCount: 5, // Example: Five new user profiles.
-              itemBuilder: (final context, final index) {
-                // Each item is a profile card with image, name, and action buttons for new users.
-                return Container(
-                  width: 160, // Fixed width for each profile card.
-                  margin: EdgeInsets.only(left: 16.0, right: index == 4 ? 16.0 : 0), // Add right margin to the last card.
-                  child: Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                    child: Wrap(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              CircleAvatar(
-                                radius: 40,
-                                backgroundImage: AssetImage("assets/images/default_user_logo.png"),
-                              ),
-                              SizedBox(height: 10),
-                              Text("New User $index", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
-                              ButtonBar(
-                                alignment: MainAxisAlignment.center,
-                                children: [
-                                  IconButton(
-                                    icon: Icon(Icons.remove_red_eye_outlined, color: Colors.blue),
-                                    onPressed: () {   Navigator.push(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text("New Users!",
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(fontWeight: FontWeight.bold)),
+        ),
+        Container(
+          height: 200, // Fixed height for the horizontal list of profile cards.
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 5, // Example: Five new user profiles.
+            itemBuilder: (final context, final index) {
+              // Each item is a profile card with image, name, and action buttons for new users.
+              return Container(
+                width: 160, // Fixed width for each profile card.
+                margin: EdgeInsets.only(
+                    left: 16.0,
+                    right: index == 4
+                        ? 16.0
+                        : 0), // Add right margin to the last card.
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0)),
+                  child: Wrap(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 40,
+                              backgroundImage: AssetImage(
+                                  "assets/images/default_user_logo.png"),
+                            ),
+                            SizedBox(height: 10),
+                            Text("New User $index",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center),
+                            ButtonBar(
+                              alignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.remove_red_eye_outlined,
+                                      color: Colors.blue),
+                                  onPressed: () {
+                                    Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (final context) => OtherProfile()),
+                                      MaterialPageRoute(
+                                          builder: (final context) =>
+                                              OtherProfile()),
                                     );
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.chat_bubble_outline, color: Colors.blue),
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (final context) => ChatView()),
-                                      );
-                                      // Placeholder for "Chat" action.
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                  },
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.chat_bubble_outline,
+                                      color: Colors.blue),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (final context) =>
+                                              ChatView()),
+                                    );
+                                    // Placeholder for "Chat" action.
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
-        ],
-
+        ),
+      ],
     );
   }
-
 
   // Constructs the "Chats" widget with a horizontal list of ongoing chats.
   Widget _buildChatsWidget() {
@@ -277,21 +313,30 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
         children: [
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text("Chats", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+            child: Text("Chats",
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(fontWeight: FontWeight.bold)),
           ),
           ListView.builder(
-            physics: NeverScrollableScrollPhysics(), // Disables scrolling within ListView.
-            shrinkWrap: true, // Allows ListView to occupy space only for its children.
+            physics:
+                NeverScrollableScrollPhysics(), // Disables scrolling within ListView.
+            shrinkWrap:
+                true, // Allows ListView to occupy space only for its children.
             itemCount: 5, // Example: Five group chats.
             itemBuilder: (final context, final index) {
               // Each item represents a group chat with title, the last message preview, and a button to open the chat.
               return ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                 leading: CircleAvatar(
-                  backgroundImage: AssetImage("assets/images/default_user_logo.png"), // Placeholder for group snapshot.
+                  backgroundImage: AssetImage(
+                      "assets/images/default_user_logo.png"), // Placeholder for group snapshot.
                   radius: 25, // Adjust the size of the CircleAvatar here.
                 ),
-                title: Text("User $index", style: TextStyle(fontWeight: FontWeight.bold)),
+                title: Text("User $index",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 subtitle: Text("The last message in the conversation.."),
                 trailing: IconButton(
                   icon: Icon(Icons.chat_bubble_outline, color: Colors.blue),
@@ -307,7 +352,6 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
     );
   }
 
-
   // Constructs the "Group Chats" widget with a vertical list of group chats.
   Widget _buildGroupChatsWidget() {
     return Card(
@@ -319,28 +363,38 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
         children: [
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text("Group Chats", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+            child: Text("Group Chats",
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(fontWeight: FontWeight.bold)),
           ),
           ListView.builder(
-            physics: NeverScrollableScrollPhysics(), // Disables scrolling within ListView.
-            shrinkWrap: true, // Allows ListView to occupy space only for its children.
+            physics:
+                NeverScrollableScrollPhysics(), // Disables scrolling within ListView.
+            shrinkWrap:
+                true, // Allows ListView to occupy space only for its children.
             itemCount: 5, // Example: Five group chats.
             itemBuilder: (final context, final index) {
               // Each item represents a group chat with title, member details, and a button to open the chat.
               return ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                 leading: CircleAvatar(
-                  backgroundImage: AssetImage("assets/images/logowhite.png"), // Placeholder for group snapshot.
+                  backgroundImage: AssetImage(
+                      "assets/images/logowhite.png"), // Placeholder for group snapshot.
                   radius: 25, // Adjust the size of the CircleAvatar here.
                 ),
-                title: Text("Group Chat $index", style: TextStyle(fontWeight: FontWeight.bold)),
+                title: Text("Group Chat $index",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 subtitle: Text("Members, Topics, etc."),
                 trailing: IconButton(
                   icon: Icon(Icons.chat_bubble_outline, color: Colors.blue),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (final context) => GroupChatView()),
+                      MaterialPageRoute(
+                          builder: (final context) => GroupChatView()),
                       // Placeholder for 'Chat' action.
                     );
                   },
@@ -357,7 +411,8 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                 onPressed: () {
                   // Placeholder for creating new group chat.
                 },
-                backgroundColor: Colors.blue, // Customize the button color to fit your app theme.
+                backgroundColor: Colors
+                    .blue, // Customize the button color to fit your app theme.
                 child: Icon(Icons.add),
               ),
             ),
@@ -368,11 +423,13 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
   }
 
   // Helper method to construct a profile card with image, name, and action buttons.
-  Widget buildProfileCard(final String imagePath, final String name, final List<String> buttonLabels) {
+  Widget buildProfileCard(final String imagePath, final String name,
+      final List<String> buttonLabels) {
     return Card(
       child: Column(
         children: [
-          Image.asset(imagePath, height: 100, width: 100), // User profile picture.
+          Image.asset(imagePath,
+              height: 100, width: 100), // User profile picture.
           Text(name), // User name.
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -384,7 +441,8 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                     // Navigating to OtherProfile when "View Profile" is tapped.
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (final context) => OtherProfile()),
+                      MaterialPageRoute(
+                          builder: (final context) => OtherProfile()),
                     );
                   },
                   child: Text(label),
@@ -417,13 +475,15 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
             itemBuilder: (final context, final index) {
               // Use "searchResults" if not empty; otherwise, generate default list items.
               final person = searchResults.isEmpty
-                  ? _Person("User $index", "Bio $index", "Interests $index", "Languages $index")
+                  ? _Person("User $index", "Bio $index", "Interests $index",
+                      "Languages $index")
                   : searchResults[index];
 
               // Card widget for each profile with a photo, name, bio, and action buttons.
               return Card(
                 margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
                 elevation: 3.0,
                 child: IntrinsicHeight(
                   child: Row(
@@ -433,19 +493,26 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: CircleAvatar(
-                          radius: 30.0, // Adjust the size of the profile picture here.
-                          backgroundImage: AssetImage("assets/images/default_user_logo.png"),
+                          radius:
+                              30.0, // Adjust the size of the profile picture here.
+                          backgroundImage:
+                              AssetImage("assets/images/default_user_logo.png"),
                         ),
                       ),
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsets.only(top: 10.0, right: 10.0, bottom: 10.0),
+                          padding: EdgeInsets.only(
+                              top: 10.0, right: 10.0, bottom: 10.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(person.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
+                              Text(person.name,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16.0)),
                               SizedBox(height: 5),
-                              Text(person.bio, style: TextStyle(fontSize: 14.0)),
+                              Text(person.bio,
+                                  style: TextStyle(fontSize: 14.0)),
                             ],
                           ),
                         ),
@@ -457,8 +524,10 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            _buttonOption("View Profile", Icons.visibility, context, person),
-                            _buttonOption("Send Request", Icons.person_add, context, person),
+                            _buttonOption("View Profile", Icons.visibility,
+                                context, person),
+                            _buttonOption("Send Request", Icons.person_add,
+                                context, person),
                             _buttonOption("Chat", Icons.chat, context, person),
                           ],
                         ),
@@ -474,7 +543,8 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
     );
   }
 
-  Widget _buttonOption(final String title, final IconData icon, final BuildContext context, final _Person person) {
+  Widget _buttonOption(final String title, final IconData icon,
+      final BuildContext context, final _Person person) {
     // Function to create a small, styled button for each action.
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.0),
@@ -485,10 +555,12 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
         icon: Icon(icon, size: 18.0),
         label: Text(title, style: TextStyle(fontSize: 12.0)),
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white, backgroundColor: Colors.blue.shade200, // Text color
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.blue.shade200, // Text color
           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0), // Rounded corners for a modern look
+            borderRadius: BorderRadius.circular(
+                15.0), // Rounded corners for a modern look
           ),
           textStyle: TextStyle(
             fontWeight: FontWeight.bold, // Bold text for clarity
@@ -497,7 +569,6 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> with SingleTicker
       ),
     );
   }
-
 
 // Additional helper methods for building connection cards, handling accept/decline logic, etc., can be added here.
 }

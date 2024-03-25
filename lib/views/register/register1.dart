@@ -15,7 +15,8 @@ class CreateAccountPage extends StatelessWidget {
         title: Text("Create a New Account"), // Title of the AppBar.
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.0), // Padding around the form.
+        padding:
+            EdgeInsets.symmetric(horizontal: 16.0), // Padding around the form.
         alignment: Alignment.center,
         child: CreateAccountForm(), // The form widget for account creation.
       ),
@@ -48,7 +49,6 @@ class CreateAccountFormState extends State<CreateAccountForm> {
     "Country of Origin": _country,
     "Password": _password,
     "Confirm Password": _rePassword,
-
   };
 
   late final Map<String, String> userInfo = {
@@ -82,7 +82,10 @@ class CreateAccountFormState extends State<CreateAccountForm> {
     super.dispose();
   }
 
-  Widget _buildTextField({required final String labelText, final bool isPassword = false, final bool hasDatePicker = false}) {
+  Widget _buildTextField(
+      {required final String labelText,
+      final bool isPassword = false,
+      final bool hasDatePicker = false}) {
     // Helper method to build text fields with common styling.
     return Padding(
       padding: const EdgeInsets.only(
@@ -107,17 +110,18 @@ class CreateAccountFormState extends State<CreateAccountForm> {
         },
         readOnly: hasDatePicker,
         onTap: () async {
-          if(hasDatePicker){
+          if (hasDatePicker) {
             final DateTime? pickedDate = await showDatePicker(
-              context: context, initialDate: DateTime.now(),
-              firstDate: DateTime(1901),
-              lastDate: DateTime(2101)
-            );
-                  
-            if(pickedDate != null ){
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(1901),
+                lastDate: DateTime(2101));
+
+            if (pickedDate != null) {
               print(pickedDate);
               setState(() {
-                  _dateOfBirth.text = "${pickedDate.year}-${pickedDate.month < 10 ? "0${pickedDate.month}" : pickedDate.month}-${pickedDate.day}";
+                _dateOfBirth.text =
+                    "${pickedDate.year}-${pickedDate.month < 10 ? "0${pickedDate.month}" : pickedDate.month}-${pickedDate.day}";
               });
             }
           }
@@ -148,15 +152,15 @@ class CreateAccountFormState extends State<CreateAccountForm> {
             // _buildTextField(labelText: "Country of Origin"),
             _buildTextField(labelText: "Password", isPassword: true),
             _buildTextField(labelText: "Confirm Password", isPassword: true),
-            Padding(padding: EdgeInsets.symmetric(vertical: 8),
-              child:
-                Text(
+            Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Text(
                   _error!,
                   style: TextStyle(color: Colors.red),
-              )
-            ),
+                )),
             Padding(
-              padding: const EdgeInsets.only(top: 8), // Adds vertical padding around the button.
+              padding: const EdgeInsets.only(
+                  top: 8), // Adds vertical padding around the button.
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF006400),
@@ -169,29 +173,32 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                 onPressed: () async {
                   final fullName = _name.text;
                   try {
-                    AuthValidator.validateRegisterForm(_name.text, _email.text, _password.text, _rePassword.text, _dateOfBirth.text);
+                    AuthValidator.validateRegisterForm(_name.text, _email.text,
+                        _password.text, _rePassword.text, _dateOfBirth.text);
                     final User? currentUser =
-                      await AuthService.registerUsingEmailPassword(
-                          name: fullName,
-                          email: _email.text,
-                          password: _password.text);
+                        await AuthService.registerUsingEmailPassword(
+                            name: fullName,
+                            email: _email.text,
+                            password: _password.text);
                     if (currentUser is User) {
-                      await UserService.fillUser(user: currentUser, userInfo: userInfo);
-                      if(!context.mounted) return;
+                      await UserService.fillUser(
+                          user: currentUser, userInfo: userInfo);
+                      if (!context.mounted) return;
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (final context) => RegisterPage2()),
+                        MaterialPageRoute(
+                            builder: (final context) => RegisterPage2()),
                       );
                     }
                   } catch (e) {
-                    switch(e.runtimeType) {
+                    switch (e.runtimeType) {
                       case FirebaseAuthException _:
                         setState(() {
-                          _error = (e as FirebaseAuthException).message; 
+                          _error = (e as FirebaseAuthException).message;
                         });
                       default:
                         setState(() {
-                          _error = e.toString(); 
+                          _error = e.toString();
                         });
                     }
                   }

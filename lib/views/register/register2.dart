@@ -98,7 +98,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 //   MaterialPageRoute(builder: (context) => RegisterPage3()),
                 // );
 
-                if(!context.mounted) return;
+                if (!context.mounted) return;
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (final context) => HomePage()),

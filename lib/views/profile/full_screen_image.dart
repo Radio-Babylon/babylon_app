@@ -1,11 +1,13 @@
 import "package:flutter/material.dart";
 
 class FullScreenImage extends StatelessWidget {
-  final String imagePath; // Path to the image that will be displayed in full screen.
+  final String
+      imagePath; // Path to the image that will be displayed in full screen.
   final String name; // Name of the person to be displayed in the AppBar.
 
   // Constructor requiring the image path and the person"s name.
-  const FullScreenImage({super.key, required this.imagePath, required this.name});
+  const FullScreenImage(
+      {super.key, required this.imagePath, required this.name});
 
   @override
   Widget build(final BuildContext context) {
@@ -13,17 +15,23 @@ class FullScreenImage extends StatelessWidget {
       // AppBar configuration
       appBar: AppBar(
         title: Text(name), // Display the person"s name in the AppBar.
-        backgroundColor: Colors.green, // Sets the AppBar"s background color to green.
+        backgroundColor:
+            Colors.green, // Sets the AppBar"s background color to green.
         leading: IconButton(
           icon: Icon(Icons.arrow_back), // Icon for the back button.
-          onPressed: () => Navigator.pop(context), // Action to return to the previous screen when the back button is pressed.
+          onPressed: () => Navigator.pop(
+              context), // Action to return to the previous screen when the back button is pressed.
         ),
       ),
-      backgroundColor: Colors.black, // Sets the background color of the screen to black.
+      backgroundColor:
+          Colors.black, // Sets the background color of the screen to black.
       body: GestureDetector(
-        onTap: () => Navigator.pop(context), // Allows closing the image by tapping anywhere on the screen.
+        onTap: () => Navigator.pop(
+            context), // Allows closing the image by tapping anywhere on the screen.
         child: Center(
-          child: Image.asset(imagePath, fit: BoxFit.contain), // Displays the image in full screen, fitting it to the screen while maintaining the aspect ratio.
+          child: Image.asset(imagePath,
+              fit: BoxFit
+                  .contain), // Displays the image in full screen, fitting it to the screen while maintaining the aspect ratio.
         ),
       ),
     );

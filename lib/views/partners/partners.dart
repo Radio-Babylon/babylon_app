@@ -26,69 +26,69 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
   @override
   Widget build(final BuildContext context) {
     return Scaffold(
-       // Your drawer widget
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            const Text("Partners"),
-            SizedBox(
-              height: 55,
-              width: 55,
-              child: Image.asset("assets/images/logowhite.png"), // Your logo asset
-            ),
-          ],
+        // Your drawer widget
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              const Text("Partners"),
+              SizedBox(
+                height: 55,
+                width: 55,
+                child: Image.asset(
+                    "assets/images/logowhite.png"), // Your logo asset
+              ),
+            ],
+          ),
+          backgroundColor: Colors.green, // Adjust the color as needed
         ),
-        backgroundColor: Colors.green, // Adjust the color as needed
-      ),
-      body: DefaultTextStyle(
-        style: Theme.of(context).textTheme.displayMedium!,
-        textAlign: TextAlign.center,
-        child: FutureBuilder<List<Partner>>(
-          future: _partners, // a previously-obtained Future<String> or null
-          builder:
-              (final BuildContext context, final AsyncSnapshot<List<Partner>> snapshot) {
-            List<Widget> children;
-            if (snapshot.hasData) {
-              print(1);
-              print(snapshot.data);
-              children = <Widget>[
-                Padding(
+        body: DefaultTextStyle(
+          style: Theme.of(context).textTheme.displayMedium!,
+          textAlign: TextAlign.center,
+          child: FutureBuilder<List<Partner>>(
+            future: _partners, // a previously-obtained Future<String> or null
+            builder: (final BuildContext context,
+                final AsyncSnapshot<List<Partner>> snapshot) {
+              List<Widget> children;
+              if (snapshot.hasData) {
+                print(1);
+                print(snapshot.data);
+                children = <Widget>[
+                  Padding(
                     padding: EdgeInsets.only(left: 16, top: 16),
                     child: Text("OUR PARTNERS",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
-                  ...snapshot.data!.map((final aPartner) =>  
-                    Card(
-                      child: ListTile(
-                        leading: Image.network(aPartner.pictureURL!),
-                        title: Text(aPartner.name!),
-                        subtitle: Text("What you can get: ${aPartner.discount}"),
-                        trailing: Icon(Icons.view_list),
-                        onTap: () => 
-                          showDialog(
-                            context: context,
-                            builder: (final BuildContext context) {
-                              return AlertDialog(
-                                title: Text(aPartner.name!),
-                                content: Text("You can get ${aPartner.discount} at ${aPartner.location}"),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: Text("Close"),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          )
-                      ),
-                  ))
-              ];
-            } else if (snapshot.hasError) {
+                  ...snapshot.data!.map((final aPartner) => Card(
+                        child: ListTile(
+                            leading: Image.network(aPartner.pictureURL!),
+                            title: Text(aPartner.name!),
+                            subtitle:
+                                Text("What you can get: ${aPartner.discount}"),
+                            trailing: Icon(Icons.view_list),
+                            onTap: () => showDialog(
+                                  context: context,
+                                  builder: (final BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text(aPartner.name!),
+                                      content: Text(
+                                          "You can get ${aPartner.discount} at ${aPartner.location}"),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text("Close"),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                )),
+                      ))
+                ];
+              } else if (snapshot.hasError) {
                 children = <Widget>[
                   const Icon(
                     Icons.error_outline,
@@ -126,13 +126,12 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
                   )
                 ];
               }
-            return ListView(
-              children: children,
-            );
-          },
-        ),
-      )
-    );
+              return ListView(
+                children: children,
+              );
+            },
+          ),
+        ));
   }
 }
 
@@ -147,7 +146,8 @@ class PartnerTile extends StatelessWidget {
       builder: (final BuildContext context) {
         return AlertDialog(
           title: Text(partner.name!),
-          content: Text("You can get ${partner.discount} at ${partner.location}"),
+          content:
+              Text("You can get ${partner.discount} at ${partner.location}"),
           actions: <Widget>[
             TextButton(
               child: Text("Close"),

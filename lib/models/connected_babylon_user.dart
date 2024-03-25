@@ -3,7 +3,7 @@ import "package:babylon_app/models/babylon_user.dart";
 // Singleton class -> we can have only one user connected so we can manage the instance properly
 
 class ConnectedBabylonUser extends BabylonUser {
-  // Intern constructor 
+  // Intern constructor
   ConnectedBabylonUser._internal() : super();
 
   static final ConnectedBabylonUser _instance =
