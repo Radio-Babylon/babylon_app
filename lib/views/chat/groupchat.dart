@@ -1,3 +1,7 @@
+import "package:babylon_app/models/connected_babylon_user.dart";
+import "package:babylon_app/models/message.dart";
+import "package:babylon_app/services/chat/chat_service.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 
@@ -28,29 +32,6 @@ class GroupChatView extends StatefulWidget {
 }
 
 class _GroupChatViewState extends State<GroupChatView> {
-  final List<GroupMessage> messages = [
-    // Predefined example messages to simulate a chat
-    GroupMessage(
-      User("1", "Alice", "assets/images/profile1.jpg"),
-      "Hi everyone, what's up?",
-      DateTime.now().subtract(Duration(minutes: 15)),
-    ),
-    GroupMessage(
-      User("2", "Bob", "assets/images/profile2.jpg"),
-      "Just working on my Flutter project!",
-      DateTime.now().subtract(Duration(minutes: 10)),
-    ),
-    GroupMessage(
-      User("3", "Charlie", "assets/images/profile3.jpg"),
-      "Thinking about the next vacation spot.",
-      DateTime.now().subtract(Duration(minutes: 5)),
-    ),
-    GroupMessage(
-      User("4", "Diana", "assets/images/profile4.jpg"),
-      "That sounds exciting, Charlie!",
-      DateTime.now().subtract(Duration(minutes: 1)),
-    ),
-  ];
 
   final TextEditingController _messageController = TextEditingController();
 
@@ -62,7 +43,7 @@ class _GroupChatViewState extends State<GroupChatView> {
 
     if (messageText.isNotEmpty) {
       setState(() {
-        messages.add(GroupMessage(currentUser, messageText, DateTime.now()));
+        // messages.add(GroupMessage(currentUser, messageText, DateTime.now()));
         _messageController.clear();
       });
     }
@@ -78,12 +59,9 @@ class _GroupChatViewState extends State<GroupChatView> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
+            child: Container(
               padding: EdgeInsets.all(10.0),
-              itemCount: messages.length,
-              itemBuilder: (final context, final index) {
-                return _buildMessageTile(messages[index]);
-              },
+              child: _buildMessageStream(),
             ),
           ),
           _buildMessageInputField(),
@@ -92,10 +70,24 @@ class _GroupChatViewState extends State<GroupChatView> {
     );
   }
 
+  Widget _buildMessageStream() {
+    return StreamBuilder<List<Message>>(
+      stream: ChatService.getChatStream(chatUID: "neEHRgTfZdYEWkPH26Hm").stream,
+      builder: (BuildContext context, AsyncSnapshot<List<Message>> snapshot) {
+        if (snapshot.hasError) return Text('Something went wrong');
+        if (snapshot.connectionState == ConnectionState.waiting) return Text("Loading");
+        return Column(
+          children: [
+            ...snapshot.data!.map((aMessage) => _buildMessageTile(aMessage))
+          ],
+        );
+      }
+    );
+  }
+
   // Builds a single message tile with enhanced UI
-  Widget _buildMessageTile(final GroupMessage message) {
-    final bool isCurrentUser =
-        message.user.id == "5"; // Check if the message is from the current user
+  Widget _buildMessageTile(final Message message) {
+    final bool isCurrentUser = message.sender!.userUID == ConnectedBabylonUser().userUID; // Check if the message is from the current user
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       child: Row(
@@ -103,7 +95,7 @@ class _GroupChatViewState extends State<GroupChatView> {
         children: [
           if (!isCurrentUser) // Only show profile picture for other users
             CircleAvatar(
-              backgroundImage: AssetImage(message.user.profilePic),
+              backgroundImage: NetworkImage(message.sender!.imagePath),
             ),
           if (!isCurrentUser) // Add spacing only if the profile picture is displayed
             SizedBox(width: 10),
@@ -115,40 +107,39 @@ class _GroupChatViewState extends State<GroupChatView> {
               children: [
                 if (!isCurrentUser) // Only show the user's name for other users
                   Text(
-                    message.user.name,
+                    message.sender!.fullName,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                Container(
-                  margin: EdgeInsets.only(top: 5),
-                  padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: isCurrentUser ? Colors.green[50] : Colors.grey[200],
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        message.text,
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Text(
-                          DateFormat("hh:mm aaa").format(message.date),
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
-                        ),
-                      ),
-                    ],
-                  ),
+
+    Container(
+    margin: EdgeInsets.only(top: 5),
+    padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+    decoration: BoxDecoration(
+    color: isCurrentUser ? Colors.green[50] : Colors.grey[200],
+    borderRadius: BorderRadius.circular(20),
+    ),
+    child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisSize: MainAxisSize.min,
+    children: [
+    Text(
+    message.message!,
+    style: TextStyle(fontSize: 16),
+    ),
+    Padding(
+    padding: const EdgeInsets.only(top: 5),
+    child: Text( message.time.toString(),
+    style: TextStyle(color: Colors.grey, fontSize: 12),
+    ),
                 ),
               ],
             ),
           ),
         ],
       ),
-    );
+    ),], ),);
+
+
   }
 
   // Builds the message input field with enhanced UX
