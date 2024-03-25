@@ -1,5 +1,8 @@
 import "package:flutter/material.dart";
 import "package:babylon_app/views/profile/other_profile.dart";
+import 'package:babylon_app/views/chat/chat.dart';
+import 'package:babylon_app/views/chat/groupchat.dart';
+import 'package:babylon_app/views/chat/createnewgroupchat.dart';
 import "package:babylon_app/views/chat/chat.dart";
 import "package:babylon_app/views/chat/groupchat.dart";
 
@@ -409,10 +412,12 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
               // Floating action button for creating a new group chat, placed at the bottom right.
               child: FloatingActionButton(
                 onPressed: () {
-                  // Placeholder for creating new group chat.
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CreateNewGroupChat()),
+                  );
                 },
-                backgroundColor: Colors
-                    .blue, // Customize the button color to fit your app theme.
+                backgroundColor: Colors.blue,
                 child: Icon(Icons.add),
               ),
             ),

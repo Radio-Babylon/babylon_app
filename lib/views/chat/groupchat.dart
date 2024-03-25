@@ -4,6 +4,7 @@ import "package:babylon_app/services/chat/chat_service.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
+import 'package:babylon_app/views/chat/groupchatinfo.dart';
 
 // Main widget for the group chat, enhanced for better UI and UX
 class GroupChatView extends StatefulWidget {
@@ -38,6 +39,17 @@ class _GroupChatViewState extends State<GroupChatView> {
       appBar: AppBar(
         title: Text("Group Chat NAME"),
         backgroundColor: Colors.green,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.info_outline),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GroupChatInfo()),
+                );
+              },
+            )
+    ]
       ),
       body: Column(
         children: [
