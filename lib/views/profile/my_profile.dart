@@ -2,6 +2,7 @@ import "dart:io";
 
 import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/models/connected_babylon_user.dart";
+import "package:babylon_app/services/chat/chat_service.dart";
 import "package:babylon_app/services/user/user_service.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
@@ -282,14 +283,20 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   Widget buildUpgradeButton() => ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        shape: StadiumBorder(),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-      ),
-      child: Text("Upgrade To PRO"),
-      onPressed: () => activateButton());
+    style: ElevatedButton.styleFrom(
+      shape: StadiumBorder(),
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      foregroundColor: Colors.white,
+      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+    ),
+
+    child: Text("Upgrade To PRO"),
+    onPressed: () async => {
+      activateButton(),
+      await ChatService.getChatMessages(chatUID: "neEHRgTfZdYEWkPH26Hm")
+    }
+      
+  );
 
   Widget buildAbout(final BabylonUser user) => Container(
         padding: EdgeInsets.symmetric(horizontal: 48),
