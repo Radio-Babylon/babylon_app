@@ -19,13 +19,14 @@ class _GroupChatViewState extends State<GroupChatView> {
 
   // Handles sending a message
   void _sendMessage() {
-    // final User currentUser =
-    //     User("5", "Me", "assets/images/default_user_logo.png");
-    final String messageText = _messageController.text.trim();
+    ChatService.sendMessage(chatUID: "neEHRgTfZdYEWkPH26Hm", message: Message(
+      message: _messageController.text.trim(),
+      sender: ConnectedBabylonUser(),
+      time: Timestamp.now()
+    ));
 
-    if (messageText.isNotEmpty) {
+    if (_messageController.text.isNotEmpty) {
       setState(() {
-        // messages.add(GroupMessage(currentUser, messageText, DateTime.now()));
         _messageController.clear();
       });
     }

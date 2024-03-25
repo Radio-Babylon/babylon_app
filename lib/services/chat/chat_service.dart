@@ -27,4 +27,16 @@ class ChatService {
       throw(e);
     }
   }
+
+  static Future<void> sendMessage({required final String chatUID, required final Message message}) async {
+    try {
+      FirebaseFirestore.instance.collection("chats").doc(chatUID).collection("messages").doc().set({
+        "message": message.message,
+        "time": message.time,
+        "sender": message.sender!.userUID
+      });
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
