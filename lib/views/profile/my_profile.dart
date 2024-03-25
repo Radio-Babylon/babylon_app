@@ -162,10 +162,11 @@ class _MyProfileState extends State<MyProfile> {
                 });
                 UserService.setUpConnectedBabylonUser(user
                     .userUID); // await BabylonUser.updateCurrentBabylonUserData(currentUserUID: user.userUID);
-                if (_fileImage != null)
+                if (_fileImage != null) {
                   UserService.addPhoto(
                       user: FirebaseAuth.instance.currentUser!,
                       file: _fileImage!);
+                }
                 await Future.delayed(Duration(seconds: 1));
                 setState(() {
                   formState = "saved";
