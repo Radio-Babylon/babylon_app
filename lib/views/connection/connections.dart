@@ -78,7 +78,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
           controller: _tabController,
           tabs: const [
             Tab(text: "MY CONNECTIONS"),
-            Tab(text: "EXPLORE THE WORLD"),
+            Tab(text: "DISCOVER PEOPLE"),
           ],
           indicatorColor: Colors.white,
           labelColor: Colors.white,
@@ -223,7 +223,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
       children: [
         Padding(
           padding: EdgeInsets.all(16.0),
-          child: Text("New Users!",
+          child: Text("Welcome New Users!",
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
@@ -414,7 +414,8 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CreateNewGroupChat()),
+                    MaterialPageRoute(
+                        builder: (context) => CreateNewGroupChat()),
                   );
                 },
                 backgroundColor: Colors.blue,

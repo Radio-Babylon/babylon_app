@@ -54,7 +54,7 @@ class _FutureBuilderNewsState extends State<FutureBuilderNews> {
                 children = <Widget>[
                   Padding(
                     padding: EdgeInsets.only(left: 16, top: 16),
-                    child: Text("LATEST NEWS",
+                    child: Text("Latest news",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),

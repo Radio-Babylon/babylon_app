@@ -1,10 +1,10 @@
-import "package:babylon_app/models/partner.dart";
+import "package:babylon_app/models/offer.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_storage/firebase_storage.dart";
 
-class PartnerService {
-  static Future<List<Partner>> getPartners() async {
-    final List<Partner> result = List.empty(growable: true);
+class OfferService {
+  static Future<List<Offer>> getOffers() async {
+    final List<Offer> result = List.empty(growable: true);
     try {
       final db = FirebaseFirestore.instance;
       final snapShot = await db.collection("partners").get();
@@ -15,7 +15,7 @@ class PartnerService {
             .ref()
             .child(partner["picture"])
             .getDownloadURL();
-        result.add(Partner(
+        result.add(Offer(
             snapShot.id,
             partner["name"],
             partner["location"],

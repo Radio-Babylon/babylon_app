@@ -7,7 +7,7 @@ import "package:babylon_app/views/events/events.dart";
 import "package:babylon_app/views/forum/forum.dart";
 import "package:babylon_app/views/navigation_menu.dart";
 import "package:babylon_app/views/news/news.dart";
-import "package:babylon_app/views/partners/partners.dart";
+import "package:babylon_app/views/offers/offers.dart";
 import "package:babylon_app/views/radio/radio.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
     NewsScreen(), // Placeholder for News
     EventsScreen(),
     ForumScreen(),
-    PartnersScreen(),
+    OffersScreen(),
     RadioScreen()
   ];
 

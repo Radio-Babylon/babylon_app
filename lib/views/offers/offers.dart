@@ -1,27 +1,27 @@
-import "package:babylon_app/models/partner.dart";
-import "package:babylon_app/services/partner/partner_service.dart";
+import "package:babylon_app/models/offer.dart";
+import "package:babylon_app/services/offer/offer_service.dart";
 import "package:flutter/material.dart";
 
-class PartnersScreen extends StatelessWidget {
-  const PartnersScreen({super.key});
+class OffersScreen extends StatelessWidget {
+  const OffersScreen({super.key});
 
   @override
   Widget build(final BuildContext context) {
     return const MaterialApp(
-      home: FutureBuilderPartners(),
+      home: FutureBuilderOffers(),
     );
   }
 }
 
-class FutureBuilderPartners extends StatefulWidget {
-  const FutureBuilderPartners({super.key});
+class FutureBuilderOffers extends StatefulWidget {
+  const FutureBuilderOffers({super.key});
 
   @override
-  State<FutureBuilderPartners> createState() => _FutureBuilderPartnersState();
+  State<FutureBuilderOffers> createState() => _FutureBuilderOffersState();
 }
 
-class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
-  final Future<List<Partner>> _partners = PartnerService.getPartners();
+class _FutureBuilderOffersState extends State<FutureBuilderOffers> {
+  final Future<List<Offer>> _partners = OfferService.getOffers();
 
   @override
   Widget build(final BuildContext context) {
@@ -31,7 +31,7 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const Text("Partners"),
+              const Text("Offers"),
               SizedBox(
                 height: 55,
                 width: 55,
@@ -45,10 +45,10 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
         body: DefaultTextStyle(
           style: Theme.of(context).textTheme.displayMedium!,
           textAlign: TextAlign.center,
-          child: FutureBuilder<List<Partner>>(
+          child: FutureBuilder<List<Offer>>(
             future: _partners, // a previously-obtained Future<String> or null
             builder: (final BuildContext context,
-                final AsyncSnapshot<List<Partner>> snapshot) {
+                final AsyncSnapshot<List<Offer>> snapshot) {
               List<Widget> children;
               if (snapshot.hasData) {
                 print(1);
@@ -56,25 +56,25 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
                 children = <Widget>[
                   Padding(
                     padding: EdgeInsets.only(left: 16, top: 16),
-                    child: Text("OUR PARTNERS",
+                    child: Text("Our Partner Offers",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
-                  ...snapshot.data!.map((final aPartner) => Card(
+                  ...snapshot.data!.map((final aOffer) => Card(
                         child: ListTile(
-                            leading: Image.network(aPartner.pictureURL!),
-                            title: Text(aPartner.name!),
+                            leading: Image.network(aOffer.pictureURL!),
+                            title: Text(aOffer.name!),
                             subtitle:
-                                Text("What you can get: ${aPartner.discount}"),
+                                Text("What you can get: ${aOffer.discount}"),
                             trailing: Icon(Icons.view_list),
                             onTap: () => showDialog(
                                   context: context,
                                   builder: (final BuildContext context) {
                                     return AlertDialog(
-                                      title: Text(aPartner.name!),
+                                      title: Text(aOffer.name!),
                                       content: Text(
-                                          "You can get ${aPartner.discount} at ${aPartner.location}"),
+                                          "You can get ${aOffer.discount} at ${aOffer.location}"),
                                       actions: <Widget>[
                                         TextButton(
                                           child: Text("Close"),
@@ -135,9 +135,9 @@ class _FutureBuilderPartnersState extends State<FutureBuilderPartners> {
   }
 }
 
-class PartnerTile extends StatelessWidget {
-  final Partner partner;
-  const PartnerTile({super.key, required this.partner});
+class OfferTile extends StatelessWidget {
+  final Offer partner;
+  const OfferTile({super.key, required this.partner});
 
   // Function to show details in a pop-up
   void _showDetails(final BuildContext context) {

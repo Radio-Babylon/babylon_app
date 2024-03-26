@@ -1,4 +1,4 @@
-class Partner {
+class Offer {
   // Attributes
 
   String? documentID;
@@ -11,7 +11,7 @@ class Partner {
 
   // Constructors
 
-  Partner(
+  Offer(
       final String? newDocumentID,
       final String? newName,
       final String? newLocation,

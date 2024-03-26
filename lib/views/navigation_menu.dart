@@ -56,7 +56,7 @@ class _PublicDrawerState extends State<PublicDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.business),
-            title: const Text("Partners"),
+            title: const Text("Offers"),
             onTap: () => widget.onItemSelected(5),
           ),
           ListTile(
