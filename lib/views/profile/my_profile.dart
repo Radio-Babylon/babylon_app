@@ -7,7 +7,7 @@ import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:image_picker/image_picker.dart";
 import "package:babylon_app/views/home.dart"; // Make sure this import is correct for your HomeScreen widget
-
+import "package:babylon_app/views/connection/my_friends.dart";
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
 
@@ -73,9 +73,30 @@ class _MyProfileState extends State<MyProfile> {
                   const SizedBox(height: 12),
                   buildName(user),
                   const SizedBox(height: 12),
-                  Center(
-                    child: buildUpgradeButton(),
+              Column(
+                children: <Widget>[
+                  ElevatedButton(
+                    onPressed: () {
+                      // Acción para "Upgrade to Premium"
+                    },
+                    child: Text("Upgrade to Premium"),
                   ),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Acción para "My Friends"
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (final context) => MyFriends()),
+                      );
+                    },
+                    child: Text("My Friends"),
+                  ),
+                  ],
+              ),
+
+
+
                   //const SizedBox(height: 24),
                   /*Center(
                     child: const Text(
