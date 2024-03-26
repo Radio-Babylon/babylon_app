@@ -83,6 +83,13 @@ class _MyProfileState extends State<MyProfile> {
                   ),
                   SizedBox(height: 10),
                   ElevatedButton(
+
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green.shade50,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    ),
                     onPressed: () {
                       // Acción para "My Friends"
                       Navigator.push(
