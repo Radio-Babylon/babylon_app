@@ -71,7 +71,7 @@ class _GroupChatViewState extends State<GroupChatView> {
       builder: (BuildContext context, AsyncSnapshot<List<Message>> snapshot) {
         if (snapshot.hasError) return Text('Something went wrong');
         if (snapshot.connectionState == ConnectionState.waiting) return Text("Loading");
-        return Column(
+        return ListView(
           children: [
             ...snapshot.data!.map((aMessage) => _buildMessageTile(aMessage))
           ],
