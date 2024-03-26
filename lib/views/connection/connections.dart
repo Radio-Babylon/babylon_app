@@ -1,10 +1,8 @@
 import "package:flutter/material.dart";
 import "package:babylon_app/views/profile/other_profile.dart";
-import 'package:babylon_app/views/chat/chat.dart';
-import 'package:babylon_app/views/chat/groupchat.dart';
-import 'package:babylon_app/views/chat/createnewgroupchat.dart';
 import "package:babylon_app/views/chat/chat.dart";
 import "package:babylon_app/views/chat/groupchat.dart";
+import "package:babylon_app/views/chat/createnewgroupchat.dart";
 
 // Define the _Person class to hold necessary information about a person.
 class _Person {
@@ -415,7 +413,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CreateNewGroupChat()),
+                        builder: (final context) => CreateNewGroupChat()),
                   );
                 },
                 backgroundColor: Colors.blue,

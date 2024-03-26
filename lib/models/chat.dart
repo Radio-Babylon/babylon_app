@@ -1,6 +1,5 @@
 import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/models/message.dart";
-import "package:cloud_firestore/cloud_firestore.dart";
 
 class Chat {
 

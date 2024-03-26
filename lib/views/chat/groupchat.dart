@@ -4,7 +4,7 @@ import "package:babylon_app/services/chat/chat_service.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
-import 'package:babylon_app/views/chat/groupchatinfo.dart';
+import "package:babylon_app/views/chat/groupchatinfo.dart";
 
 // Main widget for the group chat, enhanced for better UI and UX
 class GroupChatView extends StatefulWidget {
@@ -45,7 +45,7 @@ class _GroupChatViewState extends State<GroupChatView> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => GroupChatInfo()),
+                  MaterialPageRoute(builder: (final context) => GroupChatInfo()),
                 );
               },
             )
@@ -68,12 +68,12 @@ class _GroupChatViewState extends State<GroupChatView> {
   Widget _buildMessageStream() {
     return StreamBuilder<List<Message>>(
       stream: ChatService.getChatStream(chatUID: "neEHRgTfZdYEWkPH26Hm").stream,
-      builder: (BuildContext context, AsyncSnapshot<List<Message>> snapshot) {
-        if (snapshot.hasError) return Text('Something went wrong');
+      builder: (final BuildContext context, final AsyncSnapshot<List<Message>> snapshot) {
+        if (snapshot.hasError) return Text("Something went wrong");
         if (snapshot.connectionState == ConnectionState.waiting) return Text("Loading");
         return ListView(
           children: [
-            ...snapshot.data!.map((aMessage) => _buildMessageTile(aMessage))
+            ...snapshot.data!.map((final aMessage) => _buildMessageTile(aMessage))
           ],
         );
       }

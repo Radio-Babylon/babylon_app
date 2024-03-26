@@ -1,8 +1,10 @@
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import "dart:io";
+import "package:flutter/material.dart";
+import "package:image_picker/image_picker.dart";
 
 class CreateNewGroupChat extends StatefulWidget {
+  const CreateNewGroupChat({super.key});
+
   @override
   _CreateNewGroupChatState createState() => _CreateNewGroupChatState();
 }
@@ -24,10 +26,10 @@ class _CreateNewGroupChatState extends State<CreateNewGroupChat> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create New Group Chat'),
+        title: Text("Create New Group Chat"),
         backgroundColor: Colors.green,
       ),
       body: SingleChildScrollView(
@@ -39,7 +41,7 @@ class _CreateNewGroupChatState extends State<CreateNewGroupChat> {
               onTap: _pickImage,
               child: CircleAvatar(
                 radius: 80,
-                backgroundImage: _groupImage != null ? FileImage(_groupImage!) : AssetImage('assets/group_placeholder.png') as ImageProvider,
+                backgroundImage: _groupImage != null ? FileImage(_groupImage!) : AssetImage("assets/group_placeholder.png") as ImageProvider,
                 child: _groupImage == null ? Icon(Icons.camera_alt, color: Colors.white.withOpacity(0.7), size: 40) : null,
               ),
             ),
@@ -48,7 +50,7 @@ class _CreateNewGroupChatState extends State<CreateNewGroupChat> {
                 padding: const EdgeInsets.only(top: 10),
                 child: TextButton(
                   onPressed: _pickImage,
-                  child: Text('Select a Photo', style: TextStyle(fontSize: 18, color: Colors.green)),
+                  child: Text("Select a Photo", style: TextStyle(fontSize: 18, color: Colors.green)),
                 ),
               ),
             ),
@@ -56,7 +58,7 @@ class _CreateNewGroupChatState extends State<CreateNewGroupChat> {
             TextField(
               controller: _groupNameController,
               decoration: InputDecoration(
-                labelText: 'Group Name',
+                labelText: "Group Name",
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 prefixIcon: Icon(Icons.group),
               ),
@@ -65,7 +67,7 @@ class _CreateNewGroupChatState extends State<CreateNewGroupChat> {
             TextField(
               controller: _groupDescriptionController,
               decoration: InputDecoration(
-                labelText: 'Description',
+                labelText: "Description",
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 prefixIcon: Icon(Icons.description),
               ),
@@ -77,7 +79,7 @@ class _CreateNewGroupChatState extends State<CreateNewGroupChat> {
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
-                      labelText: 'Add People',
+                      labelText: "Add People",
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                       prefixIcon: Icon(Icons.person_add),
                     ),
@@ -104,7 +106,7 @@ class _CreateNewGroupChatState extends State<CreateNewGroupChat> {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 padding: EdgeInsets.symmetric(vertical: 14),
               ),
-              child: Text('Create', style: TextStyle(fontSize: 20)),
+              child: Text("Create", style: TextStyle(fontSize: 20)),
             ),
           ],
         ),
