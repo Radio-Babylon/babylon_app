@@ -2,10 +2,11 @@
 import "package:flutter/material.dart";
 
 class MyFriends extends StatelessWidget {
+  MyFriends({super.key});
 
   final List<Map<String, String>> joinRequests = List.generate(
     3,
-        (final index) => {
+    (final index) => {
       "name": "Request ${index + 1}",
       "profilePic": "assets/images/default_user_logo.png"
     },
@@ -13,13 +14,11 @@ class MyFriends extends StatelessWidget {
 
   final List<Map<String, String>> participants = List.generate(
     10,
-        (final index) => {
+    (final index) => {
       "name": "User ${index + 1}",
       "profilePic": "assets/images/default_user_logo.png"
     },
   );
-
-
 
   @override
   Widget build(final BuildContext context) {
@@ -62,28 +61,28 @@ class MyFriends extends StatelessWidget {
     return Column(
       children: joinRequests
           .map((final request) => ListTile(
-        leading: CircleAvatar(
-          backgroundImage: AssetImage(request["profilePic"]!),
-        ),
-        title: Text(request["name"]!),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              icon: Icon(Icons.check, color: Colors.green),
-              onPressed: () {
-                // Accept join request action
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.cancel, color: Colors.red),
-              onPressed: () {
-                // Cancel join request action
-              },
-            ),
-          ],
-        ),
-      ))
+                leading: CircleAvatar(
+                  backgroundImage: AssetImage(request["profilePic"]!),
+                ),
+                title: Text(request["name"]!),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.check, color: Colors.green),
+                      onPressed: () {
+                        // Accept join request action
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.cancel, color: Colors.red),
+                      onPressed: () {
+                        // Cancel join request action
+                      },
+                    ),
+                  ],
+                ),
+              ))
           .toList(),
     );
   }
@@ -103,9 +102,7 @@ class MyFriends extends StatelessWidget {
             children: [
               if (idx == 0) // Assuming the first user is the admin
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2)
-
-                ),
+                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2)),
               IconButton(
                 icon: Icon(Icons.remove_circle_outline, color: Colors.red),
                 onPressed: () {
@@ -149,4 +146,3 @@ class MyFriends extends StatelessWidget {
     );
   }
 }
-

@@ -1,10 +1,10 @@
 import "package:babylon_app/models/connected_babylon_user.dart";
 import "package:babylon_app/models/message.dart";
 import "package:babylon_app/services/chat/chat_service.dart";
+import "package:babylon_app/views/chat/group_chat_info.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
-import "package:babylon_app/views/chat/groupchatinfo.dart";
 
 // Main widget for the group chat, enhanced for better UI and UX
 class GroupChatView extends StatefulWidget {
@@ -15,16 +15,16 @@ class GroupChatView extends StatefulWidget {
 }
 
 class _GroupChatViewState extends State<GroupChatView> {
-
   final TextEditingController _messageController = TextEditingController();
 
   // Handles sending a message
   void _sendMessage() {
-    ChatService.sendMessage(chatUID: "neEHRgTfZdYEWkPH26Hm", message: Message(
-      message: _messageController.text.trim(),
-      sender: ConnectedBabylonUser(),
-      time: Timestamp.now()
-    ));
+    ChatService.sendMessage(
+        chatUID: "neEHRgTfZdYEWkPH26Hm",
+        message: Message(
+            message: _messageController.text.trim(),
+            sender: ConnectedBabylonUser(),
+            time: Timestamp.now()));
 
     if (_messageController.text.isNotEmpty) {
       setState(() {
@@ -37,20 +37,20 @@ class _GroupChatViewState extends State<GroupChatView> {
   Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Group Chat NAME"),
-        backgroundColor: Colors.green,
+          title: Text("Group Chat NAME"),
+          backgroundColor: Colors.green,
           actions: [
             IconButton(
               icon: Icon(Icons.info_outline),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (final context) => GroupChatInfo()),
+                  MaterialPageRoute(
+                      builder: (final context) => GroupChatInfo()),
                 );
               },
             )
-    ]
-      ),
+          ]),
       body: Column(
         children: [
           Expanded(
@@ -67,22 +67,28 @@ class _GroupChatViewState extends State<GroupChatView> {
 
   Widget _buildMessageStream() {
     return StreamBuilder<List<Message>>(
-      stream: ChatService.getChatStream(chatUID: "neEHRgTfZdYEWkPH26Hm").stream,
-      builder: (final BuildContext context, final AsyncSnapshot<List<Message>> snapshot) {
-        if (snapshot.hasError) return Text("Something went wrong");
-        if (snapshot.connectionState == ConnectionState.waiting) return Text("Loading");
-        return ListView(
-          children: [
-            ...snapshot.data!.map((final aMessage) => _buildMessageTile(aMessage))
-          ],
-        );
-      }
-    );
+        stream:
+            ChatService.getChatStream(chatUID: "neEHRgTfZdYEWkPH26Hm").stream,
+        builder: (final BuildContext context,
+            final AsyncSnapshot<List<Message>> snapshot) {
+          if (snapshot.hasError) return Text("Something went wrong");
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+          return ListView(
+            children: [
+              ...snapshot.data!
+                  .map((final aMessage) => _buildMessageTile(aMessage))
+            ],
+          );
+        });
   }
 
   // Builds a single message tile with enhanced UI
   Widget _buildMessageTile(final Message message) {
-    final bool isCurrentUser = message.sender!.userUID == ConnectedBabylonUser().userUID; // Check if the message is from the current user
+    final bool isCurrentUser = message.sender!.userUID ==
+        ConnectedBabylonUser()
+            .userUID; // Check if the message is from the current user
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       child: Row(
@@ -122,11 +128,10 @@ class _GroupChatViewState extends State<GroupChatView> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5),
-                        child: 
-                        
-                          Text("${DateFormat("dd MMMM yyyy").format(message.time!.toDate())} at ${DateFormat("hh:mm aaa").format(message.time! .toDate())}",
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
-                          ),
+                        child: Text(
+                          "${DateFormat("dd MMMM yyyy").format(message.time!.toDate())} at ${DateFormat("hh:mm aaa").format(message.time!.toDate())}",
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
                       ),
                     ],
                   ),
@@ -134,7 +139,7 @@ class _GroupChatViewState extends State<GroupChatView> {
               ],
             ),
           ),
-        ], 
+        ],
       ),
     );
   }

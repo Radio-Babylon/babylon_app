@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 import "package:babylon_app/views/profile/other_profile.dart";
 import "package:babylon_app/views/chat/chat.dart";
-import "package:babylon_app/views/chat/groupchat.dart";
-import "package:babylon_app/views/chat/createnewgroupchat.dart";
+import "package:babylon_app/views/chat/group_chat.dart";
+import "package:babylon_app/views/chat/create_new_groupchat.dart";
 
 // Define the _Person class to hold necessary information about a person.
 class _Person {
