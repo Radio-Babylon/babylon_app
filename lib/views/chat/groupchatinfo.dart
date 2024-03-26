@@ -147,7 +147,7 @@ class GroupChatInfo extends StatelessWidget {
       return AlertDialog(
           title: Text('Remove Participant'),
     content:
-    Text('Are you sure you want to remove $participantName from the group?'),
+    Text("Are you sure you want to remove $participantName from the group?"),
         actions: <Widget>[
           TextButton(
             child: Text('No'),
