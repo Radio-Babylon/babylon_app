@@ -140,7 +140,7 @@ class EventService {
         final Reference referenceImageToUpload =
             referenceDirImages.child(imgName);
         await referenceImageToUpload.putFile(image);
-        newEvent["picture"] = "/images/+${imgName}";
+        newEvent["picture"] = "/images/${imgName}";
       }
 
       db.collection("events").doc().set(newEvent);
