@@ -10,7 +10,7 @@ class ChatService {
   static StreamController<List<Message>> getChatStream ({required final chatUID}) {
     try {
       StreamController<List<Message>> streamController = StreamController();
-      FirebaseFirestore.instance.collection("chats").doc(chatUID).collection("messages").snapshots().listen((querySnapshot) async {
+      FirebaseFirestore.instance.collection("chats").doc(chatUID).collection("messages").orderBy("time",descending: false).snapshots().listen((querySnapshot) async {
         List<Message> messages = [];
         for (var messageDoc in querySnapshot.docs) 
           messages.add(Message(
