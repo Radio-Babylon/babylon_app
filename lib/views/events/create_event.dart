@@ -114,13 +114,13 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
           children: [
             _buildTextField(
               controller: _nameController,
-              labelText: "* Event Name",
+              labelText: "Event Name",
             ),
 
             _buildTextField(
               controller: TextEditingController(
                   text: _formatDateTime(_selectedDate, _selectedTime)),
-              labelText: "* Date & Time",
+              labelText: "Date & Time",
               readOnly: true,
               onTap: () => _pickDateTime(context),
             ),
@@ -143,7 +143,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
             SizedBox(height: 8.0), // Add spacing between the elements
             _buildTextField(
               controller: _placeController,
-              labelText: "* Location",
+              labelText: "Location",
             ),
             _buildTextField(
               controller: _descriptionShortController,
