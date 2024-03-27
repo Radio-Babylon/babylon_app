@@ -91,18 +91,54 @@ class ChatService {
         newChatData["iconPath"] = "/images/${imgName}";
       }
 
-      final DocumentReference chatRef =
-          await db.collection("chats").add(newChatData);
+      if (usersUID.isNotEmpty) {
+        newChatData["users"] = FieldValue.arrayUnion(usersUID);
+      }
 
-      usersUID.forEach((final userUID) {
-        final docRef = db
-            .collection("chats")
-            .doc(chatRef.id)
-            .collection("users")
-            .doc(userUID);
-        batch.set(docRef, {"userUID": userUID});
+      await db.collection("chats").doc().set(newChatData);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<List<Chat>> getUserChats(
+      {required final String userUID}) async {
+    try {
+      final db = FirebaseFirestore.instance;
+      final List<Chat> res = List<Chat>.empty(growable: true);
+      final userChats = await db
+          .collection("chats")
+          .where("users", arrayContains: userUID)
+          .get();
+
+      await Future.forEach(userChats.docs, (final snapShot) async {
+        final chatData = snapShot.data();
+        final imageUrl =
+            chatData.containsKey("iconPath") && chatData["iconPath"] != ""
+                ? await FirebaseStorage.instance
+                    .ref()
+                    .child(chatData["iconPath"])
+                    .getDownloadURL()
+                : "";
+        res.add(Chat(
+            chatUID: snapShot.id,
+            adminUID: chatData["admin"],
+            chatName: chatData["chatName"],
+            iconPath: imageUrl,
+            lastMessage: chatData.containsKey("lastMessage") &&
+                    chatData.containsKey("lastMessageTime") &&
+                    chatData.containsKey("lastSender") &&
+                    chatData["lastMessage"] != "" &&
+                    chatData["lastSender"] != "" &&
+                    chatData["lastMessageTime"] != ""
+                ? Message(
+                    message: chatData["lastMessage"],
+                    sender: await UserService.getBabylonUser(
+                        chatData["lastSender"]),
+                    time: chatData["lastMessageTime"])
+                : null));
       });
-      await batch.commit();
+      return res;
     } catch (e) {
       rethrow;
     }

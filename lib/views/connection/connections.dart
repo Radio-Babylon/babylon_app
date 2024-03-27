@@ -1,3 +1,5 @@
+import "package:babylon_app/models/connected_babylon_user.dart";
+import "package:babylon_app/services/chat/chat_service.dart";
 import "package:flutter/material.dart";
 import "package:babylon_app/views/profile/other_profile.dart";
 import "package:babylon_app/views/chat/chat.dart";
@@ -409,12 +411,15 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
               alignment: Alignment.bottomRight,
               // Floating action button for creating a new group chat, placed at the bottom right.
               child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (final context) => CreateNewGroupChat()),
-                  );
+                onPressed: () async {
+                  var oui = await ChatService.getUserChats(
+                      userUID: ConnectedBabylonUser().userUID);
+                  print("o");
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (final context) => CreateNewGroupChat()),
+                  // );
                 },
                 backgroundColor: Colors.blue,
                 child: Icon(Icons.add),
