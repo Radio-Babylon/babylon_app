@@ -43,7 +43,7 @@ class ChatService {
   static Future<void> sendMessage(
       {required final String chatUID, required final Message message}) async {
     try {
-      FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection("chats")
           .doc(chatUID)
           .collection("messages")
@@ -52,6 +52,13 @@ class ChatService {
         "message": message.message,
         "time": message.time,
         "sender": message.sender!.userUID
+      });
+
+      // update chat's last message
+      await FirebaseFirestore.instance.collection("chats").doc(chatUID).update({
+        "lastMessage": message.message,
+        "lastMessageTime": message.time,
+        "lastSender": message.sender!.userUID
       });
     } catch (e) {
       rethrow;
