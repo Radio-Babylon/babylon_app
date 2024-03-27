@@ -212,7 +212,6 @@ class _EventsScreenState extends State<EventsScreen>
       margin: const EdgeInsets.all(10),
       child: InkWell(
         onTap: () async {
-          // La acción se traslada aquí para permitir tocar en cualquier lugar de la tarjeta.
           await Navigator.push(
             context,
             MaterialPageRoute(

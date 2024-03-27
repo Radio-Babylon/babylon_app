@@ -52,7 +52,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
     final DateTime? date = await showDatePicker(
       context: context,
       initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2101),
     );
     if (date == null) return;
@@ -179,7 +179,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                           description: _descriptionController.text,
                           place: _placeController.text);
                       if (!context.mounted) return;
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (final context) => const EventsScreen()),

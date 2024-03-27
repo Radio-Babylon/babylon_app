@@ -112,20 +112,21 @@ class CreateAccountFormState extends State<CreateAccountForm> {
         onTap: () async {
           if (hasDatePicker) {
             final DateTime? pickedDate = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(1901),
-                lastDate: DateTime(2101));
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(1901),
+              lastDate: DateTime.now(),
+            );
 
             if (pickedDate != null) {
-              print(pickedDate);
               setState(() {
-                _dateOfBirth.text =
-                    "${pickedDate.year}-${pickedDate.month < 10 ? "0${pickedDate.month}" : pickedDate.month}-${pickedDate.day}";
+                String formattedDate = "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
+                _dateOfBirth.text = formattedDate;
               });
             }
           }
         },
+
       ),
     );
   }

@@ -128,7 +128,7 @@ class LoginFormState extends State<LoginForm> {
               }
             } catch (e) {
               setState(() {
-                _error = (e as FirebaseAuthException).message;
+                _error = ("Please introduce your correct email and password");
               });
             }
           },

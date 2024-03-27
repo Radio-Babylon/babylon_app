@@ -77,7 +77,7 @@ class _MyProfileState extends State<MyProfile> {
                 children: <Widget>[
                   ElevatedButton(
                     onPressed: () {
-                      // Acción para "Upgrade to Premium"
+                      //  "Upgrade to Premium"
                     },
                     child: Text("Upgrade to Premium"),
                   ),
@@ -91,7 +91,7 @@ class _MyProfileState extends State<MyProfile> {
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     ),
                     onPressed: () {
-                      // Acción para "My Friends"
+                      // "My Friends"
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (final context) => MyFriends()),
@@ -225,12 +225,12 @@ class _MyProfileState extends State<MyProfile> {
       barrierDismissible: false, // user must tap button!
       builder: (final BuildContext context) {
         return AlertDialog(
-          title: const Text("AlertDialog Title"),
+          title: const Text("You didn't save your changes"),
           content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text("This is a demo alert dialog."),
-                Text("Would you like to approve of this message?"),
+
+                Text("Are you sure you want to leave without save your changes?"),
               ],
             ),
           ),

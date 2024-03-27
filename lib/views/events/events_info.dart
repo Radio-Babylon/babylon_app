@@ -61,13 +61,12 @@ class EventInfoState extends State<EventInfoScreen> {
             // Container for the event image, taking full width of the screen.
             Container(
               width: screenWidth,
-              child: event.pictureURL == ""
+              child: event.pictureURL != null && event.pictureURL!.isNotEmpty
                   ? Image.network(
-                      event.pictureURL!,
-                      height:
-                          250, // Increase height for a more prominent image.
-                      fit: BoxFit.cover,
-                    )
+                event.pictureURL!,
+                height: 250, // Height for a more prominent image.
+                fit: BoxFit.cover,
+              )
                   : Image.asset("assets/images/logoSquare.png", height: 250),
             ),
             // Padding for the content below the image.
