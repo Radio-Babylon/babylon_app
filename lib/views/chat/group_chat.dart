@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:babylon_app/models/connected_babylon_user.dart";
 import "package:babylon_app/models/message.dart";
 import "package:babylon_app/services/chat/chat_service.dart";
@@ -16,6 +18,17 @@ class GroupChatView extends StatefulWidget {
 
 class _GroupChatViewState extends State<GroupChatView> {
   final TextEditingController _messageController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    super.dispose();
+  }
 
   // Handles sending a message
   void _sendMessage() {
@@ -36,33 +49,32 @@ class _GroupChatViewState extends State<GroupChatView> {
   @override
   Widget build(final BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text("Group Chat NAME"),
-          backgroundColor: Colors.green,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.info_outline),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (final context) => GroupChatInfo()),
-                );
-              },
-            )
-          ]),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(10.0),
-              child: _buildMessageStream(),
+        appBar: AppBar(
+            title: Text("Group Chat NAME"),
+            backgroundColor: Colors.green,
+            actions: [
+              IconButton(
+                icon: Icon(Icons.info_outline),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (final context) => GroupChatInfo()),
+                  );
+                },
+              )
+            ]),
+        body: Column(
+          children: [
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.all(10.0),
+                child: _buildMessageStream(),
+              ),
             ),
-          ),
-          _buildMessageInputField(),
-        ],
-      ),
-    );
+            _buildMessageInputField(),
+          ],
+        ));
   }
 
   Widget _buildMessageStream() {
@@ -76,6 +88,7 @@ class _GroupChatViewState extends State<GroupChatView> {
             return Text("Loading");
           }
           return ListView(
+            reverse: true,
             children: [
               ...snapshot.data!
                   .map((final aMessage) => _buildMessageTile(aMessage))
