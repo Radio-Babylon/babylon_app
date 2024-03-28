@@ -209,6 +209,7 @@ class UserService {
       for (final doc in querySnapshot.docs) {
         final data = doc.data();
         final List<String> eventsLists = [];
+        final List<String> connectionsLists = [];
         final user = BabylonUser.withData(
           doc.id,
           data["Name"] ?? "",
@@ -218,6 +219,7 @@ class UserService {
           data["Date of Birth"] ?? "",
           data["ImageUrl"] ?? "",
           eventsLists,
+          connectionsLists
         );
         users.add(user);
       }
