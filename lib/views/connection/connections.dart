@@ -1,9 +1,11 @@
 import "package:babylon_app/models/babylon_user.dart";
+import "package:babylon_app/models/chat.dart";
 import "package:babylon_app/models/connected_babylon_user.dart";
 import "package:babylon_app/services/chat/chat_service.dart";
+import "package:babylon_app/services/user/user_service.dart";
+import "package:babylon_app/views/chat/create_new_groupchat.dart";
 import "package:flutter/material.dart";
 import "package:babylon_app/views/profile/other_profile.dart";
-import "package:babylon_app/views/chat/chat.dart";
 import "package:babylon_app/views/chat/group_chat.dart";
 
 import "../../services/user/user_service.dart";
@@ -23,6 +25,8 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
   TextEditingController searchController =
       TextEditingController(); // For search functionality.
   List<BabylonUser> searchResults = []; // Holds the search results.
+  final Future<List<Chat>> _myChats =
+      ChatService.getUserChats(userUID: ConnectedBabylonUser().userUID);
 
   @override
   void initState() {
@@ -52,8 +56,10 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
       _fetchUsers();
     } else {
       setState(() {
-       searchResults = searchResults.where((final person) =>
-            person.fullName.toLowerCase().contains(query.toLowerCase())).toList();
+        searchResults = searchResults
+            .where((final person) =>
+                person.fullName.toLowerCase().contains(query.toLowerCase()))
+            .toList();
       });
     }
   }
@@ -103,7 +109,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
           _buildFriendRequestsWidget(), // Friend Requests section.
           _buildNewUsersWidget(), // New Users section.
           _buildChatsWidget(), // Chats section.
-          _buildGroupChatsWidget(), // Group Chats section.
+          _buildChatsWidget(isGroupChats: true), // Group Chats section.
         ],
       ),
     );
@@ -280,12 +286,6 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
                                   icon: Icon(Icons.chat_bubble_outline,
                                       color: Colors.blue),
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (final context) =>
-                                              ChatView()),
-                                    );
                                     // Placeholder for "Chat" action.
                                   },
                                 ),
@@ -305,58 +305,9 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
     );
   }
 
-  // Constructs the "Chats" widget with a horizontal list of ongoing chats.
-  Widget _buildChatsWidget() {
-    return Card(
-      margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-      elevation: 3.0,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text("Chats",
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(fontWeight: FontWeight.bold)),
-          ),
-          ListView.builder(
-            physics:
-                NeverScrollableScrollPhysics(), // Disables scrolling within ListView.
-            shrinkWrap:
-                true, // Allows ListView to occupy space only for its children.
-            itemCount: 5, // Example: Five group chats.
-            itemBuilder: (final context, final index) {
-              // Each item represents a group chat with title, the last message preview, and a button to open the chat.
-              return ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-                leading: CircleAvatar(
-                  backgroundImage: AssetImage(
-                      "assets/images/default_user_logo.png"), // Placeholder for group snapshot.
-                  radius: 25, // Adjust the size of the CircleAvatar here.
-                ),
-                title: Text("User $index",
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: Text("The last message in the conversation.."),
-                trailing: IconButton(
-                  icon: Icon(Icons.chat_bubble_outline, color: Colors.blue),
-                  onPressed: () {
-                    // Placeholder function for opening the group chat.
-                  },
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  Widget _buildChatsWidget({final bool isGroupChats = false}) {
+    final String title = isGroupChats ? "Group chats" : "Chats";
 
-  // Constructs the "Group Chats" widget with a vertical list of group chats.
-  Widget _buildGroupChatsWidget() {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
@@ -366,109 +317,124 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
         children: [
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text("Group Chats",
+            child: Text(title,
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge
                     ?.copyWith(fontWeight: FontWeight.bold)),
           ),
-          ListView.builder(
-            physics:
-                NeverScrollableScrollPhysics(), // Disables scrolling within ListView.
-            shrinkWrap:
-                true, // Allows ListView to occupy space only for its children.
-            itemCount: 5, // Example: Five group chats.
-            itemBuilder: (final context, final index) {
-              // Each item represents a group chat with title, member details, and a button to open the chat.
-              return ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-                leading: CircleAvatar(
-                  backgroundImage: AssetImage(
-                      "assets/images/logowhite.png"), // Placeholder for group snapshot.
-                  radius: 25, // Adjust the size of the CircleAvatar here.
-                ),
-                title: Text("Group Chat $index",
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: Text("Members, Topics, etc."),
-                trailing: IconButton(
-                  icon: Icon(Icons.chat_bubble_outline, color: Colors.blue),
-                  onPressed: () {
+          FutureBuilder<List<Chat>>(
+              future: _myChats, // a previously-obtained Future<String> or null
+              builder: (final BuildContext context,
+                  final AsyncSnapshot<List<Chat>> snapshot) {
+                List<Widget> children;
+                if (snapshot.hasData) {
+                  final List<Chat> filteredChats = isGroupChats
+                      ? snapshot.data!
+                          .where((final aChat) => aChat.adminUID != "")
+                          .toList()
+                      : snapshot.data!
+                          .where((final aChat) => aChat.adminUID == null)
+                          .toList();
+                  children = <Widget>[
+                    ...filteredChats
+                        .map((final aChat) => _buildChat(chat: aChat))
+                  ];
+                } else if (snapshot.hasError) {
+                  children = <Widget>[
+                    const Icon(
+                      Icons.error_outline,
+                      color: Colors.red,
+                      size: 60,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: Text("Error: ${snapshot.error}"),
+                    ),
+                  ];
+                } else {
+                  children = <Widget>[
+                    Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: SizedBox(
+                            width: 60,
+                            height: 60,
+                            child: CircularProgressIndicator(
+                                color: Color(0xFF006400)),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text("Loading..."),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 128),
+                          child: Image.asset("assets/images/logoSquare.png",
+                              height: 185, width: 185),
+                        ),
+                      ],
+                    )
+                  ];
+                }
+                return Column(
+                  children: children,
+                );
+              }),
+          if (isGroupChats)
+            Padding(
+              padding: EdgeInsets.only(right: 16.0, bottom: 16.0),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                // Floating action button for creating a new group chat, placed at the bottom right.
+                child: FloatingActionButton(
+                  onPressed: () async {
+                    // BabylonUser? zozz = await UserService.getBabylonUser(
+                    //     "GEWO8J4gCYYMYLwG2OmvXPxD8ah2");
+                    // ChatService.createChat(otherUser: zozz);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (final context) => GroupChatView()),
-                      // Placeholder for 'Chat' action.
+                          builder: (final context) => CreateNewGroupChat()),
                     );
                   },
+                  backgroundColor: Colors.blue,
+                  child: Icon(Icons.add),
                 ),
-              );
-            },
-          ),
-          Padding(
-            padding: EdgeInsets.only(right: 16.0, bottom: 16.0),
-            child: Align(
-              alignment: Alignment.bottomRight,
-              // Floating action button for creating a new group chat, placed at the bottom right.
-              child: FloatingActionButton(
-                onPressed: () async {
-                  var oui = await ChatService.getUserChats(
-                      userUID: ConnectedBabylonUser().userUID);
-                  print("o");
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (final context) => CreateNewGroupChat()),
-                  // );
-                },
-                backgroundColor: Colors.blue,
-                child: Icon(Icons.add),
               ),
             ),
-          ),
         ],
       ),
     );
   }
 
-  // Helper method to construct a profile card with image, name, and action buttons.
-  Widget buildProfileCard(final String imagePath, final String name,
-      final List<String> buttonLabels) {
-    return Card(
-      child: Column(
-        children: [
-          Image.asset(imagePath,
-              height: 100, width: 100), // User profile picture.
-          Text(name), // User name.
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: buttonLabels.map((final label) {
-              // Check if the label is "View Profile" to add navigation functionality.
-              if (label == "View Profile") {
-                return TextButton(
-                  onPressed: () {
-                    // Navigating to OtherProfile when "View Profile" is tapped.
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (final context) => OtherProfile()),
-                    );
-                  },
-                  child: Text(label),
-                );
-              } else {
-                // For other buttons, just return a placeholder onPressed functionality.
-                return TextButton(
-                  onPressed: () {
-                    // Placeholder for other buttons.
-                  },
-                  child: Text(label),
-                );
-              }
-            }).toList(),
-          ),
-        ],
+  Widget _buildChat({required final Chat chat}) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+      leading: CircleAvatar(
+        backgroundImage:
+            NetworkImage(chat.iconPath!), // Placeholder for group snapshot.
+        radius: 25, // Adjust the size of the CircleAvatar here.
       ),
+      title:
+          Text(chat.chatName!, style: TextStyle(fontWeight: FontWeight.bold)),
+      subtitle: Text(
+          chat.lastMessage == null || chat.lastMessage!.message == null
+              ? ""
+              : chat.lastMessage!.message!,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis),
+      trailing: Icon(Icons.chat_bubble_outline, color: Colors.blue),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (final context) => GroupChatView(
+                    chat: chat,
+                  )),
+        );
+      },
     );
   }
 
@@ -484,56 +450,66 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
           child: searchResults.isEmpty && hasSearchQuery
               ? _buildNoResultsFoundMessage() // Display this message if no results are found.
               : ListView.builder(
-            itemCount: searchResults.length,
-            itemBuilder: (final context, final index) {
-              final BabylonUser person = searchResults[index];
-              return Card(
-                margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                elevation: 3.0,
-                child: IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: CircleAvatar(
-                          radius: 30.0,
-                          backgroundImage: NetworkImage(person.imagePath
-                          ) // Usa NetworkImage para cargar la imagen de la URL
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 10.0, right: 10.0, bottom: 10.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(person.fullName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
-                              SizedBox(height: 5),
-                              Text(person.about!, style: TextStyle(fontSize: 14.0)),
-                            ],
-                          ),
-                        ),
-                      ),
-                      VerticalDivider(),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                  itemCount: searchResults.length,
+                  itemBuilder: (final context, final index) {
+                    final BabylonUser person = searchResults[index];
+                    return Card(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0)),
+                      elevation: 3.0,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _buttonOption("View Profile", Icons.visibility, context, person),
-                            _buttonOption("Send Request", Icons.person_add, context, person),
-                            _buttonOption("Chat", Icons.chat, context, person),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: CircleAvatar(
+                                  radius: 30.0,
+                                  backgroundImage: NetworkImage(person
+                                      .imagePath) // Usa NetworkImage para cargar la imagen de la URL
+                                  ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: 10.0, right: 10.0, bottom: 10.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(person.fullName,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16.0)),
+                                    SizedBox(height: 5),
+                                    Text(person.about!,
+                                        style: TextStyle(fontSize: 14.0)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            VerticalDivider(),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  _buttonOption("View Profile",
+                                      Icons.visibility, context, person),
+                                  _buttonOption("Send Request",
+                                      Icons.person_add, context, person),
+                                  _buttonOption(
+                                      "Chat", Icons.chat, context, person),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
         ),
       ],
     );
@@ -545,7 +521,8 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.search_off, size: 80, color: Colors.grey[600]),
-          SizedBox(height: 20), // Provides spacing between the icon and the text.
+          SizedBox(
+              height: 20), // Provides spacing between the icon and the text.
           Text(
             'No people found with that name.',
             style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
@@ -555,7 +532,6 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
       ),
     );
   }
-
 
   Widget _buttonOption(final String title, final IconData icon,
       final BuildContext context, final BabylonUser person) {

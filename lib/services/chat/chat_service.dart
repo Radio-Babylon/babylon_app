@@ -1,7 +1,9 @@
 import "dart:async";
 
 import "dart:io";
+import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/models/chat.dart";
+import "package:babylon_app/models/connected_babylon_user.dart";
 import "package:babylon_app/models/message.dart";
 import "package:babylon_app/services/user/user_service.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -62,42 +64,42 @@ class ChatService {
     }
   }
 
+  // if otherUser is set, you will create a single chat. If not, you will create a groupchat
   static Future<void> createChat(
       {final String? adminUID,
       final String? chatDescription,
-      required final String chatName,
+      final String? chatName,
       final File? image,
-      final List<String> usersUID = const []}) async {
+      final List<String> usersUID = const [],
+      final BabylonUser? otherUser}) async {
     try {
       final db = FirebaseFirestore.instance;
-      final newChatData = <String, dynamic>{
-        "chatName": chatName,
-      };
-
-      if (adminUID != null) {
+      final newChatData = <String, dynamic>{};
+      final BabylonUser curr = ConnectedBabylonUser();
+      if (otherUser != null) {
+        newChatData["users"] =
+            FieldValue.arrayUnion([curr.userUID, otherUser.userUID]);
+      } else {
+        newChatData["chatName"] = chatName;
         newChatData["admin"] = adminUID;
+        if (chatDescription != null) {
+          newChatData["chatDescription"] = chatDescription;
+        }
+
+        if (image != null) {
+          final Reference referenceRoot = FirebaseStorage.instance.ref();
+          final Reference referenceDirImages = referenceRoot.child("images");
+          final String imgName =
+              "${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
+          final Reference referenceImageToUpload =
+              referenceDirImages.child(imgName);
+          await referenceImageToUpload.putFile(image);
+          newChatData["iconPath"] = "/images/${imgName}";
+        }
+        if (usersUID.isNotEmpty) {
+          newChatData["users"] = FieldValue.arrayUnion(usersUID);
+        }
       }
-
-      if (chatDescription != null) {
-        newChatData["chatDescription"] = chatDescription;
-      }
-
-      if (image != null) {
-        final Reference referenceRoot = FirebaseStorage.instance.ref();
-        final Reference referenceDirImages = referenceRoot.child("images");
-        final String imgName =
-            "${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
-        final Reference referenceImageToUpload =
-            referenceDirImages.child(imgName);
-        await referenceImageToUpload.putFile(image);
-
-        newChatData["iconPath"] = "/images/${imgName}";
-      }
-
-      if (usersUID.isNotEmpty) {
-        newChatData["users"] = FieldValue.arrayUnion(usersUID);
-      }
-
       await db.collection("chats").doc().set(newChatData);
     } catch (e) {
       rethrow;
@@ -116,30 +118,53 @@ class ChatService {
 
       await Future.forEach(userChats.docs, (final snapShot) async {
         final chatData = snapShot.data();
-        final imageUrl =
-            chatData.containsKey("iconPath") && chatData["iconPath"] != ""
-                ? await FirebaseStorage.instance
-                    .ref()
-                    .child(chatData["iconPath"])
-                    .getDownloadURL()
-                : "";
-        res.add(Chat(
-            chatUID: snapShot.id,
-            adminUID: chatData["admin"],
-            chatName: chatData["chatName"],
-            iconPath: imageUrl,
-            lastMessage: chatData.containsKey("lastMessage") &&
-                    chatData.containsKey("lastMessageTime") &&
-                    chatData.containsKey("lastSender") &&
-                    chatData["lastMessage"] != "" &&
-                    chatData["lastSender"] != "" &&
-                    chatData["lastMessageTime"] != ""
-                ? Message(
-                    message: chatData["lastMessage"],
-                    sender: await UserService.getBabylonUser(
-                        chatData["lastSender"]),
-                    time: chatData["lastMessageTime"])
-                : null));
+
+        //if is groupchat (has admin)
+        if (chatData.containsKey("admin") && chatData["admin"] != "") {
+          final imageUrl = await FirebaseStorage.instance
+              .ref()
+              .child(chatData["iconPath"])
+              .getDownloadURL();
+
+          res.add(Chat(
+              chatUID: snapShot.id,
+              adminUID: chatData["admin"],
+              chatName: chatData["chatName"],
+              iconPath: imageUrl,
+              lastMessage: chatData.containsKey("lastMessage") &&
+                      chatData.containsKey("lastMessageTime") &&
+                      chatData.containsKey("lastSender") &&
+                      chatData["lastMessage"] != "" &&
+                      chatData["lastSender"] != "" &&
+                      chatData["lastMessageTime"] != ""
+                  ? Message(
+                      message: chatData["lastMessage"],
+                      sender: await UserService.getBabylonUser(
+                          chatData["lastSender"]),
+                      time: chatData["lastMessageTime"])
+                  : null));
+        } else {
+          final BabylonUser? otherUser = await UserService.getBabylonUser(
+              List<String>.from(chatData["users"])
+                  .firstWhere((final userListUID) => userListUID != userUID));
+          res.add(Chat(
+              chatUID: snapShot.id,
+              adminUID: chatData["admin"],
+              chatName: otherUser!.fullName,
+              iconPath: otherUser.imagePath,
+              lastMessage: chatData.containsKey("lastMessage") &&
+                      chatData.containsKey("lastMessageTime") &&
+                      chatData.containsKey("lastSender") &&
+                      chatData["lastMessage"] != "" &&
+                      chatData["lastSender"] != "" &&
+                      chatData["lastMessageTime"] != ""
+                  ? Message(
+                      message: chatData["lastMessage"],
+                      sender: await UserService.getBabylonUser(
+                          chatData["lastSender"]),
+                      time: chatData["lastMessageTime"])
+                  : null));
+        }
       });
       return res;
     } catch (e) {

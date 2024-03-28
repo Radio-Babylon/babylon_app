@@ -1,3 +1,4 @@
+import "package:babylon_app/models/chat.dart";
 import "package:babylon_app/models/connected_babylon_user.dart";
 import "package:babylon_app/models/message.dart";
 import "package:babylon_app/services/chat/chat_service.dart";
@@ -8,13 +9,16 @@ import "package:intl/intl.dart";
 
 // Main widget for the group chat, enhanced for better UI and UX
 class GroupChatView extends StatefulWidget {
-  const GroupChatView({super.key});
+  final Chat chat;
+  const GroupChatView({super.key, required this.chat});
 
   @override
-  _GroupChatViewState createState() => _GroupChatViewState();
+  _GroupChatViewState createState() => _GroupChatViewState(chat);
 }
 
 class _GroupChatViewState extends State<GroupChatView> {
+  final Chat chat;
+  _GroupChatViewState(this.chat);
   final TextEditingController _messageController = TextEditingController();
 
   @override
@@ -31,7 +35,7 @@ class _GroupChatViewState extends State<GroupChatView> {
   // Handles sending a message
   void _sendMessage() {
     ChatService.sendMessage(
-        chatUID: "neEHRgTfZdYEWkPH26Hm",
+        chatUID: chat.chatUID,
         message: Message(
             message: _messageController.text.trim(),
             sender: ConnectedBabylonUser(),
@@ -48,7 +52,7 @@ class _GroupChatViewState extends State<GroupChatView> {
   Widget build(final BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text("Group Chat NAME"),
+            title: Text(chat.chatName!),
             backgroundColor: Colors.green,
             actions: [
               IconButton(
@@ -77,8 +81,7 @@ class _GroupChatViewState extends State<GroupChatView> {
 
   Widget _buildMessageStream() {
     return StreamBuilder<List<Message>>(
-        stream:
-            ChatService.getChatStream(chatUID: "neEHRgTfZdYEWkPH26Hm").stream,
+        stream: ChatService.getChatStream(chatUID: chat.chatUID).stream,
         builder: (final BuildContext context,
             final AsyncSnapshot<List<Message>> snapshot) {
           if (snapshot.hasError) return Text("Something went wrong");
