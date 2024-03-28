@@ -1,3 +1,4 @@
+import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/models/connected_babylon_user.dart";
 import "package:babylon_app/services/chat/chat_service.dart";
 import "package:flutter/material.dart";
@@ -5,15 +6,7 @@ import "package:babylon_app/views/profile/other_profile.dart";
 import "package:babylon_app/views/chat/chat.dart";
 import "package:babylon_app/views/chat/group_chat.dart";
 
-// Define the _Person class to hold necessary information about a person.
-class _Person {
-  final String name;
-  final String bio;
-  final String interests;
-  final String languages;
-
-  _Person(this.name, this.bio, this.interests, this.languages);
-}
+import "../../services/user/user_service.dart";
 
 // Define ConnectionsScreen as a StatefulWidget to manage dynamic content.
 class ConnectionsScreen extends StatefulWidget {
@@ -29,12 +22,13 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
   late TabController _tabController;
   TextEditingController searchController =
       TextEditingController(); // For search functionality.
-  List<_Person> searchResults = []; // Holds the search results.
+  List<BabylonUser> searchResults = []; // Holds the search results.
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _fetchUsers();
   }
 
   @override
@@ -44,17 +38,24 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
     super.dispose();
   }
 
+  void _fetchUsers() async {
+    final users = await UserService.getAllBabylonUsers();
+    setState(() {
+      // Convert BabylonUser instances to _Person instances, or directly use BabylonUser if you adjust the UI accordingly
+      searchResults = users;
+    });
+  }
+
   // Placeholder for search logic, currently updates searchResults based on query.
   void _search(final String query) {
-    setState(() {
-      searchResults = List.generate(
-              15,
-              (final index) => _Person("User $index", "Bio $index",
-                  "Interests $index", "Languages $index"))
-          .where((final person) =>
-              person.name.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-    });
+    if (query.isEmpty) {
+      _fetchUsers();
+    } else {
+      setState(() {
+       searchResults = searchResults.where((final person) =>
+            person.fullName.toLowerCase().contains(query.toLowerCase())).toList();
+      });
+    }
   }
 
   @override
@@ -473,69 +474,56 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
 
   // Constructs "Explore The World" tab with a search bar and search results.
   Widget _buildExploreWorldTab() {
-    // Main column for the Explore World tab, containing the search bar and the list view of profiles.
+    // Check if a search query has been entered.
+    bool hasSearchQuery = searchController.text.isNotEmpty;
+
     return Column(
       children: [
-        _buildSearchBar(), // Assuming this function builds the search bar widget.
+        _buildSearchBar(), // Builds the search bar widget.
         Expanded(
-          child: ListView.builder(
-            itemCount: searchResults.isEmpty ? 15 : searchResults.length,
+          child: searchResults.isEmpty && hasSearchQuery
+              ? _buildNoResultsFoundMessage() // Display this message if no results are found.
+              : ListView.builder(
+            itemCount: searchResults.length,
             itemBuilder: (final context, final index) {
-              // Use "searchResults" if not empty; otherwise, generate default list items.
-              final person = searchResults.isEmpty
-                  ? _Person("User $index", "Bio $index", "Interests $index",
-                      "Languages $index")
-                  : searchResults[index];
-
-              // Card widget for each profile with a photo, name, bio, and action buttons.
+              final BabylonUser person = searchResults[index];
               return Card(
                 margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
                 elevation: 3.0,
                 child: IntrinsicHeight(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Profile picture on the left side of the card.
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: CircleAvatar(
-                          radius:
-                              30.0, // Adjust the size of the profile picture here.
-                          backgroundImage:
-                              AssetImage("assets/images/default_user_logo.png"),
+                          radius: 30.0,
+                          backgroundImage: NetworkImage(person.imagePath
+                          ) // Usa NetworkImage para cargar la imagen de la URL
                         ),
                       ),
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsets.only(
-                              top: 10.0, right: 10.0, bottom: 10.0),
+                          padding: EdgeInsets.only(top: 10.0, right: 10.0, bottom: 10.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(person.name,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16.0)),
+                              Text(person.fullName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
                               SizedBox(height: 5),
-                              Text(person.bio,
-                                  style: TextStyle(fontSize: 14.0)),
+                              Text(person.about!, style: TextStyle(fontSize: 14.0)),
                             ],
                           ),
                         ),
                       ),
                       VerticalDivider(),
-                      // Buttons are stacked vertically on the right side.
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            _buttonOption("View Profile", Icons.visibility,
-                                context, person),
-                            _buttonOption("Send Request", Icons.person_add,
-                                context, person),
+                            _buttonOption("View Profile", Icons.visibility, context, person),
+                            _buttonOption("Send Request", Icons.person_add, context, person),
                             _buttonOption("Chat", Icons.chat, context, person),
                           ],
                         ),
@@ -551,8 +539,26 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
     );
   }
 
+  Widget _buildNoResultsFoundMessage() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.search_off, size: 80, color: Colors.grey[600]),
+          SizedBox(height: 20), // Provides spacing between the icon and the text.
+          Text(
+            'No people found with that name.',
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+
   Widget _buttonOption(final String title, final IconData icon,
-      final BuildContext context, final _Person person) {
+      final BuildContext context, final BabylonUser person) {
     // Function to create a small, styled button for each action.
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.0),

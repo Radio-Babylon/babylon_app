@@ -200,4 +200,30 @@ class UserService {
     final BabylonUser? babylonUser = await getBabylonUser(userUID);
     await ConnectedBabylonUser.setConnectedBabylonUser(babylonUser);
   }
+
+  static Future<List<BabylonUser>> getAllBabylonUsers() async {
+    final List<BabylonUser> users = [];
+    try {
+      final db = FirebaseFirestore.instance;
+      final querySnapshot = await db.collection("users").get();
+      for (final doc in querySnapshot.docs) {
+        final data = doc.data();
+        final List<String> eventsLists = [];
+        final user = BabylonUser.withData(
+          doc.id,
+          data["Name"] ?? "",
+          data["Email Address"] ?? "",
+          data["About"] ?? "",
+          data["Country of Origin"] ?? "",
+          data["Date of Birth"] ?? "",
+          data["ImageUrl"] ?? "",
+          eventsLists,
+        );
+        users.add(user);
+      }
+    } catch (e) {
+      print("Error fetching users: $e");
+    }
+    return users;
+  }
 }
