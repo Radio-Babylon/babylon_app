@@ -331,10 +331,12 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
                 if (snapshot.hasData) {
                   final List<Chat> filteredChats = isGroupChats
                       ? snapshot.data!
-                          .where((final aChat) => aChat.adminUID != "")
+                          .where((final aChat) =>
+                              aChat.adminUID != "" && aChat.adminUID != null)
                           .toList()
                       : snapshot.data!
-                          .where((final aChat) => aChat.adminUID == null)
+                          .where((final aChat) =>
+                              aChat.adminUID == null || aChat.adminUID == "")
                           .toList();
                   children = <Widget>[
                     ...filteredChats
