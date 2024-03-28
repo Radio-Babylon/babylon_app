@@ -73,7 +73,6 @@ class ChatService {
       final List<String> usersUID = const []}) async {
     try {
       final db = FirebaseFirestore.instance;
-      final batch = db.batch();
       final newChatData = <String, dynamic>{
         "chatName": chatName,
       };
