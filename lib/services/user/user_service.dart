@@ -1,3 +1,4 @@
+import "dart:async";
 import "dart:convert";
 import "dart:typed_data";
 import "package:babylon_app/models/babylon_user.dart";
@@ -118,6 +119,7 @@ class UserService {
 
     try {
       final List<String> eventsLists = List.empty(growable: true);
+      final List<String> connectionsList = List.empty(growable: true);
       final db = FirebaseFirestore.instance;
       final docUser = await db.collection("users").doc(userUID).get();
       final userData = docUser.data();
@@ -142,9 +144,18 @@ class UserService {
           .doc(userUID)
           .collection("listedEvents")
           .get();
+      final docsListedConnections = await db
+          .collection("users")
+          .doc(userUID)
+          .collection("connections")
+          .get();
+
       await Future.forEach(docsListedEvents.docs, (final snapShot) async {
         eventsLists.add(snapShot.reference.id);
       });
+      await Future.forEach(docsListedConnections.docs,
+          (final snapShot) async => connectionsList.add(snapShot.reference.id));
+
       result = BabylonUser.withData(
           userInfo["UUID"]!,
           userInfo["name"]!,
@@ -153,12 +164,36 @@ class UserService {
           userInfo["country"]!,
           userInfo["birthDate"]!,
           userInfo["imgURL"]!,
-          eventsLists);
+          eventsLists,
+          connectionsList);
       print(userData);
     } catch (e) {
       print(e);
     }
     return result;
+  }
+
+  static Future<List<BabylonUser?>> getConnections() async {
+    final List<BabylonUser?> connections = [];
+    setUpConnectedBabylonUser(ConnectedBabylonUser().userUID);
+    await Future.forEach(ConnectedBabylonUser().listedConnections,
+        (final connectionId) async {
+      final BabylonUser? babylonUser = await getBabylonUser(connectionId);
+      connections.add(babylonUser);
+    });
+    return connections;
+  }
+
+  static void removeConnection(final String connectionUID) async {
+    final db = FirebaseFirestore.instance;
+    ConnectedBabylonUser().listedConnections.remove(connectionUID);
+    await db
+        .collection("users")
+        .doc(ConnectedBabylonUser().userUID)
+        .collection("connections")
+        .doc(connectionUID)
+        .delete();
+    setUpConnectedBabylonUser(ConnectedBabylonUser().userUID);
   }
 
   static void setUpConnectedBabylonUser(final String userUID) async {

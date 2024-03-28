@@ -22,5 +22,6 @@ class ConnectedBabylonUser extends BabylonUser {
     _instance.about = babylonUser.about;
     _instance.listedEvents = babylonUser.listedEvents;
     _instance.userUID = babylonUser.userUID;
+    _instance.listedConnections = babylonUser.listedConnections;
   }
 }
