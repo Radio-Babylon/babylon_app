@@ -8,6 +8,7 @@ import "package:flutter/material.dart";
 import "package:image_picker/image_picker.dart";
 import "package:babylon_app/views/home.dart"; // Make sure this import is correct for your HomeScreen widget
 import "package:babylon_app/views/connection/my_friends.dart";
+
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
 
@@ -73,47 +74,33 @@ class _MyProfileState extends State<MyProfile> {
                   const SizedBox(height: 12),
                   buildName(user),
                   const SizedBox(height: 12),
-              Column(
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () {
-                      //  "Upgrade to Premium"
-                    },
-                    child: Text("Upgrade to Premium"),
+                  Column(
+                    children: <Widget>[
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text("Upgrade to Premium"),
+                      ),
+                      SizedBox(height: 10),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green.shade50,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 12),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (final context) => MyFriends()),
+                          );
+                        },
+                        child: Text("My Friends"),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 10),
-                  ElevatedButton(
-
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green.shade50,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    ),
-                    onPressed: () {
-                      // "My Friends"
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (final context) => MyFriends()),
-                      );
-                    },
-                    child: Text("My Friends"),
-                  ),
-                  ],
-              ),
-
-
-
-                  //const SizedBox(height: 24),
-                  /*Center(
-                    child: const Text(
-                  'Infromation about events',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                )),
-                const SizedBox(height: 10),*/
-                  //NumbersWidget(),
                   const SizedBox(height: 20),
-                  //infoField(),_
                   infoField(
                       icon: Icons.person,
                       hintText: "example name",
@@ -127,7 +114,6 @@ class _MyProfileState extends State<MyProfile> {
                       controller: _dateOfBirth,
                       onClicked: () {},
                       hasDatePicker: true),
-                  //const SizedBox(height: 30),
                   infoField(
                       icon: Icons.public,
                       hintText: "Origin country",
@@ -229,8 +215,8 @@ class _MyProfileState extends State<MyProfile> {
           content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-
-                Text("Are you sure you want to leave without save your changes?"),
+                Text(
+                    "Are you sure you want to leave without save your changes?"),
               ],
             ),
           ),

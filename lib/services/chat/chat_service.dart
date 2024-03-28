@@ -1,10 +1,7 @@
 import "dart:async";
 
-import "dart:ffi";
 import "dart:io";
-import "package:babylon_app/models/babylon_user.dart";
 import "package:babylon_app/models/chat.dart";
-import "package:babylon_app/models/connected_babylon_user.dart";
 import "package:babylon_app/models/message.dart";
 import "package:babylon_app/services/user/user_service.dart";
 import "package:cloud_firestore/cloud_firestore.dart";

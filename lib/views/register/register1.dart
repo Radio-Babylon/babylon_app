@@ -120,13 +120,13 @@ class CreateAccountFormState extends State<CreateAccountForm> {
 
             if (pickedDate != null) {
               setState(() {
-                String formattedDate = "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
+                final String formattedDate =
+                    "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
                 _dateOfBirth.text = formattedDate;
               });
             }
           }
         },
-
       ),
     );
   }
